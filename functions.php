@@ -1,0 +1,358 @@
+<?php
+add_action( 'wp_enqueue_scripts', 'enqueue_child_theme_styles', PHP_INT_MAX);
+function enqueue_child_theme_styles() {
+    wp_enqueue_style( 'child-style', get_stylesheet_uri(),
+        array( 'storefront-style' )
+    );
+    wp_enqueue_style( 'child-assets-style', get_stylesheet_directory_uri() . '/assets/style.css',
+        array( 'storefront-style' )
+    );
+}
+
+add_action( 'wp_enqueue_scripts', 'enqueue_child_theme_scripts', PHP_INT_MAX );
+function enqueue_child_theme_scripts() {
+    // Enqueue the JavaScript file
+    wp_enqueue_script('jquery');
+    wp_enqueue_script( 'child-scripts', get_stylesheet_directory_uri() . '/assets/scripts.bundle.js', array(), '1.0', true );
+
+    wp_localize_script('child-scripts', 'custom_script_vars', array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('add_to_cart_nonce')
+    ));
+}
+
+
+add_action('acf/init', 'my_acf_init');
+function my_acf_init()
+{
+    if (function_exists('acf_register_block')) {
+        acf_register_block(array(
+            'name' => 'products-list',
+            'title' => __('Products list'),
+            'description' => __('Products list on homepage.'),
+            'render_callback' => 'my_acf_block_render_callback',
+            'category' => 'formatting',
+            'icon' => 'align-full-width',
+            'keywords' => array('Products', 'List', 'Homepage'),
+        ));
+    }
+    if (function_exists('acf_register_block')) {
+        acf_register_block(array(
+            'name' => 'hero-scroll',
+            'title' => __('Hero Scroll'),
+            'description' => __('Hero scroll'),
+            'render_callback' => 'my_acf_block_render_callback',
+            'category' => 'formatting',
+            'icon' => 'align-full-width',
+            'keywords' => array('Hero', 'scroll', 'Homepage'),
+        ));
+    }
+    if (function_exists('acf_register_block')) {
+        acf_register_block(array(
+            'name' => 'about-us',
+            'title' => __('About Us'),
+            'description' => __('About us block'),
+            'render_callback' => 'my_acf_block_render_callback',
+            'category' => 'formatting',
+            'icon' => 'align-full-width',
+            'keywords' => array('About', 'Us', 'Contact'),
+        ));
+    }
+    if (function_exists('acf_register_block')) {
+        acf_register_block(array(
+            'name' => 'contact-us',
+            'title' => __('Contact Us'),
+            'description' => __('Contact us block'),
+            'render_callback' => 'my_acf_block_render_callback',
+            'category' => 'formatting',
+            'icon' => 'align-full-width',
+            'keywords' => array('Contact', 'Us', 'block'),
+        ));
+    }
+    if (function_exists('acf_register_block')) {
+        acf_register_block(array(
+            'name' => 'scroll-animation',
+            'title' => __('Scroll Animation'),
+            'description' => __('Scroll animation front-page'),
+            'render_callback' => 'my_acf_block_render_callback',
+            'category' => 'formatting',
+            'icon' => 'align-full-width',
+            'keywords' => array('Scroll', 'animation', 'front'),
+        ));
+    }
+}
+
+// Generic callback function to include “template parts” for our blocks.
+function my_acf_block_render_callback($block)
+{
+    $slug = str_replace('acf/', '', $block['name']);
+    // include a template part from within the "blocks" folder
+    if (file_exists(get_theme_file_path("/blocks/block-{$slug}.php"))) {
+        include(get_theme_file_path("/blocks/block-{$slug}.php"));
+    }
+}
+
+if ( ! function_exists( 'storefront_homepage_header' ) ) {
+	/**
+	 * Display the page header without the featured image
+	 *
+	 * @since 1.0.0
+	 */
+	function storefront_homepage_header() {
+		edit_post_link( __( 'Edit this section', 'storefront' ), '', '', '', 'button storefront-hero__button-edit' );
+		?>
+		<header class="entry-header">
+			<?php
+			the_title( '<h1 class="entry-title">', '</h1>' );
+			?>
+		</header><!-- .entry-header -->
+		<?php
+	}
+}
+
+function is_product_in_cart($product_id) {
+    // Get cart contents
+    $cart = WC()->cart->get_cart();
+
+    // Iterate through cart items
+    foreach ($cart as $cart_item_key => $cart_item) {
+        // Check if product ID matches
+        if ($cart_item['product_id'] == $product_id) {
+            return true; // Product found in cart
+        }
+    }
+
+    return false; // Product not found in cart
+}
+
+add_action('wp_ajax_add_to_cart', 'add_to_cart_callback');
+add_action('wp_ajax_nopriv_add_to_cart', 'add_to_cart_callback');
+
+function add_to_cart_callback() {
+    // Verify nonce
+    check_ajax_referer('add_to_cart_nonce', 'nonce');
+
+    // Get product ID and quantity from AJAX request
+    $product_id = $_POST['productId'];
+    $quantity = $_POST['quantity'];
+
+    // Add product to cart
+    WC()->cart->add_to_cart($product_id, $quantity);
+
+    // Return response
+    wp_send_json_success('Product added to cart');
+}
+
+
+register_nav_menus(
+    apply_filters(
+        'storefront_register_nav_menus',
+        array(
+            'primary'   => __( 'Primary Menu', 'storefront' ),
+            'secondary' => __( 'Secondary Menu', 'storefront' ),
+            'handheld'  => __( 'Handheld Menu', 'storefront' ),
+            'footer'  => __( 'Footer Menu', 'storefront' ),
+        )
+    )
+);
+function ms_exists($obj, $key, $result = '')
+{
+    if (is_array($obj)) {
+        $result = array_key_exists($key, $obj) ? $obj[$key] : $result;
+    }
+    if (is_object($obj)) {
+        $result = isset($obj->{$key}) ? $obj->{$key} : $result;
+    }
+    return $result;
+}
+
+function ms_exists_n($obj, $key1, $key2, $key3 = '', $key4 = '')
+{
+    if ($key4)
+        return ms_exists(ms_exists(ms_exists(ms_exists($obj, $key1), $key2), $key3), $key4);
+    if ($key3)
+        return ms_exists(ms_exists(ms_exists($obj, $key1), $key2), $key3);
+    return ms_exists(ms_exists($obj, $key1), $key2);
+}
+
+function ms_tree($elements, $paren_id = 0, $args = [])
+{
+    $result = [];
+    global $wp;
+    $current_url = $wp->request;
+    foreach ($elements as $element) {
+        $element = (object)[
+            'ID' => $element->ID,
+            'parent_id' => $element->menu_item_parent,
+            'object_id' => $element->object_id,
+            'title' => $element->title,
+            'url' => $element->url,
+            'target' => $element->target,
+            'description' => $element->description,
+            'classes' => array_filter($element->classes),
+            'is_active' => home_url("/") . $current_url . "/" == $element->url ? "active" : "inactive"
+        ];
+        if (ms_exists($args, 'fields')) {
+            foreach ($args['fields'] as $field)
+                $element->{$field} = get_post_meta($element->ID, $field, true);
+        }
+        $element->args = $args;
+        if ($element->parent_id == $paren_id) {
+            $children = ms_tree($elements, $element->ID, $args);
+            if ($children)
+                $element->children = $children;
+            foreach ($children as $child) {
+                if ($child->is_active == "active") {
+                    $element->is_active = "active";
+                }
+            }
+            $result[] = $element;
+            unset($element);
+        }
+    }
+    return $result;
+}
+
+function ms_getMenuItemes()
+{
+    $result = ['menu' => [], 'menu_name' => []];
+    $locations = get_nav_menu_locations();              // Get menu locations
+    // Set menu
+    if (is_array($locations) && !empty($locations)) {
+        foreach ($locations as $location => $id) {
+            $menu_items = wp_get_nav_menu_items($id);
+            $menu_object = wp_get_nav_menu_object($id);
+            $menu_title = ms_exists($menu_object, 'name');
+            $menu_id = ms_exists($menu_object, 'term_id');
+            if ($menu_items) {
+                $result['menu'][$location] = ms_tree($menu_items, 0);
+                $result['menu_name'][$location] = $menu_title;
+                $result['menu_id'][$location] = $menu_id;
+            }
+        }
+    }
+    return $result;
+}
+
+// Allow SVG
+add_filter('wp_check_filetype_and_ext', function ($data, $file, $filename, $mimes) {
+
+    global $wp_version;
+    if ($wp_version !== '4.7.1') {
+        return $data;
+    }
+
+    $filetype = wp_check_filetype($filename, $mimes);
+
+    return [
+        'ext' => $filetype['ext'],
+        'type' => $filetype['type'],
+        'proper_filename' => $data['proper_filename']
+    ];
+
+}, 10, 4);
+
+function cc_mime_types($mimes)
+{
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+
+add_filter('upload_mimes', 'cc_mime_types');
+
+function fix_svg()
+{
+    echo '<style type="text/css">
+		  .attachment-266x266, .thumbnail img {
+			   width: 100% !important;
+			   height: auto !important;
+		  }
+		  </style>';
+}
+
+add_action('admin_head', 'fix_svg');
+
+function allow_svg_upload($mimes)
+{
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+
+add_filter('upload_mimes', 'allow_svg_upload');
+
+// CART OFFCANVAS
+add_action('wp_ajax_get_cart_contents', 'get_cart_contents');
+add_action('wp_ajax_nopriv_get_cart_contents', 'get_cart_contents');
+
+function get_cart_contents() {
+    // Get cart items
+    $cart_items = WC()->cart->get_cart();
+
+    // Format cart items
+    $formatted_items = array();
+    foreach ($cart_items as $cart_item_key => $cart_item) {
+        $product_id = $cart_item['variation_id'] > 0 ? $cart_item['variation_id'] : $cart_item['product_id'];
+        $product = wc_get_product($product_id);
+
+        $image_id = $product->get_image_id();
+        $image_url = wp_get_attachment_image_url($image_id, 'full');
+
+        $formatted_items[] = array(
+            'product_id' => $product_id,
+            'image_url' => $image_url,
+            'product_name' => $product->get_name(),
+            'quantity' => $cart_item['quantity'],
+            'price' => $product->get_price_html(),
+            // Add more fields as needed
+        );
+    }
+
+    // Return cart items as JSON
+    wp_send_json($formatted_items);
+    wp_die();
+}
+
+add_action('wp_ajax_update_cart_quantity', 'update_cart_quantity');
+add_action('wp_ajax_nopriv_update_cart_quantity', 'update_cart_quantity');
+
+function update_cart_quantity() {
+    $product_id = intval($_POST['product_id']);
+    $quantity = intval($_POST['quantity']);
+
+    // Get cart items
+    $cart_items = WC()->cart->get_cart();
+    foreach ($cart_items as $cart_item_key => $cart_item) {
+        if ($cart_item['product_id'] == $product_id || $cart_item['variation_id'] == $product_id) {
+            WC()->cart->set_quantity($cart_item_key, $quantity, true);
+            break;
+        }
+    }
+
+    wp_send_json(array('success' => true));
+    wp_die();
+}
+
+add_action('wp_ajax_remove_cart_item', 'remove_cart_item');
+add_action('wp_ajax_nopriv_remove_cart_item', 'remove_cart_item');
+
+function remove_cart_item() {
+    $product_id = intval($_POST['product_id']);
+
+    // Get cart items
+    $cart_items = WC()->cart->get_cart();
+    foreach ($cart_items as $cart_item_key => $cart_item) {
+        if ($cart_item['product_id'] == $product_id || $cart_item['variation_id'] == $product_id) {
+            $removed_quantity = $cart_item['quantity']; // Get the quantity of the removed item
+            WC()->cart->remove_cart_item($cart_item_key);
+            break;
+        }
+    }
+
+    wp_send_json(array('success' => true, 'removed_quantity' => $removed_quantity));
+    wp_die();
+}
+
+
+
+?>
+

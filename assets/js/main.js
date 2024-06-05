@@ -1,0 +1,666 @@
+import Masonry from "masonry-layout";
+import "bootstrap";
+import * as THREE from "three";
+import simpleParallax from "simple-parallax-js";
+import Swiper from "swiper/bundle";
+
+document.addEventListener("DOMContentLoaded", function () {
+  let singleColors = document.querySelectorAll(".single-colors-shop");
+
+  singleColors.forEach(function (colorElement) {
+    colorElement.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      let colorValue = colorElement.getAttribute("data-color");
+      let productId = colorElement.getAttribute("data-product-id");
+
+      let productElement = colorElement.closest(".product");
+
+      if (productElement) {
+        productElement.setAttribute("data-selected-color", colorValue);
+        productElement.setAttribute("data-product-cart", productId);
+      }
+    });
+  });
+
+  const addToCartShop = document.querySelectorAll(".add-to-cart-shop");
+
+  addToCartShop.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      let productElement = btn.closest(".product");
+      let productId = productElement.getAttribute("data-product-cart");
+      let productLink = productElement.getAttribute("data-product-link");
+
+      if (productId) {
+        let quantity = 1;
+
+        jQuery.ajax({
+          url: custom_script_vars.ajaxurl,
+          method: "POST",
+          data: {
+            action: "add_to_cart",
+            nonce: custom_script_vars.nonce,
+            productId: productId,
+            quantity: parseInt(quantity),
+          },
+          success: function (response) {
+            // Handle successful response
+            console.log(response);
+
+            let currentCount = parseInt(jQuery("#cartCount").text());
+            jQuery("#cartCount").text(currentCount + parseInt(quantity));
+            let currentCountOffcanvas = parseInt(
+              jQuery("#cartCountOffcanvas").text()
+            );
+            jQuery("#cartCountOffcanvas").text(
+              currentCountOffcanvas + parseInt(quantity)
+            );
+          },
+          error: function (xhr, status, error) {
+            // Handle error
+            console.error("There was a problem with your AJAX request:", error);
+          },
+        });
+      } else {
+        window.location.href = productLink;
+      }
+    });
+  });
+
+  const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+
+  addToCartButtons.forEach((button) => {
+    button.addEventListener("click", () => addToCart(button));
+  });
+
+  function addToCart(button) {
+    const productId = button.getAttribute("data-product-id");
+    const quantity = button.getAttribute("data-quantity");
+
+    // jQuery.ajax({
+    //   url: custom_script_vars.ajaxurl,
+    //   method: "POST",
+    //   data: {
+    //     action: "add_to_cart",
+    //     nonce: custom_script_vars.nonce,
+    //     productId: productId,
+    //     quantity: parseInt(quantity),
+    //   },
+    //   success: function (response) {
+    //     // Handle successful response
+    //     console.log(response);
+    //     // Add d-none class to .add-to-cart div
+    //     jQuery(button).find(".add-to-cart").addClass("d-none");
+
+    //     // Add d-block class to .added-to-cart div
+    //     jQuery(button).find(".added-to-cart").addClass("d-block");
+
+    //     let currentCount = parseInt(jQuery("#cartCount").text());
+    //     jQuery("#cartCount").text(currentCount + 1);
+    //   },
+    //   error: function (xhr, status, error) {
+    //     // Handle error
+    //     console.error("There was a problem with your AJAX request:", error);
+    //   },
+    // });
+  }
+
+  // Menu button animation
+
+  let overlay = document.querySelector(".main-header__overlay");
+  let menuOpen = document.querySelector(".menu-open");
+  let menuClose = document.querySelector(".menu-close");
+  let icon = document.querySelector("#nav-icon4");
+  let menuBtn = document.querySelector(".main-header__menu--btn");
+  let headerCart = document.querySelector(".main-header__cart");
+
+  if (menuBtn) {
+    menuBtn.addEventListener("click", function () {
+      // Toggle visibility classes
+      menuOpen.classList.toggle("span-invisible");
+      menuOpen.classList.toggle("span-visible");
+      menuClose.classList.toggle("span-invisible");
+      menuClose.classList.toggle("span-visible");
+
+      icon.classList.toggle("open");
+      overlay.classList.toggle("active");
+      headerCart.classList.toggle("opacity-0");
+      headerCart.classList.toggle("opacity-100");
+    });
+  }
+
+  overlay.addEventListener("click", function () {
+    // Toggle visibility classes
+    menuOpen.classList.toggle("span-invisible");
+    menuOpen.classList.toggle("span-visible");
+    menuClose.classList.toggle("span-invisible");
+    menuClose.classList.toggle("span-visible");
+
+    icon.classList.toggle("open");
+    overlay.classList.toggle("active");
+    jQuery(".main-header__nav").collapse("hide");
+  });
+
+  // Add blur To menu items
+
+  let mainHeaderImages = document.querySelector(".main-header__images");
+  const menuItems = document.querySelectorAll(".primary-menu .menu-item");
+  let loadImgSrc = "";
+  function removeAllBlur() {
+    menuItems.forEach(function (menuItem) {
+      menuItem.classList.remove("blur-menu");
+    });
+  }
+
+  function isAnyMenuItemHovered() {
+    return Array.from(menuItems).some(function (menuItem) {
+      return menuItem.matches(":hover");
+    });
+  }
+
+  const container = document.getElementById("threejs-container");
+  menuItems.forEach(function (item) {
+    item.addEventListener("mouseover", function () {
+      removeAllBlur();
+
+      let menuItemID = item.getAttribute("id");
+      let elementsWithMatchingID = document.querySelectorAll(
+        '[data-hover-id="' + menuItemID + '"]'
+      );
+
+      loadImgSrc = elementsWithMatchingID[0].getAttribute("src");
+      menuItems.forEach(function (menuItem) {
+        if (menuItem !== item) {
+          menuItem.classList.add("blur-menu");
+        }
+      });
+
+      if (!container.classList.contains(menuItemID)) {
+        // THREE JS
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000); // Aspect ratio set to 1 for a square canvas
+
+        const textureLoader = new THREE.TextureLoader();
+
+        // Load your background image (replace with your image path)
+        const texture = textureLoader.load(loadImgSrc);
+        texture.wrapS = THREE.ClampToEdgeWrapping; // Prevent horizontal repetition
+        texture.wrapT = THREE.ClampToEdgeWrapping; // Prevent vertical repetition
+
+        const planeGeometry = new THREE.PlaneGeometry(4, 4);
+
+        const vertexShader = `
+  uniform float uTime;
+  uniform float uAmplitude;
+  uniform float uFrequency;
+
+  varying vec2 vUv;
+
+  void main() {
+    float noise = sin(uFrequency * (vUv.x + uTime)) * sin(uFrequency * (vUv.y + uTime));
+    vec3 pos = position + normal * noise * uAmplitude;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+    vUv = uv;
+  }
+`;
+
+        const fragmentShader = `
+  uniform sampler2D uTexture;
+  uniform float uTime;
+  uniform float uAmplitude;
+  uniform float uFrequency;
+  uniform vec3 uEmissive; // Emissive color for the glow
+
+  varying vec2 vUv;
+
+  void main() {
+    float offset = sin(vUv.x + vUv.y) * 0.01;
+    vec2 distortedUv = vUv + vec2(offset, 0.0);
+
+    // Sample the texture with distortion
+    vec4 baseColor = texture2D(uTexture, distortedUv);
+
+    // Add a smaller noise for flickering effect
+    float smallNoise = sin(uFrequency * 5.0 * (vUv.x + uTime)) * 0.005;
+    distortedUv += vec2(smallNoise, 0.0);
+
+    // Sample the texture again with additional noise for flickering
+    vec4 flickerColor = texture2D(uTexture, distortedUv);
+
+    // Combine base color with flickering and add emissive glow
+    vec3 finalColor = mix(baseColor.rgb, flickerColor.rgb, 0.5) + uEmissive;
+
+    gl_FragColor = vec4(finalColor, baseColor.a);
+  }
+`;
+
+        const material = new THREE.ShaderMaterial({
+          uniforms: {
+            uTime: { value: 0.0 },
+            uFrequency: { value: 3.0 }, // Adjust frequency for wave speed
+            uTexture: { value: texture },
+          },
+          vertexShader,
+          fragmentShader,
+        });
+
+        const plane = new THREE.Mesh(planeGeometry, material);
+        scene.add(plane);
+
+        camera.position.z = 2;
+
+        let time = 0.0;
+
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setViewport(0, 0, 400, 400);
+        renderer.setSize(400, 400);
+
+        container.appendChild(renderer.domElement);
+        function animate() {
+          requestAnimationFrame(animate);
+
+          time += 0.01;
+
+          material.uniforms.uTime.value = time;
+
+          renderer.render(scene, camera);
+        }
+
+        animate();
+
+        const canvas = container.querySelector("canvas:not([class])");
+        if (canvas) {
+          canvas.classList.add(menuItemID);
+        }
+      }
+
+      container.classList.add(menuItemID);
+
+      let canvasToShow = document.querySelectorAll(
+        "canvas." + menuItemID + ", div." + menuItemID
+      );
+
+      canvasToShow.forEach(function (item) {
+        item.classList.remove("d-none");
+      });
+
+      mainHeaderImages.classList.add("opacity-100");
+      mainHeaderImages.classList.remove("opacity-0");
+    });
+
+    item.addEventListener("mouseleave", function () {
+      if (!isAnyMenuItemHovered()) {
+        removeAllBlur();
+      }
+
+      let menuItemID = item.getAttribute("id");
+
+      let canvasToShow = document.querySelectorAll(
+        "canvas." + menuItemID + ", div." + menuItemID
+      );
+
+      canvasToShow.forEach(function (item) {
+        item.classList.add("d-none");
+      });
+
+      mainHeaderImages.classList.remove("opacity-100");
+      mainHeaderImages.classList.add("opacity-0");
+    });
+  });
+
+  // Hide preloader after 3 seconds
+  setTimeout(
+    () => document.querySelector(".preloader").classList.add("preloader-exit"),
+    2000
+  );
+
+  // Animate preloader titles after 400 milliseconds
+  setTimeout(
+    () =>
+      document
+        .querySelectorAll(".animate-preloader__title")
+        .forEach((item) => (item.style.transform = "translateY(0)")),
+    400
+  );
+
+  // Reverse animation of preloader titles after 2.9 seconds
+  setTimeout(
+    () =>
+      document
+        .querySelectorAll(".animate-preloader__title")
+        .forEach((item) => (item.style.transform = "translateY(-100%)")),
+    1900
+  );
+
+  let parallaxImage = document.getElementById("parallaxImage");
+
+  if (parallaxImage) {
+    new simpleParallax(parallaxImage, {
+      overflow: true,
+      orientation: "down",
+      maxTransition: 99,
+      scale: 1.9,
+    });
+  }
+
+  const singleColorElements = document.querySelectorAll(".single-colors");
+  let addToCartButton = document.querySelector(".add-to-cart-single");
+
+  if (singleColorElements) {
+    singleColorElements.forEach(function (element) {
+      element.addEventListener("click", function () {
+        singleColorElements.forEach(function (el) {
+          el.classList.remove("active");
+        });
+
+        element.classList.add("active");
+        addToCartButton.disabled = false;
+
+        var key = parseInt(this.getAttribute("data-key"));
+
+        var slideIndex = key;
+
+        var singleSlider = document.querySelector("#singleSlider");
+        if (singleSlider.swiper) {
+          singleSlider.swiper.slideTo(slideIndex);
+        }
+      });
+    });
+  }
+
+  var quantityField = document.getElementById("productQuantity");
+
+  if (quantityField) {
+    // Increment quantity
+    document
+      .querySelector(".quantity .plus")
+      .addEventListener("click", function () {
+        var currentValue = parseInt(quantityField.value);
+        quantityField.value = currentValue + 1;
+      });
+
+    // Decrement quantity
+    document
+      .querySelector(".quantity .minus")
+      .addEventListener("click", function () {
+        var currentValue = parseInt(quantityField.value);
+        if (currentValue > 1) {
+          quantityField.value = currentValue - 1;
+        }
+      });
+  }
+
+  // ADD TO CART SINGLE
+  const addToCartButtonsSingle = document.querySelectorAll(
+    ".add-to-cart-single"
+  );
+
+  addToCartButtonsSingle.forEach((button) => {
+    button.addEventListener("click", () => addToCart(button));
+  });
+
+  function addToCart(button) {
+    var productId = null;
+    singleColorElements.forEach(function (colorLabel) {
+      if (colorLabel.classList.contains("active")) {
+        productId = colorLabel.getAttribute("data-product-id");
+      }
+    });
+    const quantity = quantityField.value;
+
+    jQuery.ajax({
+      url: custom_script_vars.ajaxurl,
+      method: "POST",
+      data: {
+        action: "add_to_cart",
+        nonce: custom_script_vars.nonce,
+        productId: productId,
+        quantity: parseInt(quantity),
+      },
+      success: function (response) {
+        // Handle successful response
+        console.log(response);
+
+        let currentCount = parseInt(jQuery("#cartCount").text());
+        jQuery("#cartCount").text(currentCount + parseInt(quantity));
+        let currentCountOffcanvas = parseInt(
+          jQuery("#cartCountOffcanvas").text()
+        );
+        jQuery("#cartCountOffcanvas").text(
+          currentCountOffcanvas + parseInt(quantity)
+        );
+      },
+      error: function (xhr, status, error) {
+        // Handle error
+        console.error("There was a problem with your AJAX request:", error);
+      },
+    });
+  }
+
+  const singleSlider = document.getElementById("singleSlider");
+
+  if (singleSlider) {
+    var swiper = new Swiper("#singleSlider", {
+      slidesPerView: 1,
+      loop: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+  }
+
+  // CART
+  function updateOffcanvasCart(cartItems) {
+    var offcanvasBody = document.getElementById("offcanvasBody");
+    offcanvasBody.innerHTML = "";
+
+    // Iterate over the cart items and create HTML for each item
+    cartItems.forEach(function (item) {
+      // Create a new div element for the cart item
+      var cartItemDiv = document.createElement("div");
+      cartItemDiv.className = "cart-item"; // Set class name
+
+      // Set inner HTML content for the cart item
+      cartItemDiv.innerHTML =
+        '<div class="product-thumbnail"><img src="' +
+        item.image_url +
+        '" alt="' +
+        item.product_name +
+        '"></div>' +
+        '<div class="product-info">' +
+        '<div class="product-name-price">' +
+        '<div class="product-name">' +
+        item.product_name +
+        "</div>" +
+        '<div class="product-price">' +
+        item.price +
+        "</div>" +
+        "</div>" +
+        '<div class="product-quantity-remove">' +
+        '<div class="product-quantity">' +
+        '<button class="quantity-decrease">-</button>' +
+        '<input type="number" class="quantity" value="' +
+        item.quantity +
+        '" min="1" data-product-id="' +
+        item.product_id +
+        '" data-prev-quantity="' +
+        item.quantity +
+        '">' +
+        '<button class="quantity-increase">+</button>' +
+        "</div>" +
+        '<button class="remove-item">Remove</button>' + // Add the Remove button
+        "</div>" +
+        "</div>";
+
+      // Append the cart item div to the offcanvas body
+      offcanvasBody.appendChild(cartItemDiv);
+    });
+
+    // Add event listeners for quantity buttons
+    offcanvasBody
+      .querySelectorAll(".quantity-decrease")
+      .forEach(function (button) {
+        button.addEventListener("click", function () {
+          var input = this.nextElementSibling;
+          var prevQuantity = parseInt(input.getAttribute("data-prev-quantity"));
+          if (input.value > 1) {
+            input.value = parseInt(input.value) - 1;
+            updateCartQuantity(input, prevQuantity);
+          } else if (input.value == 1) {
+            input.value = 0;
+            updateCartQuantity(input, prevQuantity);
+          }
+        });
+      });
+
+    offcanvasBody
+      .querySelectorAll(".quantity-increase")
+      .forEach(function (button) {
+        button.addEventListener("click", function () {
+          var input = this.previousElementSibling;
+          var prevQuantity = parseInt(input.getAttribute("data-prev-quantity"));
+          input.value = parseInt(input.value) + 1;
+          updateCartQuantity(input, prevQuantity);
+        });
+      });
+
+    offcanvasBody.querySelectorAll(".quantity").forEach(function (input) {
+      input.addEventListener("change", function () {
+        if (input.value < 1) input.value = 0;
+        var prevQuantity = parseInt(input.getAttribute("data-prev-quantity"));
+        updateCartQuantity(input, prevQuantity);
+      });
+    });
+
+    // Add event listeners for remove buttons
+    offcanvasBody.querySelectorAll(".remove-item").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var input = this.previousElementSibling.querySelector(".quantity");
+        var productId = input.getAttribute("data-product-id");
+        removeCartItem(productId, input.closest(".cart-item"));
+      });
+    });
+  }
+
+  function updateCartQuantity(input, prevQuantity) {
+    var quantity = parseInt(input.value);
+    var productId = input.getAttribute("data-product-id");
+
+    // Determine the action based on the new quantity
+    var action = quantity > 0 ? "update_cart_quantity" : "remove_cart_item";
+
+    // Update or remove WooCommerce cart item via AJAX
+    jQuery.ajax({
+      url: custom_script_vars.ajaxurl,
+      type: "post",
+      data: {
+        action: action,
+        product_id: productId,
+        quantity: quantity,
+      },
+      success: function (response) {
+        console.log(response);
+
+        let currentCount = parseInt(jQuery("#cartCount").text());
+        let currentCountOffcanvas = parseInt(
+          jQuery("#cartCountOffcanvas").text()
+        );
+
+        if (quantity > prevQuantity) {
+          jQuery("#cartCount").text(currentCount + 1);
+          jQuery("#cartCountOffcanvas").text(currentCountOffcanvas + 1);
+        } else if (quantity < prevQuantity) {
+          jQuery("#cartCount").text(currentCount - 1);
+          jQuery("#cartCountOffcanvas").text(currentCountOffcanvas - 1);
+        }
+
+        // Remove item from DOM if quantity is 0
+        if (quantity === 0) {
+          input.closest(".cart-item").remove();
+        }
+
+        // Update the previous quantity attribute
+        input.setAttribute("data-prev-quantity", quantity);
+        checkCartEmpty();
+      },
+    });
+  }
+
+  function removeCartItem(productId, cartItemElement) {
+    // Remove WooCommerce cart item via AJAX
+    jQuery.ajax({
+      url: custom_script_vars.ajaxurl,
+      type: "post",
+      data: {
+        action: "remove_cart_item",
+        product_id: productId,
+      },
+      success: function (response) {
+        console.log(response);
+
+        // Remove the cart item element from the DOM
+        cartItemElement.remove();
+
+        let currentCount = parseInt(jQuery("#cartCount").text());
+        let currentCountOffcanvas = parseInt(
+          jQuery("#cartCountOffcanvas").text()
+        );
+
+        // Update cart counts based on the quantity of the removed item
+        let removedQuantity = parseInt(response.removed_quantity);
+        jQuery("#cartCount").text(currentCount - removedQuantity);
+        jQuery("#cartCountOffcanvas").text(
+          currentCountOffcanvas - removedQuantity
+        );
+        checkCartEmpty();
+      },
+    });
+  }
+
+  var offcanvasCartButton = document.getElementById("offcanvasCartButton");
+
+  if (offcanvasCartButton) {
+    offcanvasCartButton.addEventListener("click", function () {
+      // Fetch WooCommerce cart items via AJAX
+      jQuery.ajax({
+        url: custom_script_vars.ajaxurl,
+        type: "post",
+        data: {
+          action: "get_cart_contents", // PHP function to retrieve cart items
+        },
+        success: function (response) {
+          console.log(response);
+          updateOffcanvasCart(response);
+          checkCartEmpty();
+        },
+      });
+    });
+  }
+
+  // Function to check if the cart is empty
+  function checkCartEmpty() {
+    // Fetch cart contents via AJAX
+    jQuery.ajax({
+      url: custom_script_vars.ajaxurl,
+      type: "post",
+      data: {
+        action: "get_cart_contents",
+      },
+      success: function (response) {
+        if (response.length === 0) {
+            document.getElementById('checkoutEmpty').classList.add('d-block');
+            document.getElementById('checkoutEmpty').classList.remove('d-none');
+            document.getElementById('checkoutOff').classList.add('d-none');
+            document.getElementById('checkoutOff').classList.remove('d-block');
+        } else {
+          document.getElementById('checkoutEmpty').classList.remove('d-block');
+          document.getElementById('checkoutEmpty').classList.add('d-none');
+          document.getElementById('checkoutOff').classList.remove('d-none');
+          document.getElementById('checkoutOff').classList.add('d-block');
+        }
+      },
+    });
+  }
+});

@@ -1,0 +1,38 @@
+.contact-us {
+    padding: 100px 0;
+    &__title {
+        font-size: 3.25rem;
+        line-height: 3.25rem;
+        color: #222222;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 3.75rem;
+        font-weight: 700;
+
+        hr {
+            width: 100px;
+            height: 3px;
+            background-color: #FFCC33;
+            opacity: 1;
+            margin: 0.5rem 0;
+        }
+    }
+
+    &__main-text {
+        font-size: 2.5rem;
+        letter-spacing: -.02em;
+        line-height: 1.1;
+        max-width: 100rem;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    &__parralax {
+        height: 100vh;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+    }
+}

@@ -1,0 +1,54 @@
+.style-scroll {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  padding: 90px 24px;
+  height: 100%;
+  gap: 40px;
+  width: 20%;
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
+  .scroll-bag {
+    width: 100%;
+    height: auto;
+    margin-bottom: -28px;
+  }
+
+  .style-scroll {
+    position: relative;
+  }
+
+  .style-sticky {
+    position: sticky;
+    top: 0;
+
+    & > div {
+      padding-top: 300px;
+    }
+
+    &.top-16 {
+      top: 16px;
+    }
+
+    &.top-32 {
+      top: 32px;
+    }
+
+    &.top-64 {
+      top: 64px;
+    }
+
+    &.top-80 {
+      top: 80px;
+    }
+  }
+}
+
+.scroll-bag-container {
+  z-index: 2;
+  position: relative;
+}

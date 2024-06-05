@@ -1,0 +1,9 @@
+/*
+ Theme Name:   Storefront Child
+ Description:  Child theme for the Storefront theme
+ Template:     storefront
+ Version:      1.0.0
+*/
+
+
+@import url("../storefront/style.css");

@@ -1,0 +1,164 @@
+:root {
+  --scrollHeight: 200vh;
+  --animationFrom: 0;
+  --animationTo: calc(100% - 36vh); // var(--scrollHeight);
+
+  --fromX: 0;
+  --toX: 0;
+
+  --fromY: -400vh;
+  --toY: 0;
+
+  --fromRotate: 0deg;
+  --toRotate: 0deg;
+
+  --fromOpacity: 1;
+  --toOpacity: 1;
+
+  --fromBlur: 0;
+  --toBlur: 0;
+}
+
+.scroll-animation {
+  margin: 0;
+  height: var(--scrollHeight);
+
+  //   background-image: url("../img/shop-bag-cropp.png");
+  //   background-size: contain;
+  //   background-repeat: no-repeat;
+  //   background-position: center;
+
+  .parent {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+  }
+
+  .div1 {
+    grid-area: 1 / 1 / 21 / 11;
+
+    background-image: url("../img/shop-bag-cropp.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .div2 {
+    grid-area: 12 / 2 / 21 / 6;
+  }
+  .div3 {
+    grid-area: 3 / 3 / 12 / 6;
+  }
+  .div4 {
+    grid-area: 3 / 6 / 21 / 9;
+  }
+
+  .bag {
+    position: fixed;
+    top: 50vh;
+    padding-bottom: 3.125rem;
+    z-index: -1;
+
+    display: grid;
+    width: 100%;
+    height: 90vh;
+
+    transform: translateY(-50%);
+    container: bag / size;
+
+    &__image {
+      margin-top: -7.5rem;
+    }
+
+    &__visual {
+      display: grid;
+      width: 100cqh;
+      height: 100cqh;
+
+      margin: 0 auto;
+
+      *:not(:last-child) {
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        background-position-x: 50%;
+
+        transform: translate(var(--fromX), var(--fromY))
+          rotate(var(--fromRotate));
+        opacity: var(--fromOpacity);
+        filter: blur(var(--fromBlur));
+
+        animation: fallingBurger ease-out 1s forwards;
+
+        @supports (animation-timeline: view()) {
+          animation: fallingBurger ease-out both;
+          animation-timeline: view();
+          animation-range: cover var(--animationFrom) cover var(--animationTo);
+        }
+      }
+    }
+
+    &__dino {
+      animation-delay: 700ms;
+      --animationTo: calc(100% - 35vh);
+      --fromRotate: -45deg;
+      --toRotate: 1deg;
+      --toX: -0.5%;
+
+      background-image: url("../img/dino-scroll.png");
+
+      background-size: contain;
+      background-position-y: 49%;
+      background-repeat: no-repeat;
+      z-index: 4;
+    }
+    &__bag {
+      background-size: cover;
+      z-index: 4;
+    }
+
+    &__seahorse {
+      animation-delay: 900ms;
+      --animationTo: calc(100% - 40vh);
+      --fromRotate: 35deg;
+      --toRotate: 2deg;
+      --toX: -1%;
+
+      background-image: url("../img/seahorse-scroll.png");
+
+      background-size: contain;
+      background-position-y: 55%;
+      z-index: 3;
+      transform-origin: 50% 45%;
+    }
+
+    &__hippo {
+      --animationTo: calc(100% - 50vh);
+      animation-delay: 700ms;
+      --fromRotate: 35deg;
+      --toRotate: 2deg;
+      --toX: -1%;
+
+      background-image: url("../img/hippo-scroll.png");
+
+      background-size: contain;
+      background-position-y: 64%;
+      background-size: 100% auto;
+      z-index: 2;
+      transform-origin: 50% 85%;
+    }
+  }
+}
+
+@keyframes fallingBurger {
+  from {
+    transform: translate(var(--fromX), var(--fromY)) rotate(var(--fromRotate));
+    opacity: var(--fromOpacity);
+    filter: blur(var(--fromBlur));
+  }
+  to {
+    transform: translate(var(--toX), var(--toY)) rotate(var(--toRotate));
+    opacity: var(--toOpacity);
+    filter: blur(var(--toBlur));
+  }
+}

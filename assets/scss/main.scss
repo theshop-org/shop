@@ -1,0 +1,41 @@
+
+/* Vendors */
+
+@import "~components/fonts";
+@import "~vendors/bootstrap/bootstrap";
+@import "~vendors/locomotive";
+
+
+@import "~blocks/block-products-list";
+@import "~blocks/block-hero-scroll";
+@import "~blocks/block-about-us";
+@import "~blocks/block-contact-us";
+@import "~blocks/block-scroll-animation";
+@import "~components/header";
+@import "~components/footer";
+@import "~components/single-product";
+@import "~components/shop";
+@import '~swiper/swiper-bundle.css';
+
+
+.site-header {
+    background-color: #fff;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.d-block {
+    display: block !important;
+}
+
+a {
+    text-decoration: none;
+    color:#2c2d33; 
+
+    &:hover {
+        color:#2c2d33; 
+    }
+}
+
