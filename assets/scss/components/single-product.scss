@@ -1,4 +1,8 @@
 .product-single {
+  &__landing {
+    padding: 0 0.625rem;
+  }
+
   &__content {
     @media screen and (max-width: 1200px) {
       display: flex;
@@ -9,6 +13,7 @@
   &__hero {
     display: flex;
     gap: 7.5rem;
+    margin-bottom: 2.5rem;
 
     @media screen and (max-width: 1200px) {
       flex-direction: column;
@@ -57,29 +62,38 @@
   &__sticky {
     position: sticky;
     top: 6.25rem;
-    max-width: 490px;
-    padding-bottom: 80px;
+    max-width: 628px;
+    height: calc(100vh - 123px);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
   }
 
   &__desc {
-    font-size: 2.5rem;
-    line-height: 2.5rem;
-    margin-bottom: 1.625rem;
+    font-size: 7.5rem;
+    font-weight: 700;
+    line-height: 8.9625rem;
+    text-align: left;
+
+    font-family: "Bodoni" !important;
   }
 
   &__attr {
     & > * {
-      padding: 1.375rem;
       display: flex;
-      font-weight: 500;
-      font-size: 1.125rem;
-      color: #8e9194;
-      justify-content: space-between;
-      &:not(:last-child) {
-        border-bottom: 1px solid #8e91944d;
-      }
-      &:first-child {
-        border-top: 1px solid #8e91944d;
+      gap: 2.875rem;
+      margin-bottom: 20px;
+
+      & > div:first-child {
+        flex-basis: 7.0625rem;
+        flex-shrink: 0;
+        width: 100%;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.25rem;
+        text-align: left;
+        color: #000;
       }
     }
 
@@ -91,24 +105,33 @@
       a {
         cursor: pointer;
         display: inline-block;
-        width: 16px;
-        height: 16px;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
-        border: 1px solid #8e9194;
-        outline-offset: 2px;
+        position: relative;
+
+        .color-name {
+          position: absolute;
+          font-size: 10px;
+          font-weight: 400;
+          line-height: 20px;
+          text-align: center;
+          bottom: -22px;
+          color: #000000;
+          width: max-content;
+          left: 50%;
+          transform: translateX(-50%);
+          opacity: 0;
+          transition: all 0.2s ease;
+        }
 
         &.active {
-          outline: 1px solid #8e91944d;
-          cursor: unset;
-        }
-      }
-    }
+          border: 0.5px solid #000;
 
-    &--short {
-      ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
+          .color-name {
+            opacity: 1;
+          }
+        }
       }
     }
   }
@@ -122,18 +145,20 @@
       display: flex;
 
       input {
-        background-color: #e3e3e3;
+        background-color: #362b25;
+        color: #fff;
 
-        &:first-child {
-          border-radius: 10px 0 0 10px;
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
         }
-        &:last-child {
-          border-radius: 0 10px 10px 0;
+        & {
+          -moz-appearance: textfield;
         }
 
         &:hover {
-          background-color: silver;
-          color: #000;
+          background-color: #362b259c;
         }
 
         &.input-text {
@@ -144,13 +169,35 @@
 
     .add-to-cart-single {
       padding: 18px 46px;
-      background-color: #e3e3e3;
-      border-radius: 10px;
-      color: #000;
+      background-color: #362b25;
+      color: #fff;
       flex-grow: 1;
       &:hover {
-        background-color: silver;
+        background-color: #362b259c;
       }
     }
   }
+}
+.single-text-style {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  color: #000;
+
+  &.list-care {
+    margin-top: 16px;
+    display: flex;
+    gap: 9px;
+    flex-direction: column;
+
+    & > div {
+      display: flex;
+      gap: 10px;
+    }
+  }
+}
+
+a:focus {
+  outline: unset;
 }

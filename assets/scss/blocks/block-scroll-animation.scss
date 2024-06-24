@@ -162,3 +162,94 @@
     filter: blur(var(--toBlur));
   }
 }
+
+.shop-our-products {
+  display: flex;
+  font-size: calc(5vw - 16px);
+  font-weight: 400;
+  line-height: 110px;
+  text-align: left;
+  color: #202020;
+  align-items: center;
+  gap: 0.625rem;
+  height: 11.4375rem;
+  margin-top: 2.5rem;
+
+  &:hover {
+    .img-1 {
+      width: 17.3125rem;
+    }
+    .img-2 {
+      width: 7.6875rem;
+    }
+  }
+
+  .img-1,
+  .img-2 {
+    width: 0;
+    transition: all 0.5s ease;
+  }
+}
+
+.scroll-animation1 {
+  position: relative;
+  overflow: hidden;
+
+  img:not(:last-child) {
+    position: absolute;
+    bottom: 50%; /* Position images above the view */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 1; /* Start with images hidden */
+    z-index: -1;
+
+    &.hippo {
+      z-index: -4;
+    }
+  }
+
+  .bag {
+    position: static;
+    margin: 0 auto;
+    opacity: 0.4;
+  }
+
+  .shop-logo {
+    position: absolute;
+    top: 55%;
+    left: 50.8%;
+    z-index: 9;
+    width: 300px;
+    transform: translate(-50.8%, -50%);
+    transition: top 1.6s cubic-bezier(0.38, 0.005, 0.215, 1),
+      width 1.6s cubic-bezier(0.38, 0.005, 0.215, 1),
+      position 0s 1.6s;
+
+    img {
+      width: 100%;
+    }
+
+    &.change-logo-shop {
+      opacity: 0;
+    }
+
+    &.animation-logo {
+      top: 6%;
+      width: 9.1875rem;
+      z-index: 99999;
+      position: fixed; /* Apply fixed positioning after transition */
+
+      &.fixed {
+        transition: position 0s 1.6s; /* Delay the position transition by 1.6s */
+      }
+    }
+  }
+}
+
+.home .main-header__logo {
+  opacity: 0;
+
+  &.change-logo-header {
+    opacity: 1;
+  }
+}

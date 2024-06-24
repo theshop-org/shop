@@ -1,37 +1,111 @@
+<?php 
+$title = get_field("title");
+$words = explode(' ', $title);
+$image = get_field('image_in_the_title');
+$location_of_the_image_in_title = get_field('location_of_the_image_in_title');
+$full_width_image = get_field('full_width_image');
+$full_width_image_location = get_field('full_width_image_location');
+$information = get_field('information');
+
+?>
 <div class="about-us">
-    <h1 class="about-us__title">
-        <hr>
-        ABOUT US
-    </h1>
-    <div class="about-us__info">
-        <div class="shape"></div>
-        <div class="about-us__info--wrapper">
-            <h2>
-                A TRIFECTA OF SKILL
-            </h2>
-            <p>
-                Few success stories can boast of Kiska Media’s unique beginnings. Originally fellow students, our core team distinguished itself by forging a bond of creative excellence. Invariably this bond grew into the vision which is Kiska Media today. Our commitment to craft not only continues to thrive but proudly distinguishes our work.
-            </p>
-        </div>
-    </div>
     <div class="about-us__container">
-        <div class="row">
-            <div class="col-12 col-md-6">
-                <div class="about-us__image">
-                    <img src="https://kiskamedia.com/wp-content/uploads/2023/12/km_keith_headshot.jpg" alt="ALT">
-                </div>
+        <div class="about-us__title">
+            <div class="about-us__title--text">
+                <?php foreach($words as $key=>$word): ?>
+                    <?php if($key < (count($words) - 2)): ?>
+                        <?php echo $word; ?>
+                    <?php endif ?>
+                <?php endforeach; ?>
             </div>
-            <div class="col-12 col-md-6">
-                <div class="about-us__content">
-                Certain people exemplify talent. Keith Kiska is one such person. With nearly twenty years of experience, his spirited leadership, natural creativity and unflappable focus always astonish. An awarded cinematographer, photographer, producer, director, motion-graphics artist and timelapse virtuoso, Keith’s also an accomplished Lynda and LinkedIn author, hosting online courses as a valued expert in the photography and timelapse fields.
-
-Keith’s tireless energy continues to yield state-of-the-art branding and marketing deliverables. From venture-backed startups to Fortune 500 companies, he’s traveled the country producing cutting-edge corporate, commercial, narrative, animated, livestream, event, podcast and social media content.
-
-Whether journeying by car, truck, RV, boat, helo, private or commercial jet, Keith’s scrupulous visual stamp is always present. Constantly the innovator, his scholarly embrace of digital-capture technology clearly sets Kiska Media apart. Regardless of locale – studio, conference, desert, mountain or remote island – he’s somehow done it all.
-
-And if he’s not spending precious time with family, you’ll find Keith experimenting with the latest stop-motion techniques or mastering his LEGO IQ. In fact, connecting with his kids is so important he’s created a YouTube channel called Happy Bricks bridging both mediums – https://youtube.com/@MrHappyBricks?feature=shared
+            <div class="about-us__title--bot">
+                <div class="about-us__title--text">
+                    <?php 
+                    echo $words[count($words) - 2] 
+                    ?>
                 </div>
+                <div class="about-us__title--image">
+                    <?php if(isset($image['url']) && $image['url']): ?>
+                        <img src="<?php echo $image['url'] ?>" alt="<?php echo $image['alt'] ?>">
+                    <?php endif; ?>
+                    <span><?php echo $location_of_the_image_in_title ?></span>
+                </div>
+                 <div class="about-us__title--text">
+                    <?php
+                    echo $words[count($words) - 1]
+                    ?>
+                 </div>
             </div>
+        </div>
+        <div class="about-us__main">
+            <span class="about-us__main--loc">
+                <?php echo $full_width_image_location; ?>
+            </span>
+            <?php if(isset($full_width_image['url']) && $full_width_image['url']): ?>
+                <img src="<?php echo $full_width_image['url'] ?>" alt="<?php echo $full_width_image['alt'] ?>">
+            <?php endif; ?>
+        </div>
+        <div class="about-us__content">
+            <?php if(!empty($information)): ?>
+                <div class="about-us__content--first">
+                    <div class="about-us__content--texts">
+                        <h2 class="about-us__content--title">
+                            <?php echo $information[0]['title'] ?>
+                        </h2>
+                        <p class="about-us__content--desc">
+                            <?php echo $information[0]['description'] ?>
+                        </p>
+                    </div>
+                    <div class="about-us__content--img">
+                        <span class="about-us__content--loc">
+                            <?php echo $information[0]['location'] ?>
+                        </span>
+                        <?php if(isset($information[0]['image']['url']) && $information[0]['image']['url']): ?>
+                            <img src="<?php echo $information[0]['image']['url'] ?>" alt="<?php echo $information[0]['image']['alt'] ?>">
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php if(isset($information[1])): ?>
+                    <div class="about-us__content--second">
+                        <div class="about-us__content--img">
+                            <span class="about-us__content--loc">
+                                <?php echo $information[1]['location'] ?>
+                            </span>
+                            <?php if(isset($information[1]['image']['url']) && $information[1]['image']['url']): ?>
+                                <img src="<?php echo $information[1]['image']['url'] ?>" alt="<?php echo $information[1]['image']['alt'] ?>">
+                            <?php endif; ?>
+                        </div>
+                        <div class="about-us__content--texts">
+                            <h2 class="about-us__content--title">
+                                <?php echo $information[1]['title'] ?>
+                            </h2>
+                            <p class="about-us__content--desc">
+                                <?php echo $information[1]['description'] ?>
+                            </p>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <?php if(isset($information[2])): ?>
+                    <div class="about-us__content--third">
+                        <div class="about-us__content--texts">
+                            <h2 class="about-us__content--title">
+                                <?php echo $information[2]['title'] ?>
+                            </h2>
+                            <p class="about-us__content--desc">
+                                <?php echo $information[2]['description'] ?>
+                            </p>
+                        </div>
+                        <div class="about-us__content--img">
+                            <?php if(isset($information[2]['image']['url']) && $information[2]['image']['url']): ?>
+                                <img src="<?php echo $information[2]['image']['url'] ?>" alt="<?php echo $information[2]['image']['alt'] ?>">
+                            <?php endif; ?>
+                            <span class="about-us__content--loc">
+                                <?php echo $information[2]['location'] ?>
+                            </span>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

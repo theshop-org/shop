@@ -1,12 +1,23 @@
-<section class="scroll-animation1" style="display: flex; justify-content:center;">
-    <!-- <img src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/shop-bag-cropp.png" alt="Bag" class="bag__image">
-    <div class="bag">
-        <div class="bag__visual parent">
-            <div class="bag__seahorse div3"></div>
-            <div class="bag__hippo div2"></div>
-            <div class="bag__dino div4"></div>
-            <div class="bag__bag div1"></div>
-        </div>
-    </div> -->
-    <img src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/main-svg.svg" alt="Bag">
+<section class="scroll-animation1">
+    <div class="shop-logo" id="shopLogo">
+        <?php echo get_custom_logo() ?>
+    </div>
+    <img class="seahorse" src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/seahorse-scroll.svg" alt="Seahorse">
+    <img class="hippo" src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/hippo-scroll.svg" alt="Hippo">
+    <img class="dino" src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/dino-scroll.svg" alt="Dino">
+    <img class="bag" src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/gsap-bag.png" alt="bag">
 </section>
+
+<div style="margin-left:30px">
+    <a href="/shop"  class="shop-our-products">
+        <span>SHOP</span>
+        <div class="img-1">
+            <img src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/hippo-small.png" alt="Hippo">
+        </div>
+        <span>OUR</span>
+        <div class="img-2">
+            <img src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/seahorse-small.png" alt="Seahorse">
+        </div>
+        <span>PRODUCTS</span>
+    </a>
+</div>

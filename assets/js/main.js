@@ -3,8 +3,162 @@ import "bootstrap";
 import * as THREE from "three";
 import simpleParallax from "simple-parallax-js";
 import Swiper from "swiper/bundle";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+window.addEventListener("load", () => {
+  const animationSettings = {
+    y: "81%",
+    opacity: 1,
+    scrollTrigger: {
+      trigger: ".scroll-animation1",
+      start: "top top", // Animation starts when the top of the trigger hits the top of the viewport
+      end: "bottom bottom", // Animation ends when the bottom of the trigger hits the bottom of the viewport
+      scrub: true,
+      once: true,
+    },
+  };
+
+  // Animation for the seahorse image
+  gsap.fromTo(
+    ".seahorse",
+    { y: "-95%", x: "-21%", opacity: 1 },
+    animationSettings
+  );
+
+  // Animation for the hippo image
+  gsap.fromTo(
+    ".hippo",
+    { y: "-95%", x: "-18%", opacity: 1 },
+    {
+      y: "112%",
+      opacity: 1,
+      scrollTrigger: {
+        trigger: ".scroll-animation1",
+        start: "top top", // Animation starts when the top of the trigger hits the top of the viewport
+        end: "bottom bottom", // Animation ends when the bottom of the trigger hits the bottom of the viewport
+        scrub: true,
+        once: true,
+      },
+    }
+  );
+
+  // Animation for the dino image
+  gsap.fromTo(
+    ".dino",
+    { y: "-95%", x: "24%", opacity: 1 },
+    {
+      y: "75%",
+      opacity: 1,
+      scrollTrigger: {
+        trigger: ".scroll-animation1",
+        start: "top top", // Animation starts when the top of the trigger hits the top of the viewport
+        end: "bottom bottom", // Animation ends when the bottom of the trigger hits the bottom of the viewport
+        scrub: true,
+        once: true,
+      },
+    }
+  );
+});
 
 document.addEventListener("DOMContentLoaded", function () {
+  // let lastScrollTop = 0;
+
+  // document.addEventListener("scroll", function () {
+  //   // Get the elements with IDs 'shopLogo' and 'headerLogo'
+  //   var shopLogo = document.getElementById("shopLogo");
+  //   var headerLogo = document.getElementById("headerLogo");
+  //   var headerLogoPositionLeft = headerLogo.getBoundingClientRect().left;
+  //   var shopLogoPositionLeft = shopLogo.getBoundingClientRect().left;
+
+  //   console.log(headerLogoPositionLeft);
+  //   console.log(shopLogoPositionLeft);
+
+  //   // Initialize the current width if it hasn't been initialized yet
+  //   if (!shopLogo.dataset.currentWidth) {
+  //     shopLogo.dataset.currentWidth = shopLogo.offsetWidth;
+  //   }
+
+  //   // Convert the current width from string to number
+  //   var currentWidth = parseFloat(shopLogo.dataset.currentWidth);
+
+  //   // Get the current scroll position
+  //   var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+  //   // Determine if scrolling up or down
+  //   var isScrollingDown = scrollTop > lastScrollTop;
+  //   lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+
+  //   // Check if both elements exist
+  //   if (shopLogo && headerLogo) {
+  //     // Get the position of the headerLogo element
+  //     var shopLogoPosition = shopLogo.getBoundingClientRect().top;
+  //     var headerLogoPosition = headerLogo.getBoundingClientRect().top;
+
+  //     // Check if the shopLogo is in view and adjust width based on scroll direction
+  //     if (shopLogoPosition <= headerLogoPosition) {
+  //       if (!isScrollingDown) {
+  //         // Increase the width by 2px each time, up to a maximum of 300px
+  //         currentWidth = Math.min(300, currentWidth + 2);
+  //       }
+  //       if (isScrollingDown) {
+  //         // Decrease the width by 2px each time, down to a minimum of 147px
+  //         currentWidth = Math.max(147, currentWidth - 2);
+  //       }
+  //       shopLogo.style.width = currentWidth + "px";
+  //       shopLogo.dataset.currentWidth = currentWidth;
+  //       shopLogo.classList.add("change-logo-shop");
+  //       headerLogo.classList.add("change-logo-header");
+  //     } else {
+  //       if (!isScrollingDown) {
+  //         // Increase the width by 2px each time, up to a maximum of 300px
+  //         currentWidth = Math.min(300, currentWidth + 2);
+  //       }
+  //       if (isScrollingDown) {
+  //         // Decrease the width by 2px each time, down to a minimum of 147px
+  //         currentWidth = Math.max(147, currentWidth - 2);
+  //       }
+  //       shopLogo.style.width = currentWidth + "px";
+  //       shopLogo.dataset.currentWidth = currentWidth;
+  //       shopLogo.classList.remove("change-logo-shop");
+  //       headerLogo.classList.remove("change-logo-header");
+  //     }
+  //   }
+  // });
+
+  document.addEventListener("scroll", function () {
+    var shopLogo = document.getElementById("shopLogo");
+
+    // Calculate the middle of the viewport height
+    var viewportHeight = window.innerHeight;
+    var viewportMiddle = viewportHeight / 2; // Middle of the viewport
+
+    // Get the position of the shopLogo element relative to the viewport
+    var shopLogoRect = shopLogo.getBoundingClientRect();
+    var shopLogoTopRelativeToViewport = shopLogoRect.top;
+    var shopLogoBottomRelativeToViewport = shopLogoRect.bottom;
+
+    // Calculate the scroll position relative to the document
+    var scrollPosition = window.scrollY || window.pageYOffset;
+
+    // Calculate the position of the shopLogo element relative to the document
+    var shopLogoTopAbsolute = shopLogoRect.top + scrollPosition;
+
+    // Determine if the shopLogo element is approximately centered in the viewport
+    var isInMiddle =
+      shopLogoTopRelativeToViewport <= viewportMiddle &&
+      shopLogoBottomRelativeToViewport >= viewportMiddle;
+
+    if (isInMiddle) {
+      shopLogo.classList.add("animation-logo");
+      setTimeout(function () {
+        shopLogo.classList.add("fixed");
+      }, 1300);
+    }
+  });
+
   let singleColors = document.querySelectorAll(".single-colors-shop");
 
   singleColors.forEach(function (colorElement) {
@@ -461,9 +615,15 @@ document.addEventListener("DOMContentLoaded", function () {
       // Create a new div element for the cart item
       var cartItemDiv = document.createElement("div");
       cartItemDiv.className = "cart-item"; // Set class name
+      let nameParts = item.product_name.split(" - ");
+      let productName = nameParts[0];
+      let productCode = nameParts.length > 1 ? nameParts[1] : ""; // Check if there is a part after " - "
 
-      // Set inner HTML content for the cart item
-      cartItemDiv.innerHTML =
+      var cartItemDiv = document.createElement("div");
+      cartItemDiv.className = "cart-item"; // Set class name
+
+      // Construct the inner HTML content for the cart item
+      var innerHTML =
         '<div class="product-thumbnail"><img src="' +
         item.image_url +
         '" alt="' +
@@ -472,11 +632,24 @@ document.addEventListener("DOMContentLoaded", function () {
         '<div class="product-info">' +
         '<div class="product-name-price">' +
         '<div class="product-name">' +
-        item.product_name +
+        productName +
         "</div>" +
         '<div class="product-price">' +
         item.price +
-        "</div>" +
+        "</div>";
+
+      // Conditionally add the product code and description if it's a variable product
+      if (item.is_variable === "variation") {
+        innerHTML +=
+          '<div class="product-code">' +
+          '<span style="background-color:' +
+          productCode +
+          '"></span>' +
+          item.description +
+          "</div>";
+      }
+
+      innerHTML +=
         "</div>" +
         '<div class="product-quantity-remove">' +
         '<div class="product-quantity">' +
@@ -490,9 +663,12 @@ document.addEventListener("DOMContentLoaded", function () {
         '">' +
         '<button class="quantity-increase">+</button>' +
         "</div>" +
-        '<button class="remove-item">Remove</button>' + // Add the Remove button
+        '<button class="remove-item">Remove</button>' +
         "</div>" +
         "</div>";
+
+      // Set the innerHTML of the cart item div
+      cartItemDiv.innerHTML = innerHTML;
 
       // Append the cart item div to the offcanvas body
       offcanvasBody.appendChild(cartItemDiv);
@@ -542,6 +718,8 @@ document.addEventListener("DOMContentLoaded", function () {
         removeCartItem(productId, input.closest(".cart-item"));
       });
     });
+
+    fetchCartTotal();
   }
 
   function updateCartQuantity(input, prevQuantity) {
@@ -584,6 +762,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Update the previous quantity attribute
         input.setAttribute("data-prev-quantity", quantity);
         checkCartEmpty();
+
+        fetchCartTotal();
       },
     });
   }
@@ -615,6 +795,8 @@ document.addEventListener("DOMContentLoaded", function () {
           currentCountOffcanvas - removedQuantity
         );
         checkCartEmpty();
+
+        fetchCartTotal();
       },
     });
   }
@@ -634,6 +816,8 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log(response);
           updateOffcanvasCart(response);
           checkCartEmpty();
+
+          fetchCartTotal();
         },
       });
     });
@@ -650,17 +834,89 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       success: function (response) {
         if (response.length === 0) {
-            document.getElementById('checkoutEmpty').classList.add('d-block');
-            document.getElementById('checkoutEmpty').classList.remove('d-none');
-            document.getElementById('checkoutOff').classList.add('d-none');
-            document.getElementById('checkoutOff').classList.remove('d-block');
+          document.getElementById("checkoutEmpty").classList.add("d-block");
+          document.getElementById("checkoutEmpty").classList.remove("d-none");
+          document.getElementById("checkoutOff").classList.add("d-none");
+          document.getElementById("checkoutOff").classList.remove("d-block");
         } else {
-          document.getElementById('checkoutEmpty').classList.remove('d-block');
-          document.getElementById('checkoutEmpty').classList.add('d-none');
-          document.getElementById('checkoutOff').classList.remove('d-none');
-          document.getElementById('checkoutOff').classList.add('d-block');
+          document.getElementById("checkoutEmpty").classList.remove("d-block");
+          document.getElementById("checkoutEmpty").classList.add("d-none");
+          document.getElementById("checkoutOff").classList.remove("d-none");
+          document.getElementById("checkoutOff").classList.add("d-block");
         }
       },
     });
   }
+
+  function fetchCartTotal() {
+    // Make an AJAX request to fetch the cart total
+    jQuery.ajax({
+      type: "POST",
+      url: custom_script_vars.ajaxurl, // WooCommerce AJAX URL
+      data: {
+        action: "get_cart_total", // Action to get cart total
+      },
+      success: function (response) {
+        // Update the span element with the cart total
+        document.getElementById("checkoutPrice").innerHTML = response;
+      },
+    });
+  }
+
+  // Call the function to fetch cart total
+  fetchCartTotal();
+
+  // Get all grid-style elements
+  var gridStyles = document.querySelectorAll(".grid-style");
+
+  // Get the products-grid element
+  var productsGrid = document.querySelector(".shop-page");
+
+  // Add click event listener to each grid-style element
+  gridStyles.forEach(function (gridStyle) {
+    gridStyle.addEventListener("click", function () {
+      // Remove active class from all grid-style elements
+      gridStyles.forEach(function (item) {
+        item.classList.remove("active");
+      });
+
+      // Add active class to the clicked grid-style element
+      gridStyle.classList.add("active");
+
+      // Update the class of the shop-page element
+      productsGrid.className = "shop-page " + gridStyle.id;
+    });
+  });
+
+  const searchInput = document.querySelector(
+    '.woocommerce-product-search input[type="search"]'
+  );
+  const searchResults = document.querySelector(".search-results-wrapper");
+
+  searchInput.addEventListener("input", function () {
+    const searchQuery = this.value;
+
+    // Abort previous request if any
+    if (this.previousSearchXHR) {
+      this.previousSearchXHR.abort();
+    }
+
+    // Send AJAX request
+    this.previousSearchXHR = new XMLHttpRequest();
+    this.previousSearchXHR.open("POST", custom_script_vars.ajaxurl);
+    this.previousSearchXHR.setRequestHeader(
+      "Content-Type",
+      "application/x-www-form-urlencoded"
+    );
+    this.previousSearchXHR.onload = function () {
+      if (this.status >= 200 && this.status < 300) {
+        searchResults.innerHTML = this.responseText;
+      }
+    };
+    this.previousSearchXHR.send(
+      "action=live_search&search_query=" + encodeURIComponent(searchQuery)
+    );
+  });
+
+  // GSAP
 });

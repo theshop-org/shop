@@ -1,0 +1,41 @@
+.posts-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 10px;
+  margin: 0 9px;
+  height: 100%;
+  article {
+    flex: 0 0 calc(25% - 7.5px);
+    height: 100%;
+    box-sizing: border-box;
+
+    img {
+      margin-bottom: 0.9375rem;
+      border-radius: unset;
+    }
+
+    span {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    h2 {
+      a {
+        font-family: "Bodoni";
+        font-size: 1.5625rem;
+        font-weight: 700;
+        line-height: 1.5987rem;
+        text-align: left;
+      }
+    }
+
+    p {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1rem;
+      text-align: left;
+    }
+  }
+}

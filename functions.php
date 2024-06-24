@@ -303,6 +303,8 @@ function get_cart_contents() {
             'product_name' => $product->get_name(),
             'quantity' => $cart_item['quantity'],
             'price' => $product->get_price_html(),
+            'description' => $product->get_description(),
+            'is_variable' => $product->get_type(), 
             // Add more fields as needed
         );
     }
@@ -352,6 +354,74 @@ function remove_cart_item() {
     wp_die();
 }
 
+
+// Function to get cart total
+add_action('wp_ajax_get_cart_total', 'get_cart_total');
+add_action('wp_ajax_nopriv_get_cart_total', 'get_cart_total'); // For non-logged in users
+
+function get_cart_total() {
+    // Get cart total
+    $cart_total = WC()->cart->get_cart_total();
+
+    // Return cart total
+    echo $cart_total;
+
+    // Don't forget to exit
+    wp_die();
+}
+
+add_action('wp_ajax_live_search', 'live_search');
+add_action('wp_ajax_nopriv_live_search', 'live_search');
+
+function live_search() {
+    $search_query = $_POST['search_query'];
+    $args = array(
+        'post_type' => 'product',
+        's' => $search_query,
+        'posts_per_page' => 6, // Limit to 3 results
+    );
+    $query = new WP_Query($args);
+
+    // Buffer the output
+    ob_start();
+
+    if ($query->have_posts()) {
+        echo '<h4>SUGESTIONS</h4>';
+        echo '<div class="search-results-js">';
+        while ($query->have_posts()) {
+            $query->the_post();
+            // Simple results
+            echo '<a class="suggested-item" href="' . get_permalink() . '">' . get_the_title() . '</a>';
+        }
+        echo '</div>';
+
+        echo '<div class="search-products">';
+        echo '<h4>SUGGESTED PRODUCTS</h4>';
+        echo '<div class="search-products__grid">';
+        while ($query->have_posts()) {
+            $query->the_post();
+            $product_id = get_the_ID();
+            $product_permalink = get_permalink($product_id);
+            $product_image_url = get_the_post_thumbnail_url($product_id, 'thumbnail'); // Get the product image URL
+
+            // Detailed results
+            echo '<a href="' . $product_permalink . '">';
+            echo '<img src="' . $product_image_url . '" alt="' . get_the_title($product_id) . '">';
+            echo '</a>';
+        }
+        echo '</div>';
+        echo '</div>';
+
+        wp_reset_postdata();
+    } else {
+        echo '<p>No products found</p>';
+    }
+
+    // Capture the output and return it
+    $output = ob_get_clean();
+    echo $output;
+    die();
+}
 
 
 ?>

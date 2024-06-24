@@ -1,70 +1,86 @@
-$font-regular: "Neue-Regular";
-$font-medium-italic: "Neue-MediumItalic";
-$font-medium: "Neue-Medium";
-$font-light-italic: "Neue-LightItalic";
-$font-light: "Neue-Light";
-$font-bold: "Neue-Bold";
-$font-bold-italic: "Neue-BoldItalic";
+$font-regular: "NBAkademieRegular";
+$font-medium-italic: "NBAkademieMediumItalic";
+$font-medium: "NBAkademieMedium";
+$font-light-italic: "NBAkademieLightItalic";
+$font-light: "NBAkademieLight";
+$font-bold: "NBAkademieBold";
+$font-bold-italic: "NBAkademieBoldItalic";
 
 
 
 @font-face {
-  font-family: "Neue-Regular";
-  src: url("../fonts/NeueMontreal-Regular.woff2") format("woff2"),
-    url("../fonts/NeueMontreal-Regular.otf") format("opentype");
+  font-family: "NBAkademieRegular";
+  src: url("../fonts/NB Akademie Pro - Regular.woff2") format("woff2"),
+    url("../fonts/NB Akademie Pro - Regular.otf") format("opentype");
   font-style: normal;
   font-weight: 400;
   text-rendering: optimizeLegibility;
 }
 @font-face {
-  font-family: "Neue-MediumItalic";
-  src: url("../fonts/NeueMontreal-MediumItalic.woff2") format("woff2"),
-    url("../fonts/NeueMontreal-MediumItalic.otf") format("opentype");
+  font-family: "NBAkademieMediumItalic";
+  src: url("../fonts/NB Akademie Pro - Medium Italic.woff2") format("woff2"),
+    url("../fonts/NB Akademie Pro - Medium Italic.otf") format("opentype");
   font-style: italic;
   font-weight: 500;
   text-rendering: optimizeLegibility;
 }
 @font-face {
-  font-family: "Neue-Medium";
-  src: url("../fonts/NeueMontreal-Medium.woff2") format("woff2"),
-    url("../fonts/NeueMontreal-Medium.otf") format("opentype");
+  font-family: "NBAkademieMedium";
+  src: url("../fonts/NB Akademie Pro - Medium.woff2") format("woff2"),
+    url("../fonts/NB Akademie Pro - Medium.otf") format("opentype");
   font-style: normal;
   font-weight: 500;
   text-rendering: optimizeLegibility;
 }
 @font-face {
-  font-family: "Neue-LightItalic";
-  src: url("../fonts/NeueMontreal-LightItalic.woff2") format("woff2"),
-    url("../fonts/NeueMontreal-LightItalic.otf") format("opentype");
+  font-family: "NBAkademieLightItalic";
+  src: url("../fonts/NB Akademie Pro - Light Italic.woff2") format("woff2"),
+    url("../fonts/NB Akademie Pro - Light Italic.otf") format("opentype");
   font-style: italic;
   font-weight: 300;
   text-rendering: optimizeLegibility;
 }
 @font-face {
-  font-family: "Neue-Light";
-  src: url("../fonts/NeueMontreal-Light.woff2") format("woff2"),
-    url("../fonts/NeueMontreal-Light.otf") format("opentype");
+  font-family: "NBAkademieLight";
+  src: url("../fonts/NB Akademie Pro - Light.woff2") format("woff2"),
+    url("../fonts/NB Akademie Pro - Light.otf") format("opentype");
   font-style: normal;
   font-weight: 300;
   text-rendering: optimizeLegibility;
 }
 @font-face {
-  font-family: "Neue-Bold";
-  src: url("../fonts/NeueMontreal-Bold.woff2") format("woff2"),
-    url("../fonts/NeueMontreal-Bold.otf") format("opentype");
+  font-family: "NBAkademieBold";
+  src: url("../fonts/NB Akademie Pro - Bold.woff2") format("woff2"),
+    url("../fonts/NB Akademie Pro - Bold.otf") format("opentype");
   font-style: normal;
   font-weight: 700;
   text-rendering: optimizeLegibility;
 }
 @font-face {
-  font-family: "Neue-BoldItalic";
-  src: url("../fonts/NeueMontreal-BoldItalic.woff2") format("woff2"),
-    url("../fonts/NeueMontreal-BoldItalic.otf") format("opentype");
+  font-family: "NBAkademieBoldItalic";
+  src: url("../fonts/NB Akademie Pro - Bold Italic.woff2") format("woff2"),
+    url("../fonts/NB Akademie Pro - Bold Italic.otf") format("opentype");
   font-style: normal;
   font-weight: 700;
   text-rendering: optimizeLegibility;
+}
+@font-face {
+  font-family: "BodoniSmallCaps";
+  src: url("../fonts/Bodoni 72 Smallcaps Book.woff2") format("woff2"),
+    url("../fonts/Bodoni 72 Smallcaps Book.ttf") format("ttf");
+  font-style: normal;
+  font-weight: 700;
+  text-rendering: optimizeLegibility;
+}
+@font-face {
+  font-family: "Bodoni";
+  src: url("../fonts/BodoniFLF-Bold.woff2") format("woff2"),
+    url("../fonts/BodoniFLF-Bold.ttf") format("ttf");
 }
 
+:root {
+  --bs-body-font-family: 'NBAkademieRegular';
+}
 body {
     font-family: $font-regular !important;
 }
