@@ -19,10 +19,6 @@
     &--bot {
       display: flex;
       justify-content: center;
-
-      .about-us__title--text {
-        font-family: "NBAkademieRegular" !important;
-      }
     }
 
     &--image {
@@ -44,6 +40,8 @@
         line-height: 10px;
         text-align: center;
         color: #202020;
+
+        font-family: "NBAkademieRegular" !important;
       }
     }
   }
