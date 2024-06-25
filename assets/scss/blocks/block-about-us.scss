@@ -4,6 +4,7 @@
   }
   &__title {
     margin-bottom: 17.125rem;
+    margin-left: 7.5rem;
 
     font-family: "Bodoni" !important;
     &--text {
@@ -18,6 +19,10 @@
     &--bot {
       display: flex;
       justify-content: center;
+
+      .about-us__title--text {
+        font-family: "NBAkademieRegular" !important;
+      }
     }
 
     &--image {
@@ -53,7 +58,7 @@
       max-width: 6.5625rem;
       font-size: 10px;
       font-weight: 400;
-      line-height: 10px;
+      line-height: 12px;
       text-align: left;
       color: #202020;
     }
@@ -142,7 +147,7 @@
       max-width: 29.25rem;
       font-size: 20px;
       font-weight: 400;
-      line-height: 20px;
+      line-height: 24px;
       text-align: left;
       color: #202020;
     }

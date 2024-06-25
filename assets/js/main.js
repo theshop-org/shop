@@ -7,226 +7,180 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
-
 window.addEventListener("load", () => {
   const animationSettings = {
     y: "81%",
     opacity: 1,
     scrollTrigger: {
       trigger: ".scroll-animation1",
-      start: "top top", // Animation starts when the top of the trigger hits the top of the viewport
-      end: "bottom bottom", // Animation ends when the bottom of the trigger hits the bottom of the viewport
+      start: "top top",
+      end: "bottom bottom",
       scrub: true,
       once: true,
     },
   };
 
-  // Animation for the seahorse image
-  gsap.fromTo(
-    ".seahorse",
-    { y: "-95%", x: "-21%", opacity: 1 },
-    animationSettings
-  );
+  // Function to check if an element exists
+  const elementExists = (selector) => document.querySelector(selector) !== null;
 
-  // Animation for the hippo image
-  gsap.fromTo(
-    ".hippo",
-    { y: "-95%", x: "-18%", opacity: 1 },
-    {
-      y: "112%",
-      opacity: 1,
-      scrollTrigger: {
-        trigger: ".scroll-animation1",
-        start: "top top", // Animation starts when the top of the trigger hits the top of the viewport
-        end: "bottom bottom", // Animation ends when the bottom of the trigger hits the bottom of the viewport
-        scrub: true,
-        once: true,
-      },
-    }
-  );
+  // Animation for the seahorse image if element exists
+  if (elementExists(".seahorse")) {
+    gsap.fromTo(
+      ".seahorse",
+      { y: "-95%", x: "-21%", opacity: 1 },
+      animationSettings
+    );
+  }
 
-  // Animation for the dino image
-  gsap.fromTo(
-    ".dino",
-    { y: "-95%", x: "24%", opacity: 1 },
-    {
-      y: "75%",
-      opacity: 1,
-      scrollTrigger: {
-        trigger: ".scroll-animation1",
-        start: "top top", // Animation starts when the top of the trigger hits the top of the viewport
-        end: "bottom bottom", // Animation ends when the bottom of the trigger hits the bottom of the viewport
-        scrub: true,
-        once: true,
-      },
-    }
-  );
+  // Animation for the hippo image if element exists
+  if (elementExists(".hippo")) {
+    gsap.fromTo(
+      ".hippo",
+      { y: "-95%", x: "-18%", opacity: 1 },
+      {
+        y: "112%",
+        opacity: 1,
+        scrollTrigger: {
+          trigger: ".scroll-animation1",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+          once: true,
+        },
+      }
+    );
+  }
+
+  // Animation for the dino image if element exists
+  if (elementExists(".dino")) {
+    gsap.fromTo(
+      ".dino",
+      { y: "-95%", x: "24%", opacity: 1 },
+      {
+        y: "75%",
+        opacity: 1,
+        scrollTrigger: {
+          trigger: ".scroll-animation1",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+          once: true,
+        },
+      }
+    );
+  }
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  // let lastScrollTop = 0;
+  var shopLogo = document.getElementById("shopLogo");
+  if (shopLogo) {
+    document.addEventListener("scroll", function () {
+      // Calculate the middle of the viewport height
+      var viewportHeight = window.innerHeight;
+      var viewportMiddle = viewportHeight / 2; // Middle of the viewport
 
-  // document.addEventListener("scroll", function () {
-  //   // Get the elements with IDs 'shopLogo' and 'headerLogo'
-  //   var shopLogo = document.getElementById("shopLogo");
-  //   var headerLogo = document.getElementById("headerLogo");
-  //   var headerLogoPositionLeft = headerLogo.getBoundingClientRect().left;
-  //   var shopLogoPositionLeft = shopLogo.getBoundingClientRect().left;
+      // Get the position of the shopLogo element relative to the viewport
+      var shopLogoRect = shopLogo.getBoundingClientRect();
+      var shopLogoTopRelativeToViewport = shopLogoRect.top;
+      var shopLogoBottomRelativeToViewport = shopLogoRect.bottom;
 
-  //   console.log(headerLogoPositionLeft);
-  //   console.log(shopLogoPositionLeft);
+      // Calculate the scroll position relative to the document
+      var scrollPosition = window.scrollY || window.pageYOffset;
 
-  //   // Initialize the current width if it hasn't been initialized yet
-  //   if (!shopLogo.dataset.currentWidth) {
-  //     shopLogo.dataset.currentWidth = shopLogo.offsetWidth;
-  //   }
+      // Calculate the position of the shopLogo element relative to the document
+      var shopLogoTopAbsolute = shopLogoRect.top + scrollPosition;
 
-  //   // Convert the current width from string to number
-  //   var currentWidth = parseFloat(shopLogo.dataset.currentWidth);
+      // Determine if the shopLogo element is approximately centered in the viewport
+      var isInMiddle =
+        shopLogoTopRelativeToViewport <= viewportMiddle &&
+        shopLogoBottomRelativeToViewport >= viewportMiddle;
 
-  //   // Get the current scroll position
-  //   var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-  //   // Determine if scrolling up or down
-  //   var isScrollingDown = scrollTop > lastScrollTop;
-  //   lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
-
-  //   // Check if both elements exist
-  //   if (shopLogo && headerLogo) {
-  //     // Get the position of the headerLogo element
-  //     var shopLogoPosition = shopLogo.getBoundingClientRect().top;
-  //     var headerLogoPosition = headerLogo.getBoundingClientRect().top;
-
-  //     // Check if the shopLogo is in view and adjust width based on scroll direction
-  //     if (shopLogoPosition <= headerLogoPosition) {
-  //       if (!isScrollingDown) {
-  //         // Increase the width by 2px each time, up to a maximum of 300px
-  //         currentWidth = Math.min(300, currentWidth + 2);
-  //       }
-  //       if (isScrollingDown) {
-  //         // Decrease the width by 2px each time, down to a minimum of 147px
-  //         currentWidth = Math.max(147, currentWidth - 2);
-  //       }
-  //       shopLogo.style.width = currentWidth + "px";
-  //       shopLogo.dataset.currentWidth = currentWidth;
-  //       shopLogo.classList.add("change-logo-shop");
-  //       headerLogo.classList.add("change-logo-header");
-  //     } else {
-  //       if (!isScrollingDown) {
-  //         // Increase the width by 2px each time, up to a maximum of 300px
-  //         currentWidth = Math.min(300, currentWidth + 2);
-  //       }
-  //       if (isScrollingDown) {
-  //         // Decrease the width by 2px each time, down to a minimum of 147px
-  //         currentWidth = Math.max(147, currentWidth - 2);
-  //       }
-  //       shopLogo.style.width = currentWidth + "px";
-  //       shopLogo.dataset.currentWidth = currentWidth;
-  //       shopLogo.classList.remove("change-logo-shop");
-  //       headerLogo.classList.remove("change-logo-header");
-  //     }
-  //   }
-  // });
-
-  document.addEventListener("scroll", function () {
-    var shopLogo = document.getElementById("shopLogo");
-
-    // Calculate the middle of the viewport height
-    var viewportHeight = window.innerHeight;
-    var viewportMiddle = viewportHeight / 2; // Middle of the viewport
-
-    // Get the position of the shopLogo element relative to the viewport
-    var shopLogoRect = shopLogo.getBoundingClientRect();
-    var shopLogoTopRelativeToViewport = shopLogoRect.top;
-    var shopLogoBottomRelativeToViewport = shopLogoRect.bottom;
-
-    // Calculate the scroll position relative to the document
-    var scrollPosition = window.scrollY || window.pageYOffset;
-
-    // Calculate the position of the shopLogo element relative to the document
-    var shopLogoTopAbsolute = shopLogoRect.top + scrollPosition;
-
-    // Determine if the shopLogo element is approximately centered in the viewport
-    var isInMiddle =
-      shopLogoTopRelativeToViewport <= viewportMiddle &&
-      shopLogoBottomRelativeToViewport >= viewportMiddle;
-
-    if (isInMiddle) {
-      shopLogo.classList.add("animation-logo");
-      setTimeout(function () {
-        shopLogo.classList.add("fixed");
-      }, 1300);
-    }
-  });
+      if (isInMiddle) {
+        shopLogo.classList.add("animation-logo");
+        setTimeout(function () {
+          shopLogo.classList.add("fixed");
+        }, 1300);
+      }
+    });
+  }
 
   let singleColors = document.querySelectorAll(".single-colors-shop");
 
-  singleColors.forEach(function (colorElement) {
-    colorElement.addEventListener("click", function (e) {
-      e.preventDefault();
+  if (singleColors) {
+    singleColors.forEach(function (colorElement) {
+      colorElement.addEventListener("click", function (e) {
+        e.preventDefault();
 
-      let colorValue = colorElement.getAttribute("data-color");
-      let productId = colorElement.getAttribute("data-product-id");
+        let colorValue = colorElement.getAttribute("data-color");
+        let productId = colorElement.getAttribute("data-product-id");
 
-      let productElement = colorElement.closest(".product");
+        let productElement = colorElement.closest(".product");
 
-      if (productElement) {
-        productElement.setAttribute("data-selected-color", colorValue);
-        productElement.setAttribute("data-product-cart", productId);
-      }
+        if (productElement) {
+          productElement.setAttribute("data-selected-color", colorValue);
+          productElement.setAttribute("data-product-cart", productId);
+        }
+      });
     });
-  });
+  }
 
   const addToCartShop = document.querySelectorAll(".add-to-cart-shop");
 
-  addToCartShop.forEach((btn) => {
-    btn.addEventListener("click", function (e) {
-      e.preventDefault();
-      let productElement = btn.closest(".product");
-      let productId = productElement.getAttribute("data-product-cart");
-      let productLink = productElement.getAttribute("data-product-link");
+  if (addToCartShop) {
+    addToCartShop.forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        let productElement = btn.closest(".product");
+        let productId = productElement.getAttribute("data-product-cart");
+        let productLink = productElement.getAttribute("data-product-link");
 
-      if (productId) {
-        let quantity = 1;
+        if (productId) {
+          let quantity = 1;
 
-        jQuery.ajax({
-          url: custom_script_vars.ajaxurl,
-          method: "POST",
-          data: {
-            action: "add_to_cart",
-            nonce: custom_script_vars.nonce,
-            productId: productId,
-            quantity: parseInt(quantity),
-          },
-          success: function (response) {
-            // Handle successful response
-            console.log(response);
+          jQuery.ajax({
+            url: custom_script_vars.ajaxurl,
+            method: "POST",
+            data: {
+              action: "add_to_cart",
+              nonce: custom_script_vars.nonce,
+              productId: productId,
+              quantity: parseInt(quantity),
+            },
+            success: function (response) {
+              // Handle successful response
+              console.log(response);
 
-            let currentCount = parseInt(jQuery("#cartCount").text());
-            jQuery("#cartCount").text(currentCount + parseInt(quantity));
-            let currentCountOffcanvas = parseInt(
-              jQuery("#cartCountOffcanvas").text()
-            );
-            jQuery("#cartCountOffcanvas").text(
-              currentCountOffcanvas + parseInt(quantity)
-            );
-          },
-          error: function (xhr, status, error) {
-            // Handle error
-            console.error("There was a problem with your AJAX request:", error);
-          },
-        });
-      } else {
-        window.location.href = productLink;
-      }
+              let currentCount = parseInt(jQuery("#cartCount").text());
+              jQuery("#cartCount").text(currentCount + parseInt(quantity));
+              let currentCountOffcanvas = parseInt(
+                jQuery("#cartCountOffcanvas").text()
+              );
+              jQuery("#cartCountOffcanvas").text(
+                currentCountOffcanvas + parseInt(quantity)
+              );
+            },
+            error: function (xhr, status, error) {
+              // Handle error
+              console.error(
+                "There was a problem with your AJAX request:",
+                error
+              );
+            },
+          });
+        } else {
+          window.location.href = productLink;
+        }
+      });
     });
-  });
+  }
 
   const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
 
-  addToCartButtons.forEach((button) => {
-    button.addEventListener("click", () => addToCart(button));
-  });
+  if (addToCartButtons) {
+    addToCartButtons.forEach((button) => {
+      button.addEventListener("click", () => addToCart(button));
+    });
+  }
 
   function addToCart(button) {
     const productId = button.getAttribute("data-product-id");
