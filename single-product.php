@@ -184,12 +184,12 @@ get_header( 'shop' );
 											</div>
 										</div>
 										<div class="product-single__buttons">
-											<div class="quantity">
+											<div class="quantity d-none">
 												<input type="button" value="-" class="minus">
 												<input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="[0-9]*" inputmode="numeric" id="productQuantity">
 												<input type="button" value="+" class="plus">
 											</div>
-											<button type="button" class="product__single--add add-to-cart-single" disabled>
+											<button type="button" class="product__single--add add-to-cart-single">
 												<?php echo esc_html( $product->single_add_to_cart_text() ); ?>
 											</button>
 										</div>

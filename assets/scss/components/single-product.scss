@@ -105,10 +105,12 @@
       a {
         cursor: pointer;
         display: inline-block;
-        width: 34px;
-        height: 34px;
+        width: 1.625rem;
+        height: 1.625rem;
         border-radius: 50%;
         position: relative;
+
+        border: 0.5px solid rgba(0, 0, 0, 0.3);
 
         .color-name {
           position: absolute;
@@ -168,7 +170,8 @@
     }
 
     .add-to-cart-single {
-      padding: 18px 46px;
+      font-family: "NBAkademieBook";
+      padding: 12px 46px;
       background-color: #362b25;
       color: #fff;
       flex-grow: 1;

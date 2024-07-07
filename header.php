@@ -124,19 +124,16 @@ $total_product_count = count($products);
 					</div>
 				</div>
 			</div>
-			<div class="main-header__menu">
-				<?php if(isset($first_half) && $first_half): ?>
-					<?php foreach($first_half as $item): ?>
-						<a class="main-header__menu--item" href="<?php echo $item->url ?>" target="<?php echo $item->target ?>">
-							<?php echo $item->title ?>
-						</a>
-					<?php endforeach; ?>
-				<?php endif; ?>
-			</div>
+			<?php if(isset($first_half) && $first_half): ?>
+				<?php foreach($first_half as $item): ?>
+					<a class="main-header__menu--item" href="<?php echo $item->url ?>" target="<?php echo $item->target ?>">
+						<?php echo $item->title ?>
+					</a>
+				<?php endforeach; ?>
+			<?php endif; ?>
 			<div class="main-header__logo" id="headerLogo">
 				<?php echo get_custom_logo(); ?>
 			</div>
-			<div class="main-header__menu">
 				<?php if(isset($second_half) && $second_half): ?>
 					<?php foreach($second_half as $item): ?>
 						<a class="main-header__menu--item" href="<?php echo $item->url ?>" target="<?php echo $item->target ?>">
@@ -144,7 +141,6 @@ $total_product_count = count($products);
 						</a>
 					<?php endforeach; ?>
 				<?php endif; ?>
-			</div>
 			<div class="main-header__cart">
 				<button class="main-header__cart--btn" id="offcanvasCartButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">CART (<span id="cartCount"><?php echo $cart_count ?></span>)</button>
 			</div>

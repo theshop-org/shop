@@ -515,7 +515,7 @@ document.addEventListener("DOMContentLoaded", function () {
         productId = colorLabel.getAttribute("data-product-id");
       }
     });
-    const quantity = quantityField.value;
+    const quantity = 1;
 
     jQuery.ajax({
       url: custom_script_vars.ajaxurl,

@@ -49,6 +49,11 @@ $font-bold-italic: "NBAkademieBoldItalic";
   text-rendering: optimizeLegibility;
 }
 @font-face {
+  font-family: "NBAkademieBook";
+  src: url("../fonts/NB Akademie Pro - Book.woff2") format("woff2"),
+    url("../fonts/NB Akademie Pro - Book.otf") format("opentype");
+}
+@font-face {
   font-family: "NBAkademieBold";
   src: url("../fonts/NB Akademie Pro - Bold.woff2") format("woff2"),
     url("../fonts/NB Akademie Pro - Bold.otf") format("opentype");

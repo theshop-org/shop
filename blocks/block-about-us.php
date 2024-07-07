@@ -10,33 +10,35 @@ $information = get_field('information');
 ?>
 <div class="about-us">
     <div class="about-us__container">
-        <div class="about-us__title">
-            <div class="about-us__title--text">
-                <?php foreach($words as $key=>$word): ?>
-                    <?php if($key < (count($words) - 2)): ?>
-                        <?php echo $word; ?>
-                    <?php endif ?>
-                <?php endforeach; ?>
-            </div>
-            <div class="about-us__title--bot">
+        <?php if($title): ?>
+            <div class="about-us__title">
                 <div class="about-us__title--text">
-                    <?php 
-                    echo $words[count($words) - 2] 
-                    ?>
+                    <?php foreach($words as $key=>$word): ?>
+                        <?php if($key < (count($words) - 2)): ?>
+                            <?php echo $word; ?>
+                        <?php endif ?>
+                    <?php endforeach; ?>
                 </div>
-                <div class="about-us__title--image">
-                    <?php if(isset($image['url']) && $image['url']): ?>
-                        <img src="<?php echo $image['url'] ?>" alt="<?php echo $image['alt'] ?>">
-                    <?php endif; ?>
-                    <span><?php echo $location_of_the_image_in_title ?></span>
+                <div class="about-us__title--bot">
+                    <div class="about-us__title--text">
+                        <?php 
+                        echo $words[count($words) - 2] 
+                        ?>
+                    </div>
+                    <div class="about-us__title--image">
+                        <?php if(isset($image['url']) && $image['url']): ?>
+                            <img src="<?php echo $image['url'] ?>" alt="<?php echo $image['alt'] ?>">
+                        <?php endif; ?>
+                        <span><?php echo $location_of_the_image_in_title ?></span>
+                    </div>
+                    <div class="about-us__title--text">
+                        <?php
+                        echo $words[count($words) - 1]
+                        ?>
+                    </div>
                 </div>
-                 <div class="about-us__title--text">
-                    <?php
-                    echo $words[count($words) - 1]
-                    ?>
-                 </div>
             </div>
-        </div>
+        <?php endif; ?>
         <div class="about-us__main">
             <span class="about-us__main--loc">
                 <?php echo $full_width_image_location; ?>

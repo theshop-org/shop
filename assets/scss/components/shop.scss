@@ -65,6 +65,11 @@
         transition: all 0.3s ease-in;
         opacity: 0;
 
+        svg {
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+
         &:hover {
           circle {
             fill: #a7a7a7;
@@ -208,6 +213,7 @@
             display: inline-block;
             border-radius: 50%;
             outline: unset !important;
+            border: .5px solid rgba(0, 0, 0, 0.3);
           }
         }
       }

@@ -1,13 +1,154 @@
 .footer {
   background-color: #362b25;
-  padding: 6.1875rem 1.875rem 5.625rem;
+  padding: 6.1875rem 1.875rem 1.75rem;
   margin-top: 2.5rem;
   color: #fff;
 
-  &__container {
+  &__top {
     display: flex;
     justify-content: space-between;
-    height: 168px;
+    gap: 2rem;
+    margin-bottom: 2.8125rem;
+
+    &--title {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: left;
+      color: #fff;
+      margin-bottom: 1.625rem;
+      font-family: "NBAkademieMedium";
+    }
+
+    &--section {
+      &.section-newsletter {
+        max-width: 542px;
+        flex-shrink: 0;
+        width: 100%;
+      }
+    }
+
+    &--city {
+      font-family: "NBAkademieMedium";
+    }
+
+    &--city,
+    &--address,
+    &--phone,
+    &--email {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: left;
+      color: #fff;
+      &:hover {
+        color: #726465;
+      }
+    }
+
+    &--address {
+      font-weight: 400;
+
+      &:hover {
+        color: #726465;
+      }
+    }
+
+    &--content {
+      display: flex;
+      flex-direction: column;
+
+      &:not(:last-child) {
+        margin-bottom: 1.625rem;
+      }
+
+      form {
+        display: flex;
+        gap: 0.625rem;
+        margin: 0;
+        p {
+          margin: 0;
+          position: relative;
+
+          &:has(input[type="email"]) {
+            flex-grow: 1;
+
+            input {
+              width: 100%;
+            }
+          }
+        }
+        input {
+          background-color: unset;
+          padding: unset;
+          box-shadow: unset;
+          color: #fff;
+          padding-bottom: 0.25rem;
+          font-size: 1rem;
+          font-weight: 400;
+          line-height: 1.5rem;
+
+          &[type="email"] {
+            border-bottom: 0.5px solid #ffffff;
+          }
+          &[type="submit"] {
+            background-color: unset;
+            transition: all 0.3s ease-in;
+            padding: 0;
+
+            &:hover {
+              border-bottom: 0.5px solid #ffffff;
+            }
+          }
+
+          .wpcf7-spinner {
+            position: absolute;
+            right: 0;
+            top: 100%;
+          }
+
+          &:focus {
+            background-color: unset;
+            color: #fff;
+            outline: unset;
+          }
+
+          &::placeholder {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+
+    &--copy {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      text-align: left;
+      color: #726465;
+    }
+
+    &--menu {
+      display: flex;
+      flex-direction: column;
+
+      a {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: right;
+        color: #726465;
+
+        &:hover {
+          color: #FFF;
+        }
+      }
+    }
   }
 
   &__left {
