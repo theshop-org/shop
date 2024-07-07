@@ -12,7 +12,7 @@
     <a href="/shop"  class="shop-our-products">
         <span>SHOP</span>
         <div class="img-1">
-            <img src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/hippo-small.png" alt="Hippo">
+            <img src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/hippo-small.jpeg" alt="Hippo">
         </div>
         <span>OUR</span>
         <div class="img-2">
