@@ -872,5 +872,24 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   });
 
-  // GSAP
+  const inputs = document.querySelectorAll("input");
+
+  inputs.forEach(function (input) {
+    const label = document.querySelector(
+      `label[for="${input.getAttribute("id")}"]`
+    );
+    
+    if (label) {
+      input.addEventListener("focus", function () {
+        console.log("asdas");
+        label.classList.add("focused");
+      });
+
+      input.addEventListener("blur", function () {
+        if (input.value === "") {
+          label.classList.remove("focused");
+        }
+      });
+    }
+  });
 });
