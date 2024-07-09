@@ -27,7 +27,16 @@ $allowed_html = array(
 	),
 );
 ?>
-
+<div class="account-heading">
+	<?php
+	printf(
+		/* translators: 1: user display name 2: logout url */
+		wp_kses( __( 'Welcome %1$s', 'woocommerce' ), $allowed_html ),
+		 esc_html( $current_user->display_name ),
+		esc_url( wc_logout_url() )
+	);
+	?>
+</div>
 <p>
 	<?php
 	printf(

@@ -168,7 +168,24 @@ $total_product_count = count($products);
 			</div>
 			<div class="offcanvas-body">
 				<div id="offcanvasBody"></div>
-				
+				<div class="post-card">
+					<div class="post-card__left">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="addPostCardCheck">
+							<label class="form-check-label" for="addPostCardCheck">
+								Add Post Card
+							</label>
+						</div>
+						<!-- Button to open the modal -->
+						<button type="button" class="post-card__btn" id="addMessageButton" data-bs-toggle="modal" data-bs-target="#messageModal">
+							+ Add message to the card
+						</button>
+	
+					</div>
+					<div class="post-card__right">
+						10 GEL
+					</div>
+				</div>
 				<div class="checkout-box">
 					<div class="checkout-info">
 						<div class="checkout-info__top">
@@ -187,6 +204,25 @@ $total_product_count = count($products);
 					<a href="/checkout" id="checkoutOff" class="<?php echo WC()->cart->is_empty() ? 'd-none' :  'd-block' ?>">
 						CHECKOUT
 					</a>
+				</div>
+
+				<!-- Bootstrap Modal -->
+				<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="messageModalLabel">Add Message to Post Card</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<textarea class="form-control" id="postCardMessage" rows="4" placeholder="Write your message here..."></textarea>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary" id="saveMessageButton">Save message</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -878,10 +878,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const label = document.querySelector(
       `label[for="${input.getAttribute("id")}"]`
     );
-    
+
     if (label) {
+      if (input.value !== "") {
+        label.classList.add("focused");
+      }
       input.addEventListener("focus", function () {
-        console.log("asdas");
         label.classList.add("focused");
       });
 
@@ -892,4 +894,19 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
+
+  
+  document
+    .getElementById("saveMessageButton")
+    .addEventListener("click", function () {
+      var message = document.getElementById("postCardMessage").value;
+      if (message) {
+        // Do something with the message, e.g., save it or display it
+        console.log("Message saved:", message);
+      }
+      var messageModal = bootstrap.Modal.getInstance(
+        document.getElementById("messageModal")
+      );
+      messageModal.hide();
+    });
 });

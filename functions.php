@@ -468,5 +468,38 @@ function wc_get_account_menu_items_child() {
 
 	return apply_filters( 'woocommerce_account_menu_items', $items, $endpoints );
 }
+
+// Hook into WooCommerce registration process
+add_action('woocommerce_created_customer', 'save_custom_registration_fields');
+
+function save_custom_registration_fields($customer_id) {
+    if (isset($_POST['first_name'])) {
+        $first_name = sanitize_text_field($_POST['first_name']);
+        // Save first name
+        update_user_meta($customer_id, 'first_name', $first_name);
+        // Save billing first name
+        update_user_meta($customer_id, 'billing_first_name', $first_name);
+        // Save shipping first name
+        update_user_meta($customer_id, 'shipping_first_name', $first_name);
+    }
+
+    if (isset($_POST['last_name'])) {
+        $last_name = sanitize_text_field($_POST['last_name']);
+        // Save last name
+        update_user_meta($customer_id, 'last_name', $last_name);
+        // Save billing last name
+        update_user_meta($customer_id, 'billing_last_name', $last_name);
+        // Save shipping last name
+        update_user_meta($customer_id, 'shipping_last_name', $last_name);
+    }
+
+    if (isset($_POST['prefix']) && isset($_POST['phone'])) {
+        // Save billing phone number
+        $billing_phone = sanitize_text_field($_POST['prefix']) . sanitize_text_field($_POST['phone']);
+        update_user_meta($customer_id, 'billing_phone', $billing_phone);
+        update_user_meta($customer_id, 'shiping_phone', $billing_phone);
+    }
+}
+
 ?>
 

@@ -22,8 +22,24 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 2.6.0
  */
-do_action( 'woocommerce_account_navigation' ); ?>
+do_action( 'woocommerce_account_navigation' ); 
 
+$allowed_html = array(
+	'a' => array(
+		'href' => array(),
+	),
+);
+?>
+<div class="account-heading">
+	<?php
+	printf(
+		/* translators: 1: user display name 2: logout url */
+		wp_kses( __( 'Welcome %1$s', 'woocommerce' ), $allowed_html ),
+		 esc_html( $current_user->display_name ),
+		esc_url( wc_logout_url() )
+	);
+	?>
+</div>
 <div class="woocommerce-MyAccount-content">
 	<?php
 		/**
