@@ -501,5 +501,45 @@ function save_custom_registration_fields($customer_id) {
     }
 }
 
+
+// Hook to handle AJAX request to save message and price to order
+add_action('wp_ajax_save_message_to_order', 'save_message_to_order_callback');
+add_action('wp_ajax_nopriv_save_message_to_order', 'save_message_to_order_callback'); // Allow non-logged in users to use this AJAX action
+
+function save_message_to_order_callback() {
+    if (isset($_POST['message']) && isset($_POST['price'])) {
+        $message = sanitize_text_field($_POST['message']);
+        $price = floatval($_POST['price']);
+
+        // Get current user's shopping cart and update the item
+        global $woocommerce;
+        $order_id = $woocommerce->cart->get_cart_id();
+
+        // Add message and price as order meta
+        update_post_meta($order_id, '_custom_message', $message);
+        update_post_meta($order_id, '_custom_price', $price);
+
+        echo 'Message saved successfully.';
+    } else {
+        echo 'Error: Message or price missing.';
+    }
+
+    wp_die(); // Always include this at the end of Ajax functions to terminate script
+}
+
+
+// Display it 
+// $order = wc_get_order($order_id);
+// $message = get_post_meta($order_id, '_custom_message', true);
+// $price = get_post_meta($order_id, '_custom_price', true);
+
+// if ($message && $price) {
+//     echo '<h2>Custom Message:</h2>';
+//     echo '<p>' . esc_html($message) . '</p>';
+//     echo '<h2>Custom Price:</h2>';
+//     echo '<p>' . wc_price($price) . '</p>';
+// }
+
+
 ?>
 

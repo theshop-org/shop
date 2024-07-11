@@ -207,19 +207,21 @@ $total_product_count = count($products);
 				</div>
 
 				<!-- Bootstrap Modal -->
-				<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+				<div class="modal fade card-modal" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="messageModalLabel">Add Message to Post Card</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								<h5 class="modal-title" id="messageModalLabel">Post Card Message</h5>
+								<p class="modal-text">
+									A personal message written by you will be printed onto The Shop card and placed inside your package. Please note that all documents will still be included. 
+								</p>
 							</div>
 							<div class="modal-body">
-								<textarea class="form-control" id="postCardMessage" rows="4" placeholder="Write your message here..."></textarea>
+								<textarea class="form-control" id="postCardMessage" rows="4" placeholder="Write your message here..." maxlength="435"></textarea>
+								<div id="characterCount">0/435 characters</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary" id="saveMessageButton">Save message</button>
+								<button type="button" class="modal-footer-save" id="saveMessageButton"  data-bs-dismiss="modal" disabled>SEND</button>
 							</div>
 						</div>
 					</div>
