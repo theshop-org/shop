@@ -8,7 +8,7 @@
     <img class="bag" src="<?php echo get_stylesheet_directory_uri() ?>/assets/img/gsap-bag.png" alt="bag">
 </section>
 
-<div style="margin-left:30px">
+<div class="shop-our-products-wrapper">
     <a href="/shop"  class="shop-our-products">
         <span>SHOP</span>
         <div class="img-1">

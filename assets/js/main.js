@@ -130,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     addToCartShop.forEach((btn) => {
       btn.addEventListener("click", function (e) {
         e.preventDefault();
+
         let productElement = btn.closest(".product");
         let productId = productElement.getAttribute("data-product-cart");
         let productLink = productElement.getAttribute("data-product-link");
@@ -149,6 +150,8 @@ document.addEventListener("DOMContentLoaded", function () {
             success: function (response) {
               // Handle successful response
               console.log(response);
+
+              document.getElementById("offcanvasCartButton").click();
 
               let currentCount = parseInt(jQuery("#cartCount").text());
               jQuery("#cartCount").text(currentCount + parseInt(quantity));
@@ -529,6 +532,8 @@ document.addEventListener("DOMContentLoaded", function () {
       success: function (response) {
         // Handle successful response
         console.log(response);
+
+        document.getElementById("offcanvasCartButton").click();
 
         let currentCount = parseInt(jQuery("#cartCount").text());
         jQuery("#cartCount").text(currentCount + parseInt(quantity));

@@ -80,6 +80,70 @@
 						</div>
 					</div>
 				<?php endif; ?>
+
+				<div class="accordion accordion-flush footer-accordions" id="accordionFlushExample">
+					<?php if(!empty($addresses)): ?>
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="flush-headingOne">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+									ADDRESSES
+								</button>
+							</h2>
+							<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+								<div class="accordion-body">
+								<?php foreach($addresses as $address): ?>
+									<div class="footer__top--content">
+										<div class="footer__top--city">
+											<?php echo $address['city']; ?>
+										</div>
+										<a href="<?php echo $address['link']; ?>" class="footer__top--address">
+											<?php echo $address['address']; ?>
+										</a>
+									</div>
+								<?php endforeach; ?>
+								</div>
+							</div>
+						</div>
+					<?php endif; ?>
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-headingTwo">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+							CONTACT US
+						</button>
+						</h2>
+						<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+							<div class="accordion-body">
+								<div class="footer__top--content">
+									<a href="tel:<?php echo $contact_us_phone; ?>" class="footer__top--phone">
+										<?php echo $contact_us_phone; ?>
+									</a>
+									<a href="mailto:<?php echo $contact_us_email; ?>" class="footer__top--email">
+										<?php echo $contact_us_email; ?>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<?php if($subscribe_form): ?>
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="flush-headingThree">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+									FOLLOW US
+								</button>
+							</h2>
+							<div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+								<div class="accordion-body d-flex flex-column">
+									<?php foreach($socials as $social): ?>
+										<a href="<?php echo $social['social_media_url']; ?>" class="footer__top--phone">
+											<?php echo $social['social_media']; ?>
+										</a>
+									<?php endforeach; ?>
+								</div>
+							</div>
+						</div>
+					<?php endif; ?>
+					</div>
 			</div>
 			<div class="footer__bottom">
 				<div class="footer__bottom--copy">
