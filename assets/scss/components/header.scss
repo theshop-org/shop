@@ -194,6 +194,75 @@
       width: 100%;
       height: fit-content;
 
+      &.offcanvas-mobile {
+        height: 100%;
+
+        .offcanvas-header {
+          padding: 0.9375rem 0.625rem 1.125rem;
+          border-bottom: 1px solid #535353;
+        }
+
+        .offcanvas-body {
+          padding: 0 0 1.25rem;
+
+          .mobile-offcanvas {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+
+            &__body {
+              display: flex;
+              flex-direction: column;
+
+              a {
+                padding: 0.9375rem 0.625rem 1.125rem;
+                border-bottom: 1px solid #5353531a;
+                color: #202020;
+                font-size: 13px;
+                font-weight: 400;
+                line-height: 13px;
+                text-align: left;
+              }
+            }
+
+            &__footer {
+              padding: 0.9375rem 0.625rem 0;
+              border-top: 1px solid #5353531a;
+
+              &--title {
+                font-size: 13px;
+                font-weight: 400;
+                line-height: 13px;
+                text-align: left;
+                color: #202020;
+                border: unset;
+              }
+
+              &--content {
+                display: flex;
+                flex-direction: column;
+
+                a {
+                  font-size: 0.8125rem;
+                  font-weight: 400;
+                  line-height: 1.5rem;
+                }
+
+                span {
+                  font-size: 13px;
+                  font-weight: 400;
+                  line-height: 16px;
+                  color: #20202066;
+                  margin-top: 1rem;
+                  display: inline-block;
+                }
+              }
+            }
+          }
+        }
+      }
+
       .offcanvas-body {
         padding: 0.25rem 9px 0.6875rem;
         overflow: hidden;

@@ -70,7 +70,7 @@ $contact_us_email = get_field("contact_us_email", "option");
 						</svg>
 					</a>
 	
-					<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMobile" aria-labelledby="offcanvasMobileLabel">
+					<div class="offcanvas offcanvas-start offcanvas-mobile" tabindex="-1" id="offcanvasMobile" aria-labelledby="offcanvasMobileLabel">
 						<div class="offcanvas-header">
 							<h5 class="offcanvas-title" id="offcanvasMobileLabel">THESHOP.COM</h5>
 							<button type="button" class="offcanvas-right-close" data-bs-dismiss="offcanvas" aria-label="Close">
@@ -88,12 +88,13 @@ $contact_us_email = get_field("contact_us_email", "option");
 										CONTACT US
 									</h4>
 									<div class="mobile-offcanvas__footer--content">
-										<a href="tel:<?php echo $contact_us_phone; ?>" class="mobile-offcanvas__footer--phone">
-											<?php echo $contact_us_phone; ?>
-										</a>
 										<a href="mailto:<?php echo $contact_us_email; ?>" class="mobile-offcanvas__footer--email">
 											<?php echo $contact_us_email; ?>
 										</a>
+										<a href="tel:<?php echo $contact_us_phone; ?>" class="mobile-offcanvas__footer--phone">
+											<?php echo $contact_us_phone; ?>
+										</a>
+										<span>Monday to Friday, 9am to 6pm GMT+4</span>
 									</div>
 								</div>
 							</div>

@@ -27,7 +27,7 @@ window.addEventListener("load", () => {
   if (elementExists(".seahorse")) {
     gsap.fromTo(
       ".seahorse",
-      { y: "-95%", x: "-21%", opacity: 1 },
+      { y: "-120%", x: "-21%", opacity: 1 },
       animationSettings
     );
   }

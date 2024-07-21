@@ -165,7 +165,7 @@
 .shop-our-products-wrapper {
   margin-left: 1.875rem;
 
-  @media screen and (max-width:960px) {
+  @media screen and (max-width: 960px) {
     margin-left: 1rem;
   }
 }
@@ -186,14 +186,14 @@
     .img-1 {
       width: 11.0625rem;
 
-      @media screen and (max-width:960px) {
+      @media screen and (max-width: 960px) {
         width: 5rem;
       }
     }
     .img-2 {
       width: 7.6875rem;
-      
-      @media screen and (max-width:960px) {
+
+      @media screen and (max-width: 960px) {
         width: 5rem;
       }
     }
@@ -221,6 +221,15 @@
     &.hippo {
       z-index: -4;
     }
+
+    &.seahorse {
+      @media screen and (max-width: 960px) {
+        width: 20rem;
+      }
+      @media screen and (max-width: 540px) {
+        width: 10rem;
+      }
+    }
   }
 
   .bag {
@@ -236,9 +245,11 @@
     z-index: 9;
     width: 300px;
     transform: translate(-50.8%, -50%);
-    transition: top 1.6s ease-out,
-      width 1.6s ease-out,
-      position 0s 1.6s;
+    transition: top 1.6s ease-out, width 1.6s ease-out, position 0s 1.6s;
+
+    @media screen and (max-width:60rem) {
+      width: 130px;
+    }
 
     img {
       width: 100%;
@@ -254,7 +265,7 @@
       z-index: 99999;
       position: fixed;
 
-      @media screen and (max-width:960px) {
+      @media screen and (max-width: 960px) {
         width: 4.5625rem;
         top: 1.75rem;
       }
