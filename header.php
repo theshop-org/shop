@@ -386,15 +386,15 @@ $contact_us_email = get_field("contact_us_email", "option");
 				</div>
 				<div class="products-grid-change">
 					<div class="grid-style active" id="gridStyleOne">                
-						<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg width="15" height="16" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" y="0.5" width="17" height="18" stroke="black"/>
 						</svg>
 					</div>
 					<div class="grid-style" id="gridStyleTwo">  
-						<svg width="9" height="19" viewBox="0 0 9 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg width="8" height="16" viewBox="0 0 9 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" y="0.5" width="8" height="18" stroke="black"/>
 						</svg>
-						<svg width="9" height="19" viewBox="0 0 9 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg width="8" height="16" viewBox="0 0 9 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" y="0.5" width="8" height="18" stroke="black"/>
 						</svg>
 					</div>
