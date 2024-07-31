@@ -28,6 +28,15 @@
   --swiper-wrapper-transition-timing-function: initial;
   */
 }
+
+.about-us__content--texts{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+ 
+}
+
+
 :host {
   position: relative;
   display: block;
@@ -13206,9 +13215,3 @@ a:hover {
 
 
 
-.about-us__content--texts{
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
- 
-}
