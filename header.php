@@ -378,7 +378,7 @@ $contact_us_email = get_field("contact_us_email", "option");
 		</div>
 		<?php if(is_archive()): ?>
 			<div class="products-header">
-				
+
 
 
 				<div class="products-count">
@@ -391,7 +391,7 @@ $contact_us_email = get_field("contact_us_email", "option");
 						</svg>
 					</div>
 					<div class="grid-style" id="gridStyleTwo">  
-						<svg width="9" height="19" viewBox="0 0 9 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<svg width="90" height="19" viewBox="0 0 9 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<rect x="0.5" y="0.5" width="8" height="18" stroke="black"/>
 						</svg>
 						<svg width="9" height="19" viewBox="0 0 9 19" fill="none" xmlns="http://www.w3.org/2000/svg">
