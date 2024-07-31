@@ -30,10 +30,7 @@
 }
 
 .about-us__content--texts{
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
- 
+  display: flex !important;
 }
 
 
