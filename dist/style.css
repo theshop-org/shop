@@ -12944,7 +12944,7 @@ a:focus {
   flex-direction: column;
 }
 .shop-page .products-grid .product__info--title, .shop-page .products-grid .product__info--right {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.5rem;
   letter-spacing: -0.02em;
