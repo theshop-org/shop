@@ -378,6 +378,7 @@ $contact_us_email = get_field("contact_us_email", "option");
 		</div>
 		<?php if(is_archive()): ?>
 			<div class="products-header">
+				
 				<div class="products-count">
 					<?php  echo $total_product_count  . ' ITEMS'; ?>
 				</div>
