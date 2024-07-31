@@ -81,15 +81,9 @@
 
       div:first-child {
         max-width: 50vw;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
       }
       div:last-child {
-        max-width: 50vw;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        max-width: 50;
       }
     }
 
