@@ -12963,7 +12963,7 @@ a:focus {
   display: inline-block;
   border-radius: 50%;
   outline: unset !important;
-  border: 0.5px solid rgba(0, 0, 0, 0.3);
+  /* border: 0.5px solid rgba(0, 0, 0, 0.3); */
 }
 .shop-page .products-grid .product__only-text {
   font-size: 2.5rem;
