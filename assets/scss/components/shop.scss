@@ -20,7 +20,8 @@
     grid-row-gap: 0px;
 
     .products-vertical-img {
-      grid-area: 2 / 9 / 11 / 13;
+      // grid-area: 2 / 9 / 11 / 13;
+      grid-area: 1 / 1 / 8 / 7;
     }
     .products-horizontal-img {
       grid-area: 1 / 1 / 8 / 7;
