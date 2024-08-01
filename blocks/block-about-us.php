@@ -54,7 +54,7 @@ $information = get_field('information');
                         <h2 class="about-us__content--title" style="width: 50%">
                             <?php echo $information[0]['title'] ?>
                         </h2>
-                        <p class="about-us__content--desc">
+                        <p class="about-us__content--desc" style="with: 50%">
                             <?php echo $information[0]['description'] ?>
                         </p>
                     </div>
