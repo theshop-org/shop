@@ -80,6 +80,7 @@
       }
 
       div:first-child {
+        justify-content: space-between;
        
         display: flex;
       }
@@ -160,6 +161,7 @@
       text-align: left;
       color: #202020;
       margin-bottom: 3.375rem;
+      
     }
 
     &--desc {
