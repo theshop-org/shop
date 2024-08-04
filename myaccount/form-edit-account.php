@@ -23,7 +23,7 @@ do_action( 'woocommerce_before_edit_account_form' ); ?>
 
 	<?php do_action( 'woocommerce_edit_account_form_start' ); ?>
 
-	<p class="woocommerce-form-row woocommerce-form-row--wide position-relative form-row form-row-wide">
+	<p class="woocommerce-form-row woocommerce-form-row--wide position-relative form-row form-row-wide" >
 		<label for="account_first_name"><?php esc_html_e( 'First name', 'woocommerce' ); ?></label>
 		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_first_name" id="account_first_name" autocomplete="given-name" value="<?php echo esc_attr( $user->first_name ); ?>" />
 	</p>
@@ -53,8 +53,8 @@ do_action( 'woocommerce_before_edit_account_form' ); ?>
 		do_action( 'woocommerce_edit_account_form_fields' );
 	?>
 
-	<fieldset>
-		<legend><?php esc_html_e( 'Password change', 'woocommerce' ); ?></legend>
+	<fieldset style="background-color: #fff !important">
+		<legend style="background-color: #fff !important"><?php esc_html_e( 'Password change', 'woocommerce' ); ?></legend>
 
 		<p class="woocommerce-form-row woocommerce-form-row--wide position-relative form-row form-row-wide">
 			<label for="password_current"><?php esc_html_e( 'Current password (leave blank to leave unchanged)', 'woocommerce' ); ?></label>
