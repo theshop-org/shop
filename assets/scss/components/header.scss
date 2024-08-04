@@ -814,12 +814,13 @@
       width: 20px;
       height: 20px;
       border: 1px solid #000;
-      background-color: #000;
+      background-color: #fff;
       border-radius: 2px;
     }
     input:checked ~ .form-check-label::before {
       content: "\2713"; /* Unicode for check mark */
-      color: #fff;
+      color: #000;
+      background-color: #000 !important;
       display: flex;
       align-items: center;
       justify-content: center;
