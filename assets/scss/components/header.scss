@@ -862,11 +862,14 @@
     
 
     &:hover {
+      opacity: 1 !important;
       background-color: #ccbac1; 
+     
     }
 
     &[disabled]:hover {
-      background-color: rgba(54, 43, 37, 0.5);
+      opacity: 1 !important;
+      background-color: #ccbac1 !important;
     }
   }
 
