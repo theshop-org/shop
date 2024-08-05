@@ -41,3 +41,22 @@ a {
     }
 }
 
+
+.account button[type=submit]:hover{
+    background-color: #CCBAC1;
+}
+
+
+.show-password-input::after {
+    font-family: "NBAkademieRegular";
+    font-size: 12px;
+    font-weight: 400;
+    vertical-align: baseline;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 12px;
+    content: "SHOW" ;
+}
