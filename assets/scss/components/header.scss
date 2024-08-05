@@ -753,6 +753,12 @@
   }
 }
 
+@media (max-width: 960px) {
+  .products-header {
+    padding: 0 15px;
+  }
+}
+
 .post-card {
   display: flex;
   justify-content: space-between;
