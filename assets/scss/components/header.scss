@@ -21,6 +21,12 @@
     margin-top: 10.1875rem;
   }
 
+  @media screen and (max-width:960px){
+    &.archive-page + div {
+      margin-top: 80px !important;
+    }
+  }
+
   &__wrapper {
     display: flex;
     justify-content: space-between;
