@@ -11,10 +11,14 @@
 
     @media screen and (max-width:960px) {
       flex: 0 0 calc(50% - 7.5px);
+      
+       
+      
+      
     }
-    @media screen and (max-width:660px) {
-      flex: 0 0 100%;
-    }
+    // @media screen and (max-width:660px) {
+    //   flex: 0 0 100%;
+    // }
 
     img {
       margin-bottom: 0.9375rem;
@@ -49,4 +53,30 @@
       text-align: left;
     }
   }
+}
+
+
+@media screen and (max-width:960px) {
+  .posts-wrapper{
+    gap: 15px 10px;
+  }
+
+  
+    span{
+      font-size: 0.5rem !important;
+      line-height: 0.5rem !important;
+    }
+  
+    h2{
+      font-size: 12px !important;
+      line-height: 12px !important;
+    }
+
+    p{
+      font-size: 10px !important;
+      line-height: 10px !important;
+    }
+
+  
+  
 }
