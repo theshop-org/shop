@@ -13,7 +13,7 @@
     transition: all 0.3s ease;
     height: 0;
     width: 100%;
-    display: grid;
+    display: none;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(7, 1fr);
     grid-column-gap: 0px;
@@ -52,6 +52,7 @@
       visibility: visible;
       height: auto;
       column-gap: 11px;
+      display: grid;
     }
 
     .products-last-image{
