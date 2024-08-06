@@ -24,6 +24,7 @@ $grid_texts = get_field('grid_texts', wc_get_page_id('shop'));
 $main_image = get_field('main_image', wc_get_page_id('shop'));
 $horizontal_image = get_field('horizontal_image', wc_get_page_id('shop'));
 $vertical_image = get_field('vertical_image', wc_get_page_id('shop'));
+$last_image = get_field('last_image', wc_get_page_id('shop'));
 $count = 0;
 if (have_posts()) : ?>
     <div class="shop-page gridStyleOne">
@@ -176,6 +177,19 @@ if (have_posts()) : ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
+                    <?php
+                      $count++;
+                endif;
+
+               
+
+                if ($count == 10) :
+                    ?>
+                              <?php if(isset($last_image['url']) && $last_image['url']): ?>
+                                    <div class="products-last-image" >
+                                        <img src="<?php echo $last_image['url'] ?>" alt="<?php echo $last_image['alt'] ?>">
+                                    </div>
+                                <?php endif; ?>
                     <?php
                 endif;
                 
