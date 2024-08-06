@@ -37,6 +37,7 @@
 
   .products-last-image{
     visibility: hidden;
+    display: none;
   }
 
   &.gridStyleOne {
@@ -54,6 +55,7 @@
 
     .products-last-image{
       visibility: visible;
+      display: flex;
     }
   }
 
