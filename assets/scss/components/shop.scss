@@ -280,6 +280,23 @@
     
     margin-bottom: 0 !important;
   }
+
+  .products-horizontal-img {
+    display: none;
+  }
+
+  .products-vertical-img{
+   grid-area: 8/1/16/26 !important;
+  }
+
+  .two-images {
+    grid-column: span 2;
+  }
+  
+
+  .products-last-image{
+    grid-column: span 2;
+  }
   
    
   
