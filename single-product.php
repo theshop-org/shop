@@ -173,7 +173,7 @@ get_header( 'shop' );
 															foreach($safe_list_care as $list): ?>
 															<div>
 																<?php if(isset($list['icon']['url']) && $list['icon']['url']): ?>
-																	<img src="<?php echo $list['icon']['url'] ?>" alt="<?php echo $list['icon']['alt'] ?>">
+																	<img class="icon-width-style" src="<?php echo $list['icon']['url'] ?>" alt="<?php echo $list['icon']['alt'] ?>">
 																<?php endif; ?>
 																<span><?php echo $list['text'] ?></span>
 															</div>
