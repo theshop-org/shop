@@ -183,7 +183,7 @@ if (have_posts()) : ?>
 
                
 
-                if ($count == 10) :
+                if ($count == 11) :
                     ?>
                               <?php if(isset($last_image['url']) && $last_image['url']): ?>
                                     <div class="products-last-image" >
