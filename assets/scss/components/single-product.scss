@@ -182,11 +182,13 @@
   }
 }
 .single-text-style {
+  white-space: pre-line;
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
   text-align: left;
   color: #000;
+
 
   &.list-care {
     margin-top: 16px;
