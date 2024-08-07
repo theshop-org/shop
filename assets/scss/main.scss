@@ -94,3 +94,10 @@ a {
         margin-top: 0 !important;
     }
 }
+
+@media screen and (max-width:1200px) {
+    .product-single__desc{
+        font-size: 22px;
+        line-height: 26px;
+    }
+}
