@@ -459,8 +459,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let addToCartButton = document.querySelector(".add-to-cart-single");
 
   if (singleColorElements) {
-    addToCartButton.disabled = true;   //disables add to cart button if color is not choosen
+   
     singleColorElements.forEach(function (element) {
+      addToCartButton.disabled = true; //disables add to cart button if color is not chosen
       element.addEventListener("click", function () {
         singleColorElements.forEach(function (el) {
           el.classList.remove("active");
