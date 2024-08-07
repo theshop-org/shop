@@ -792,16 +792,25 @@ document.addEventListener("DOMContentLoaded", function () {
         action: "get_cart_contents",
       },
       success: function (response) {
+        const postCardOption = document.querySelector(".post-card");
         if (response.length === 0) {
           document.getElementById("checkoutEmpty").classList.add("d-block");
           document.getElementById("checkoutEmpty").classList.remove("d-none");
           document.getElementById("checkoutOff").classList.add("d-none");
           document.getElementById("checkoutOff").classList.remove("d-block");
+          if (postCardOption) {
+            postCardOption.classList.add("d-none");
+            postCardOption.classList.remove("d-block");
+          }
         } else {
           document.getElementById("checkoutEmpty").classList.remove("d-block");
           document.getElementById("checkoutEmpty").classList.add("d-none");
           document.getElementById("checkoutOff").classList.remove("d-none");
           document.getElementById("checkoutOff").classList.add("d-block");
+          if (postCardOption) {
+            postCardOption.classList.remove("d-none");
+            postCardOption.classList.add("d-block");
+          }
         }
       },
     });
@@ -899,6 +908,9 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
+
+  
+
 
   var textarea = document.getElementById("postCardMessage");
   var counter = document.getElementById("characterCount");
