@@ -97,6 +97,13 @@
         text-align: left;
         color: #000;
       }
+
+      @media screen and (max-width:1200px){
+        & > div:first-child {
+          flex-basis: 0;
+         
+        }
+      }
     }
 
     &--color {

@@ -106,7 +106,15 @@ get_header( 'shop' );
 							<div class="product-single__content">
 								<div class="product-single__sticky">
 									<div class="product-single__desc">
+										<div class="title-and-price">
+												<div>
 										<?php echo $product->get_title(); ?>
+											</div>
+												<div class="price-for-mobile-screen">
+													<?php echo get_woocommerce_currency_symbol() . $product->get_price(); ?>
+												</div>
+											</div>
+										
 									</div>
 									<div class="product-single__bot">
 
