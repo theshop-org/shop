@@ -307,7 +307,7 @@ $contact_us_email = get_field("contact_us_email", "option");
 				</button>
 			</div>
 		</div>
-		<div class="preloader<?php echo is_front_page() ? '' : ' d-none' ?>">
+		<!-- <div class="preloader<?php echo is_front_page() ? '' : ' d-none' ?>">
 			<div class="preloader__title">
 				<div class="preloader__title-inside">
 					<?php if($pre_text):
@@ -318,7 +318,7 @@ $contact_us_email = get_field("contact_us_email", "option");
 					<?php endif; ?>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
 			<div class="offcanvas-header">
 				<div class="offcanvas-title" id="offcanvasRightLabel">
