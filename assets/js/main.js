@@ -189,6 +189,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const productId = button.getAttribute("data-product-id");
     const quantity = button.getAttribute("data-quantity");
 
+
+
+    
+
     // jQuery.ajax({
     //   url: custom_script_vars.ajaxurl,
     //   method: "POST",
