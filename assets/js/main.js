@@ -1000,5 +1000,16 @@ searchInputs.forEach(function (searchInput) {
 
 
 
+//hide form after subscribe 
 
-
+document.addEventListener( 'wpcf7mailsent', function( event ) {
+  var form = document.querySelector('.wpcf7-form');
+  var message = event.detail.apiResponse.message;
+  if (form) {
+      form.style.display = 'none ';
+      var successMessage = document.createElement('div');
+      successMessage.className = 'subscribe-success-message';
+      successMessage.innerHTML = message;
+      form.parentNode.appendChild(successMessage);
+  }
+}, false );

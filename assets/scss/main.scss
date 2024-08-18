@@ -19,9 +19,54 @@
 @import "~components/account";
 @import '~swiper/swiper-bundle.css';
 
+// input:-webkit-autofill {
+//     background-color: transparent !important;
+//     color: white !important;
+//     -webkit-box-shadow: 0 0 0 1000px rgba(180, 42, 42, 0.074) inset !important;
+//     box-shadow: 0 0 0 1000px rgba(155, 74, 74, 0.171) inset !important;
+// }
+
+// input:-webkit-autofill,
+// input:-webkit-autofill:hover, 
+// input:-webkit-autofill:focus, 
+// input:-webkit-autofill:active{
+//     -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.06) inset !important;
+// }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #23232329;
+    font-size: 16px   !important;
+}
+
+// form response output margin
+
+
+.wpcf7-response-output{
+    margin: 0 !important;
+}
 
 .site-header {
     background-color: #fff;
+}
+
+.footer__top{
+    font-family: NbAkademieBook !important;
+}
+
+.footer__top--title{
+    font-family: NbAkademieBook !important;
+}
+
+.wpcf7-form-control::placeholder{
+    color: #726465 !important ;
+    
+   
 }
 
 .d-none {
@@ -164,4 +209,20 @@ a {
         padding: 0 !important;
     }
 
+}
+
+
+
+
+.subscribe-success-message {
+    margin-top: 0px;
+   
+}
+
+
+
+
+.wpcf7-response-output {
+    border: none !important;
+    padding: 0 !important;
 }
