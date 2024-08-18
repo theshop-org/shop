@@ -197,7 +197,7 @@ get_header( 'shop' );
 												<input type="number" step="1" min="1" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="[0-9]*" inputmode="numeric" id="productQuantity">
 												<input type="button" value="+" class="plus">
 											</div>
-											<button type="button" class="product__single--add add-to-cart-single">
+											<button type="button" class="product__single--add add-to-cart-single" data-product-id="<?php echo $product->get_id(); ?>">
 												<?php echo esc_html( $product->single_add_to_cart_text() ); ?>
 											</button>
 										</div>

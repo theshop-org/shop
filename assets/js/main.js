@@ -519,7 +519,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function addToCart(button) {
-    var productId = null;
+    var productId = button.getAttribute("data-product-id");
     singleColorElements.forEach(function (colorLabel) {
       if (colorLabel.classList.contains("active")) {
         productId = colorLabel.getAttribute("data-product-id");
@@ -863,13 +863,48 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  const searchInput = document.querySelector(
-    '.woocommerce-product-search input[type="search"]'
-  );
-  const searchResults = document.querySelector(".search-results-wrapper");
+  // const searchInput = document.querySelector(
+  //   '.woocommerce-product-search input[type="search"]'
+  // );
+  // const searchResults = document.querySelector(".search-results-wrapper");
 
+  // searchInput.addEventListener("input", function () {
+  //   const searchQuery = this.value;
+
+  //   // Abort previous request if any
+  //   if (this.previousSearchXHR) {
+  //     this.previousSearchXHR.abort();
+  //   }
+
+  //   // Send AJAX request
+  //   this.previousSearchXHR = new XMLHttpRequest();
+  //   this.previousSearchXHR.open("POST", custom_script_vars.ajaxurl);
+  //   this.previousSearchXHR.setRequestHeader(
+  //     "Content-Type",
+  //     "application/x-www-form-urlencoded"
+  //   );
+  //   this.previousSearchXHR.onload = function () {
+  //     if (this.status >= 200 && this.status < 300) {
+  //       searchResults.innerHTML = this.responseText;
+  //     }
+  //   };
+  //   this.previousSearchXHR.send(
+  //     "action=live_search&search_query=" + encodeURIComponent(searchQuery)
+  //   );
+  // });
+
+  // Select all search input elements within .woocommerce-product-search
+const searchInputs = document.querySelectorAll(
+  '.woocommerce-product-search input[type="search"]'
+);
+
+// Loop through each search input element
+searchInputs.forEach(function (searchInput) {
   searchInput.addEventListener("input", function () {
     const searchQuery = this.value;
+
+    // Find the closest .search-results-wrapper that is a sibling to the current input
+    const searchResults = this.closest('.offcanvas-body').querySelector('.search-results-wrapper');
 
     // Abort previous request if any
     if (this.previousSearchXHR) {
@@ -885,13 +920,16 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     this.previousSearchXHR.onload = function () {
       if (this.status >= 200 && this.status < 300) {
-        searchResults.innerHTML = this.responseText;
+        if (searchResults) {
+          searchResults.innerHTML = this.responseText;
+        }
       }
     };
     this.previousSearchXHR.send(
       "action=live_search&search_query=" + encodeURIComponent(searchQuery)
     );
   });
+});
 
   const inputs = document.querySelectorAll("input");
 
@@ -959,6 +997,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+
 
 
 
