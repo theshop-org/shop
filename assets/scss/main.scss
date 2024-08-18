@@ -147,10 +147,16 @@ a {
 }
 
 
+.product__info--title{
+    text-transform: uppercase;
+}
+
+
 @media screen and (max-width:960px) {
     .product__info--title{
         font-size: 0.5rem !important;
         line-height: 0.5rem !important;
+       
     }
     
     .product__info--right{
