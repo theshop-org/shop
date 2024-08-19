@@ -233,6 +233,17 @@ a {
         padding: 0 !important;
     }
 
+    //product images width and height on mobile screen(search)
+
+    .main-header .offcanvas.offcanvas-start .offcanvas-body .search-products__grid a {
+        width: 113px !important;
+        height: 131px !important;
+    }
+
+    .search-products__grid{
+        justify-content: center !important;
+    }
+
 }
 
 
