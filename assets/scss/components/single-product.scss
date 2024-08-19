@@ -8,7 +8,6 @@
       display: flex;
       justify-content: center;
       padding: 0 16px;
-     
     }
   }
   &__hero {
@@ -98,10 +97,9 @@
         color: #000;
       }
 
-      @media screen and (max-width:1200px){
+      @media screen and (max-width: 1200px) {
         & > div:first-child {
           flex-basis: 0;
-         
         }
       }
     }
@@ -147,10 +145,25 @@
     }
   }
 
+  &__bot {
+    @media screen and (max-width: 1200px) {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+  }
+
   &__buttons {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+
+    @media screen and (max-width: 960px) {
+      order: -1;
+      position: sticky;
+      top: 3.5rem;
+      margin-bottom: 0.625rem;
+    }
 
     .quantity {
       display: flex;
@@ -185,7 +198,7 @@
       color: #fff;
       flex-grow: 1;
       &:hover {
-        background-color: #CCBAC1;
+        background-color: #ccbac1;
       }
     }
   }
@@ -197,8 +210,6 @@
   line-height: 20px;
   text-align: left;
   color: #000;
-  
-
 
   &.list-care {
     margin-top: 16px;
