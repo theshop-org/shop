@@ -184,6 +184,19 @@ a {
 }
 
 @media screen and (max-width:1200px) {
+
+    .account__login{
+        margin-top: 0 !important;
+    }
+
+    .entry-title{
+        display: none;
+    }
+
+    .woocommerce-ResetPassword{
+        margin: 15px;
+    }
+
     .product-single__desc{
         font-size: 22px;
         line-height: 26px;
