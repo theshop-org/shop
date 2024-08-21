@@ -164,8 +164,7 @@ get_header( 'shop' );
 												<div>
 													<?php echo __("Product details:"); ?>
 												</div>
-												<div class="single-text-style">
-													<?php
+												<div class="single-text-style"><?php
 														echo $product->get_description();									
 													?>
 												</div>
