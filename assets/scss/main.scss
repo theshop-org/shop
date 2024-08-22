@@ -358,13 +358,13 @@ a {
         font-size: 40px;
     }
 
-    .woocommerce-column woocommerce-column--1 woocommerce-column--billing-address col-1{
+    .woocommerce-column--billing-address{
         width: 100%;
     }
 
-    .woocommerce-column woocommerce-column--2 woocommerce-column--shipping-address col-2{
-        width: 100%;
-    }
+    // .woocommerce-column woocommerce-column--2 woocommerce-column--shipping-address col-2{
+    //     width: 100%;
+    // }
 
 }
 
