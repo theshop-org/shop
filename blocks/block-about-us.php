@@ -51,10 +51,10 @@ $information = get_field('information');
             <?php if(!empty($information)): ?>
                 <div class="about-us__content--first">
                     <div class="about-us__content--texts">
-                        <h2 class="about-us__content--title" style="width: 50% !important">
+                        <h2 class="about-us__content--title" style="width: 50%">
                             <?php echo $information[0]['title'] ?>
                         </h2>
-                        <p class="about-us__content--desc" style="width: 50% !important">
+                        <p class="about-us__content--desc" style="width: 50%">
                             <?php echo $information[0]['description'] ?>
                         </p>
                     </div>
