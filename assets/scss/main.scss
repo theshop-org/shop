@@ -439,7 +439,9 @@ a {
 
 @media (min-width: 1201px) and (max-height: 900px) {
    .title-and-price{
-    max-height: 110px;
+    font-size: 50px;
+    margin-top: -50px;
+    max-height: 100px;
    }
 
    .list-care{
