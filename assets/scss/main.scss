@@ -435,3 +435,17 @@ a {
     border: none !important;
     padding: 0 !important;
 }
+
+
+@media (min-width: 1201px) and (max-height: 900px) {
+   .title-and-price{
+    max-height: 110px;
+   }
+
+   .list-care{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+   }
+
+
+}
