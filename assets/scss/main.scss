@@ -218,6 +218,14 @@ a {
     color: #000;
 }
 
+//woocommerce message
+
+.woocommerce-message{
+    border-left: unset;
+    background-color: transparent;
+    color: #000;
+}
+
 
 
 @media screen and (max-width:960px) {
@@ -403,6 +411,11 @@ a {
 
     .shop-our-products-wrapper > a > span{
         font-size: 25px !important;
+    }
+
+    //privacy policy first span font size
+    .woocommerce-form-row > span{
+        font-size: 12px Im !important;
     }
 
 }
