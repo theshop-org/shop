@@ -338,7 +338,7 @@ $contact_us_email = get_field("contact_us_email", "option");
 							<img class="postcard-first-image" src="https://theshopag.com/wp-content/uploads/2024/08/Artboard-1-copy-4.png" style="width: 68px" />
 							<img class="postcard-second-image" src="https://theshopag.com/wp-content/uploads/2024/08/Artboard-1-copy-9.png" style="width: 68px" />
 							<div class="postcard-display-flex-column">
-								Add Post Card
+								Add Postcard
 								<button type="button" class="post-card__btn" id="addMessageButton" data-bs-toggle="modal" data-bs-target="#messageModal">
 							+ Add message to the card
 						</button>
