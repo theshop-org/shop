@@ -202,6 +202,22 @@ a {
 
 
 
+//no orders placed yet text
+
+.woocommerce-info{
+    background-color: transparent;
+    color: #000;
+}
+
+//red error background for login 
+
+.woocommerce-error{
+    background-color: transparent;
+    color: #000;
+}
+
+
+
 @media screen and (max-width:960px) {
     .product__info--title{
         font-size: 0.5rem !important;
