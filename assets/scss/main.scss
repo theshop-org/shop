@@ -207,11 +207,13 @@ a {
 .woocommerce-info{
     background-color: transparent;
     color: #000;
+    border-left: unset;
 }
 
 //red error background for login 
 
 .woocommerce-error{
+    border-left: unset;
     background-color: transparent;
     color: #000;
 }
