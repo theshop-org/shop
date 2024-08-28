@@ -147,10 +147,13 @@
 			</div>
 			<div class="footer__bottom">
 				<div class="footer__bottom--copy">
-					<?php echo $copyright_text ?>
+					<p style="text-transform: uppercase">Product of georgia</p>
+					<img style="height: 19px; border-radius: 0;" src="https://theshopag.com/wp-content/uploads/2024/08/Flag_of_Georgia-1.png" />
+					<!-- <?php echo $copyright_text ?> -->
 				</div>
 				<div class="footer__bottom--menu">
 					<?php if(!empty($footer_menu)): ?>
+						<p class="the-shop-footer-text-copyright">© 2024 THE SHOP</p>
 						<?php foreach($footer_menu as $item): ?>
 							<?php if(isset($item['link']['url'])): ?>
 								<a href="<?php echo $item['link']['url'] ?>" target="<?php echo $item['link']['target'] ?>">
