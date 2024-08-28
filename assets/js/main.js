@@ -1012,7 +1012,25 @@ document.addEventListener(
       successMessage.className = "subscribe-success-message";
       successMessage.innerHTML = message;
       form.parentNode.appendChild(successMessage);
-    }
-  },
-  false
+  }
+}, 
+ false 
 );
+
+
+//postcard random images 
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Select both images
+  var firstImage = document.querySelector(".postcard-first-image");
+  var secondImage = document.querySelector(".postcard-second-image");
+
+  // Randomly decide which one to show
+  if (Math.random() < 0.5) {
+      firstImage.style.display = "block";
+      secondImage.style.display = "none";
+  } else {
+      firstImage.style.display = "none";
+      secondImage.style.display = "block";
+  }
+});

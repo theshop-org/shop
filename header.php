@@ -334,19 +334,26 @@ $contact_us_email = get_field("contact_us_email", "option");
 					<div class="post-card__left">
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" id="addPostCardCheck">
-							<label class="form-check-label" for="addPostCardCheck">
-								Add Post Card
-							</label>
-						</div>
-						<!-- Button to open the modal -->
-						<button type="button" class="post-card__btn" id="addMessageButton" data-bs-toggle="modal" data-bs-target="#messageModal">
+					<label class="form-check-label" for="addPostCardCheck">
+							<img class="postcard-first-image" src="https://theshopag.com/wp-content/uploads/2024/08/Artboard-1-copy-4.png" style="width: 68px" />
+							<img class="postcard-second-image" src="https://theshopag.com/wp-content/uploads/2024/08/Artboard-1-copy-9.png" style="width: 68px" />
+							<div class="postcard-display-flex-column">
+								Add Postcard
+								<button type="button" class="post-card__btn" id="addMessageButton" data-bs-toggle="modal" data-bs-target="#messageModal">
 							+ Add message to the card
 						</button>
-	
 					</div>
-					<div class="post-card__right">
+					<div class="post-card__right" style="align-self: flex-start; margin-left: auto; margin-top: 5px;">
 						10 GEL
 					</div>
+					</label>
+					
+						</div>
+						<!-- Button to open the modal -->
+						
+	
+					</div>
+					
 				</div>
 				<div class="checkout-box">
 					<div class="checkout-info">
