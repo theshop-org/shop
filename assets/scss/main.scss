@@ -236,6 +236,13 @@ a {
 }
 
 
+.footer__bottom--copy{
+    display: flex;
+    place-self: bottom;
+    gap: 11px;
+}
+
+
 
 @media screen and (max-width:960px) {
     .product__info--title{
