@@ -215,7 +215,7 @@
     bottom: 50%; /* Position images above the view */
     left: 50%;
     transform: translateX(-50%);
-    opacity: 1; /* Start with images hidden */
+    opacity: 0; /* Start with images hidden */
     z-index: -1;
 
     &.hippo {
@@ -239,6 +239,7 @@
   }
 
   .shop-logo {
+    display: none;
     position: absolute;
     top: 55%;
     left: 50.8%;
@@ -277,11 +278,3 @@
   }
 }
 
-.home .main-header__logo,
-.home .main-header__logo-mobile {
-  opacity: 0;
-
-  &.change-logo-header {
-    opacity: 1;
-  }
-}

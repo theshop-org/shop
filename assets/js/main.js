@@ -22,21 +22,23 @@ window.addEventListener("load", () => {
 
   // Function to check if an element exists
   const elementExists = (selector) => document.querySelector(selector) !== null;
-
+  const screenWidth = window.innerWidth;
   // Animation for the seahorse image if element exists
   if (elementExists(".seahorse")) {
+    const seahorseX = screenWidth <= 960 ? "-20%" : "-21%";
     gsap.fromTo(
       ".seahorse",
-      { y: "-120%", x: "-21%", opacity: 1 },
+      { y: "-170%", x: seahorseX, opacity: 1 },
       animationSettings
     );
   }
 
   // Animation for the hippo image if element exists
   if (elementExists(".hippo")) {
+    const hippoX = screenWidth <= 960 ? "-16%" : "-18%";
     gsap.fromTo(
       ".hippo",
-      { y: "-95%", x: "-18%", opacity: 1 },
+      { y: "-95%", x: hippoX, opacity: 1 },
       {
         y: "112%",
         opacity: 1,
@@ -53,9 +55,10 @@ window.addEventListener("load", () => {
 
   // Animation for the dino image if element exists
   if (elementExists(".dino")) {
+    const dinoElementX = screenWidth <= 960 ? "29%" : "24%";
     gsap.fromTo(
       ".dino",
-      { y: "-95%", x: "24%", opacity: 1 },
+      { y: "-95%", x: dinoElementX, opacity: 1 },
       {
         y: "75%",
         opacity: 1,
@@ -188,10 +191,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function addToCart(button) {
     const productId = button.getAttribute("data-product-id");
     const quantity = button.getAttribute("data-quantity");
-
-
-
-    
 
     // jQuery.ajax({
     //   url: custom_script_vars.ajaxurl,
@@ -425,28 +424,33 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Hide preloader after 3 seconds
-  setTimeout(
-    () => document.querySelector(".preloader").classList.add("preloader-exit"),
-    2000
-  );
+  let preloader = document.querySelector(".preloader");
 
-  // Animate preloader titles after 400 milliseconds
-  setTimeout(
-    () =>
-      document
-        .querySelectorAll(".animate-preloader__title")
-        .forEach((item) => (item.style.transform = "translateY(0)")),
-    400
-  );
+  if (preloader) {
+    setTimeout(
+      () =>
+        preloader.classList.add("preloader-exit"),
+      2000
+    );
 
-  // Reverse animation of preloader titles after 2.9 seconds
-  setTimeout(
-    () =>
-      document
-        .querySelectorAll(".animate-preloader__title")
-        .forEach((item) => (item.style.transform = "translateY(-100%)")),
-    1900
-  );
+    // Animate preloader titles after 400 milliseconds
+    setTimeout(
+      () =>
+        document
+          .querySelectorAll(".animate-preloader__title")
+          .forEach((item) => (item.style.transform = "translateY(0)")),
+      400
+    );
+
+    // Reverse animation of preloader titles after 2.9 seconds
+    setTimeout(
+      () =>
+        document
+          .querySelectorAll(".animate-preloader__title")
+          .forEach((item) => (item.style.transform = "translateY(-100%)")),
+      1900
+    );
+  }
 
   let parallaxImage = document.getElementById("parallaxImage");
 
@@ -463,13 +467,11 @@ document.addEventListener("DOMContentLoaded", function () {
   let addToCartButton = document.querySelector(".add-to-cart-single");
 
   if (singleColorElements) {
-   
     singleColorElements.forEach(function (element) {
       addToCartButton.disabled = true; //disables add to cart button if color is not chosen
       element.addEventListener("click", function () {
         singleColorElements.forEach(function (el) {
           el.classList.remove("active");
-          
         });
 
         element.classList.add("active");
@@ -894,42 +896,44 @@ document.addEventListener("DOMContentLoaded", function () {
   // });
 
   // Select all search input elements within .woocommerce-product-search
-const searchInputs = document.querySelectorAll(
-  '.woocommerce-product-search input[type="search"]'
-);
+  const searchInputs = document.querySelectorAll(
+    '.woocommerce-product-search input[type="search"]'
+  );
 
-// Loop through each search input element
-searchInputs.forEach(function (searchInput) {
-  searchInput.addEventListener("input", function () {
-    const searchQuery = this.value;
+  // Loop through each search input element
+  searchInputs.forEach(function (searchInput) {
+    searchInput.addEventListener("input", function () {
+      const searchQuery = this.value;
 
-    // Find the closest .search-results-wrapper that is a sibling to the current input
-    const searchResults = this.closest('.offcanvas-body').querySelector('.search-results-wrapper');
+      // Find the closest .search-results-wrapper that is a sibling to the current input
+      const searchResults = this.closest(".offcanvas-body").querySelector(
+        ".search-results-wrapper"
+      );
 
-    // Abort previous request if any
-    if (this.previousSearchXHR) {
-      this.previousSearchXHR.abort();
-    }
-
-    // Send AJAX request
-    this.previousSearchXHR = new XMLHttpRequest();
-    this.previousSearchXHR.open("POST", custom_script_vars.ajaxurl);
-    this.previousSearchXHR.setRequestHeader(
-      "Content-Type",
-      "application/x-www-form-urlencoded"
-    );
-    this.previousSearchXHR.onload = function () {
-      if (this.status >= 200 && this.status < 300) {
-        if (searchResults) {
-          searchResults.innerHTML = this.responseText;
-        }
+      // Abort previous request if any
+      if (this.previousSearchXHR) {
+        this.previousSearchXHR.abort();
       }
-    };
-    this.previousSearchXHR.send(
-      "action=live_search&search_query=" + encodeURIComponent(searchQuery)
-    );
+
+      // Send AJAX request
+      this.previousSearchXHR = new XMLHttpRequest();
+      this.previousSearchXHR.open("POST", custom_script_vars.ajaxurl);
+      this.previousSearchXHR.setRequestHeader(
+        "Content-Type",
+        "application/x-www-form-urlencoded"
+      );
+      this.previousSearchXHR.onload = function () {
+        if (this.status >= 200 && this.status < 300) {
+          if (searchResults) {
+            searchResults.innerHTML = this.responseText;
+          }
+        }
+      };
+      this.previousSearchXHR.send(
+        "action=live_search&search_query=" + encodeURIComponent(searchQuery)
+      );
+    });
   });
-});
 
   const inputs = document.querySelectorAll("input");
 
@@ -953,9 +957,6 @@ searchInputs.forEach(function (searchInput) {
       });
     }
   });
-
-  
-
 
   var textarea = document.getElementById("postCardMessage");
   var counter = document.getElementById("characterCount");
@@ -998,18 +999,20 @@ searchInputs.forEach(function (searchInput) {
   }
 });
 
+//hide form after subscribe
 
-
-//hide form after subscribe 
-
-document.addEventListener( 'wpcf7mailsent', function( event ) {
-  var form = document.querySelector('.wpcf7-form');
-  var message = event.detail.apiResponse.message;
-  if (form) {
-      form.style.display = 'none ';
-      var successMessage = document.createElement('div');
-      successMessage.className = 'subscribe-success-message';
+document.addEventListener(
+  "wpcf7mailsent",
+  function (event) {
+    var form = document.querySelector(".wpcf7-form");
+    var message = event.detail.apiResponse.message;
+    if (form) {
+      form.style.display = "none ";
+      var successMessage = document.createElement("div");
+      successMessage.className = "subscribe-success-message";
       successMessage.innerHTML = message;
       form.parentNode.appendChild(successMessage);
-  }
-}, false );
+    }
+  },
+  false
+);
