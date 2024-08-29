@@ -227,6 +227,58 @@ a {
 }
 
 
+//footer copyright 
+
+.the-shop-footer-text-copyright{
+    margin: 0 !important;
+    color: #726465;
+    align-self: end;
+}
+
+
+.footer__bottom--copy{
+    display: flex;
+    place-self: bottom;
+    gap: 11px;
+}
+
+
+//woocommerce order background
+
+.woocommerce-orders-table__header{
+    background: transparent !important;
+}
+
+.woocommerce-orders-table__cell{
+    background: transparent !important;
+}
+
+.my_account_orders .button.view::after {
+    display: none ;
+}
+
+.order-number, .order-date, .order-status {
+    background: transparent;
+}
+
+.woocommerce-table--order-details > thead > tr > th{
+    background: transparent !important;
+}
+
+.woocommerce-table--order-details > tbody > tr > td{
+    background: transparent !important;
+}
+
+.woocommerce-table--order-details > tfoot > tr > th{
+    background: transparent !important;
+}
+
+.woocommerce-table--order-details {
+    background: transparent !important;
+}
+
+
+
 
 @media screen and (max-width:960px) {
     .product__info--title{

@@ -58,9 +58,10 @@ $col    = 1;
 	?>
 
 	<div class="woocommerce-Address">
-		<header class="woocommerce-Address-title title">
+		<header class=" woocommerce-Address-title" style="display: flex; justify-content: space-between;" >
 			<h3><?php echo esc_html( $address_title ); ?></h3>
-			<a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>" class="edit"><?php echo $address ? esc_html__( 'Edit', 'woocommerce' ) : esc_html__( 'Add', 'woocommerce' ); ?></a>
+			
+			<a style="text-decoration: none;" href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>" class="edit"><?php echo $address ? esc_html__( 'Edit', 'woocommerce' ) : esc_html__( 'Add', 'woocommerce' ); ?></a>
 		</header>
 		<address>
 			<?php
