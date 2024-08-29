@@ -147,7 +147,7 @@
 			</div>
 			<div class="footer__bottom">
 				<div class="footer__bottom--copy">
-					<p style="text-transform: uppercase">Product of georgia</p>
+					<p style="text-transform: uppercase; color: white;">Product of georgia</p>
 					<img style="height: 19px; border-radius: 0;" src="https://theshopag.com/wp-content/uploads/2024/08/Flag_of_Georgia-1.png" />
 					<!-- <?php echo $copyright_text ?> -->
 				</div>
