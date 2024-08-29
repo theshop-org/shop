@@ -49,64 +49,56 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 		</div>
 	
 		<div class="account__register">
-			<h2><?php esc_html_e( 'SIGN UP', 'woocommerce' ); ?></h2>
-	
-			<form method="post" class="woocommerce-form woocommerce-form-register register" <?php do_action( 'woocommerce_register_form_tag' ); ?> >
-				<?php do_action( 'woocommerce_register_form_start' ); ?>
-	
-				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide position-relative">
-					<input type="email" class="woocommerce-Input woocommerce-Input--text input-text" name="email" id="reg_email" autocomplete="email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>" />
-					<label for="reg_email"><?php esc_html_e( 'E-MAIL', 'woocommerce' ); ?></label>
-				</p>
-	
-				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide position-relative">
-					<input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password" id="reg_password" autocomplete="new-password" />
-					<label for="reg_password"><?php esc_html_e( 'PASSWORD', 'woocommerce' ); ?></label>
-				</p>
-	
-				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide position-relative">
-					<input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password2" id="reg_password2" autocomplete="new-password" />
-					<label for="reg_password2"><?php esc_html_e( 'CONFIRM PASSWORD', 'woocommerce' ); ?></label>
-				</p>
-	
-				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide position-relative">
-					<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="first_name" id="reg_first_name" value="<?php echo ( ! empty( $_POST['first_name'] ) ) ? esc_attr( wp_unslash( $_POST['first_name'] ) ) : ''; ?>" />
-					<label for="reg_first_name"><?php esc_html_e( 'NAME', 'woocommerce' ); ?></label>
-				</p>
-	
-				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide position-relative">
-					<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="last_name" id="reg_last_name" value="<?php echo ( ! empty( $_POST['last_name'] ) ) ? esc_attr( wp_unslash( $_POST['last_name'] ) ) : ''; ?>" />
-					<label for="reg_last_name"><?php esc_html_e( 'SURNAME', 'woocommerce' ); ?></label>
-				</p>
+    <h2><?php esc_html_e( 'SIGN UP', 'text-domain' ); ?></h2>
 
-				<div class="d-flex phone-container">
-					<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide position-relative">
-						<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="prefix" id="reg_prefix" value="<?php echo ( ! empty( $_POST['prefix'] ) ) ? esc_attr( wp_unslash( $_POST['prefix'] ) ) : ''; ?>" />
-						<label for="reg_prefix"><?php esc_html_e( 'PREFIX', 'woocommerce' ); ?></label>
-					</p>
-		
-					<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide position-relative">
-						<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="phone" id="reg_phone" value="<?php echo ( ! empty( $_POST['phone'] ) ) ? esc_attr( wp_unslash( $_POST['phone'] ) ) : ''; ?>" />
-						<label for="reg_phone"><?php esc_html_e( 'PHONE NUMBER', 'woocommerce' ); ?></label>
-					</p>
-				</div>
-	
-				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide position-relative">
-					<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="privacy" type="checkbox" id="reg_privacy" value="1" /> <span>I have read and understand the <a href="#">Privacy and Cookies Policy.</a></span>
-					<label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-register__privacy">
-					</label>
-				</p>
-	
-				<!-- <?php do_action( 'woocommerce_register_form' ); ?> -->
-	
-				<p class="woocommerce-form-row form-row">
-					<?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?>
-					<button type="submit" class="woocommerce-Button woocommerce-button button<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?> woocommerce-form-register__submit" name="register" value="<?php esc_attr_e( 'Register', 'woocommerce' ); ?>"><?php esc_html_e( 'Register', 'woocommerce' ); ?></button>
-				</p>
-	
-				<?php do_action( 'woocommerce_register_form_end' ); ?>
-			</form>
-		</div>
+    <form method="post" class="custom-form-register">
+        <p class="form-row form-row-wide">
+            <input type="email" class="input-text" name="email" id="reg_email" autocomplete="email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>"  required />
+            <label for="reg_email"><?php esc_html_e( 'E-MAIL', 'text-domain' ); ?></label>
+        </p>
+
+        <p class="form-row form-row-wide">
+            <input type="password" class="input-text" name="password" id="reg_password" autocomplete="new-password"  required />
+            <label for="reg_password"><?php esc_html_e( 'PASSWORD', 'text-domain' ); ?></label>
+        </p>
+
+        <p class="form-row form-row-wide">
+            <input type="password" class="input-text" name="password2" id="reg_password2" autocomplete="new-password" required  />
+            <label for="reg_password2"><?php esc_html_e( 'CONFIRM PASSWORD', 'text-domain' ); ?></label>
+        </p>
+
+        <p class="form-row form-row-wide">
+            <input type="text" class="input-text" name="first_name" id="reg_first_name" value="<?php echo ( ! empty( $_POST['first_name'] ) ) ? esc_attr( wp_unslash( $_POST['first_name'] ) ) : ''; ?>"  required />
+            <label for="reg_first_name"><?php esc_html_e( 'NAME', 'text-domain' ); ?></label>
+        </p>
+
+        <p class="form-row form-row-wide">
+            <input type="text" class="input-text" name="last_name" id="reg_last_name" value="<?php echo ( ! empty( $_POST['last_name'] ) ) ? esc_attr( wp_unslash( $_POST['last_name'] ) ) : ''; ?>"  required />
+            <label for="reg_last_name"><?php esc_html_e( 'SURNAME', 'text-domain' ); ?></label>
+        </p>
+
+        <div class="d-flex phone-container">
+            <p class="form-row form-row-wide">
+                <input type="text" class="input-text" name="prefix" id="reg_prefix" value="<?php echo ( ! empty( $_POST['prefix'] ) ) ? esc_attr( wp_unslash( $_POST['prefix'] ) ) : ''; ?>" required  />
+                <label for="reg_prefix"><?php esc_html_e( 'PREFIX', 'text-domain' ); ?></label>
+            </p>
+
+            <p class="form-row form-row-wide">
+                <input type="text" class="input-text" name="phone" id="reg_phone" value="<?php echo ( ! empty( $_POST['phone'] ) ) ? esc_attr( wp_unslash( $_POST['phone'] ) ) : ''; ?>" required  />
+                <label for="reg_phone"><?php esc_html_e( 'PHONE NUMBER', 'text-domain' ); ?></label>
+            </p>
+        </div>
+
+        <p class="form-row form-row-wide">
+            <input class="input-checkbox" name="privacy" type="checkbox" id="reg_privacy" value="1" /> <span><?php esc_html_e( 'I have read and understand the', 'text-domain' ); ?> <a href="#">Privacy and Cookies Policy.</a></span>
+        </p>
+
+        <p class="form-row">
+            <button type="submit" class="button" name="register" value="<?php esc_attr_e( 'Register', 'text-domain' ); ?>"><?php esc_html_e( 'Register', 'text-domain' ); ?></button>
+        </p>
+    </form>
+</div>
+
 	</div>
 
 </div>

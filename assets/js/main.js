@@ -75,6 +75,44 @@ window.addEventListener("load", () => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Show password visibility hover icon on woocommerce forms
+  // Wrap password inputs with a span element
+  var passwordInputs = document.querySelectorAll(
+    '.account__register form .input-text[type="password"]'
+  );
+  passwordInputs.forEach(function (input) {
+    var wrapper = document.createElement("span");
+    wrapper.classList.add("password-input");
+    input.parentNode.insertBefore(wrapper, input);
+    wrapper.appendChild(input);
+  });
+
+  // Append the visibility toggle icon
+  var passwordWrappers = document.querySelectorAll(
+    ".account__register form .password-input"
+  );
+  passwordWrappers.forEach(function (wrapper) {
+    var toggleIcon = document.createElement("span");
+    toggleIcon.classList.add("show-password-input");
+    wrapper.appendChild(toggleIcon);
+  });
+
+  // Toggle password visibility
+  document
+    .querySelectorAll(".show-password-input")
+    .forEach(function (toggleIcon) {
+      toggleIcon.addEventListener("click", function () {
+        var input = this.previousElementSibling;
+        if (input.type === "password") {
+          input.type = "text";
+          this.classList.add("display-password");
+        } else {
+          input.type = "password";
+          this.classList.remove("display-password");
+        }
+      });
+    });
+
   var shopLogo = document.getElementById("shopLogo");
   if (shopLogo) {
     document.addEventListener("scroll", function () {
@@ -427,11 +465,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let preloader = document.querySelector(".preloader");
 
   if (preloader) {
-    setTimeout(
-      () =>
-        preloader.classList.add("preloader-exit"),
-      2000
-    );
+    setTimeout(() => preloader.classList.add("preloader-exit"), 2000);
 
     // Animate preloader titles after 400 milliseconds
     setTimeout(
@@ -1012,25 +1046,24 @@ document.addEventListener(
       successMessage.className = "subscribe-success-message";
       successMessage.innerHTML = message;
       form.parentNode.appendChild(successMessage);
-  }
-}, 
- false 
+    }
+  },
+  false
 );
 
+//postcard random images
 
-//postcard random images 
-
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   // Select both images
   var firstImage = document.querySelector(".postcard-first-image");
   var secondImage = document.querySelector(".postcard-second-image");
 
   // Randomly decide which one to show
   if (Math.random() < 0.5) {
-      firstImage.style.display = "block";
-      secondImage.style.display = "none";
+    firstImage.style.display = "block";
+    secondImage.style.display = "none";
   } else {
-      firstImage.style.display = "none";
-      secondImage.style.display = "block";
+    firstImage.style.display = "none";
+    secondImage.style.display = "block";
   }
 });

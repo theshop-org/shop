@@ -469,37 +469,59 @@ function wc_get_account_menu_items_child() {
 	return apply_filters( 'woocommerce_account_menu_items', $items, $endpoints );
 }
 
-// Hook into WooCommerce registration process
-add_action('woocommerce_created_customer', 'save_custom_registration_fields');
+add_action('init', 'custom_handle_registration');
 
-function save_custom_registration_fields($customer_id) {
-    if (isset($_POST['first_name'])) {
+function custom_handle_registration() {
+    if ( isset($_POST['register']) ) {
+        $email = sanitize_email($_POST['email']);
+        $password = $_POST['password'];
+        $password2 = $_POST['password2'];
         $first_name = sanitize_text_field($_POST['first_name']);
-        // Save first name
-        update_user_meta($customer_id, 'first_name', $first_name);
-        // Save billing first name
-        update_user_meta($customer_id, 'billing_first_name', $first_name);
-        // Save shipping first name
-        update_user_meta($customer_id, 'shipping_first_name', $first_name);
-    }
-
-    if (isset($_POST['last_name'])) {
         $last_name = sanitize_text_field($_POST['last_name']);
-        // Save last name
-        update_user_meta($customer_id, 'last_name', $last_name);
-        // Save billing last name
-        update_user_meta($customer_id, 'billing_last_name', $last_name);
-        // Save shipping last name
-        update_user_meta($customer_id, 'shipping_last_name', $last_name);
-    }
+        $prefix = sanitize_text_field($_POST['prefix']);
+        $phone = sanitize_text_field($_POST['phone']);
+        $privacy = isset($_POST['privacy']) ? intval($_POST['privacy']) : 0;
 
-    if (isset($_POST['prefix']) && isset($_POST['phone'])) {
-        // Save billing phone number
-        $billing_phone = sanitize_text_field($_POST['prefix']) . sanitize_text_field($_POST['phone']);
-        update_user_meta($customer_id, 'billing_phone', $billing_phone);
-        update_user_meta($customer_id, 'shiping_phone', $billing_phone);
+        // Basic validation
+        if ( ! is_email($email) || empty($password) || $password !== $password2 || !$privacy ) {
+            // Handle error
+            return;
+        }
+
+        // Check if user already exists
+        if ( email_exists($email) ) {
+            // Handle error
+            return;
+        }
+
+        // Create user
+        $user_id = wp_create_user($email, $password, $email);
+        if ( is_wp_error($user_id) ) {
+            // Handle error
+            return;
+        }
+
+        // Set user meta
+        wp_update_user(array(
+            'ID' => $user_id,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+        ));
+
+        // Set WooCommerce customer meta
+        update_user_meta($user_id, 'billing_prefix', $prefix);
+        update_user_meta($user_id, 'billing_phone', $phone);
+
+        // Log user in
+        wp_set_current_user($user_id);
+        wp_set_auth_cookie($user_id);
+
+        // Redirect or show success message
+        wp_redirect(home_url() . "/my-account"); // Redirect to the home page
+        exit;
     }
 }
+
 
 
 // Hook to handle AJAX request to save message and price to order
