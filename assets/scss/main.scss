@@ -242,6 +242,16 @@ a {
     gap: 11px;
 }
 
+.product-of-georgia{
+    text-transform: uppercase;
+     color: white;
+}
+
+.product-of-georgia-flag{
+    height: 19px !important;
+    border-radius: 0 !important;
+}
+
 
 //woocommerce order background
 
@@ -467,6 +477,26 @@ a {
 
     //privacy policy first span font size
     .woocommerce-form-row > span{
+        font-size: 12px !important;
+    }
+
+    .footer__bottom--copy{
+        align-items: center;
+    }
+
+    .product-of-georgia{
+        text-transform: uppercase;
+         color: white;
+         font-size: 15px !important;
+         margin: 0;
+    }
+    
+    .product-of-georgia-flag{
+        height: 15px !important;
+        border-radius: 0;
+    }
+
+    .i-have-read-and-understand-font-size{
         font-size: 12px !important;
     }
 

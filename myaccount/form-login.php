@@ -90,7 +90,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
         </div>
 
         <p class="form-row form-row-wide">
-            <input class="input-checkbox" name="privacy" type="checkbox" id="reg_privacy" value="1" /> <span><?php esc_html_e( 'I have read and understand the', 'text-domain' ); ?> <a href="#">Privacy and Cookies Policy.</a></span>
+            <input class="input-checkbox" name="privacy" type="checkbox" id="reg_privacy" value="1" /> <span class="i-have-read-and-understand-font-size"><?php esc_html_e( 'I have read and understand the', 'text-domain' ); ?> <a href="#">Privacy and Cookies Policy.</a></span>
         </p>
 
         <p class="form-row">
