@@ -292,11 +292,26 @@ a {
 
 @media screen and (max-width:960px) {
     .product__info--title{
-        font-size: 0.5rem !important;
-        line-height: 0.5rem !important;
+        font-size: 12px !important;
+        line-height: 12px !important;
        
     }
+
+    .woocommerce-Price-amount{
+        font-size: 12px !important;
+        line-height: 12px !important;
+    }
     
+    .woocommerce-Price-currencySymbol{
+        font-size: 12px !important;
+        line-height: 12px !important;
+    }
+
+    .woocommerce-form-row > label{
+        font-size: 10px !important;
+        line-height: 10px !important;
+    }
+
     .product__info--right{
         display: flex;
         margin-right: 0 !important;
