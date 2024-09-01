@@ -23,34 +23,65 @@ window.addEventListener("load", () => {
   // Function to check if an element exists
   const elementExists = (selector) => document.querySelector(selector) !== null;
   const screenWidth = window.innerWidth;
-  // Animation for the seahorse image if element exists
-  if (elementExists(".seahorse")) {
-    const seahorseX = screenWidth <= 960 ? "-20%" : "-21%";
-    gsap.fromTo(
-      ".seahorse",
-      { y: "-170%", x: seahorseX, opacity: 1 },
-      animationSettings
-    );
-  }
 
-  // Animation for the hippo image if element exists
-  if (elementExists(".hippo")) {
-    const hippoX = screenWidth <= 960 ? "-16%" : "-18%";
-    gsap.fromTo(
-      ".hippo",
-      { y: "-95%", x: hippoX, opacity: 1 },
-      {
-        y: "112%",
-        opacity: 1,
-        scrollTrigger: {
-          trigger: ".scroll-animation1",
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
-          once: true,
-        },
-      }
-    );
+  // Apply animations directly on page load for devices below 500px
+  if (screenWidth < 500) {
+    // Seahorse animation on load for small devices
+    if (elementExists(".seahorse")) {
+      gsap.fromTo(
+        ".seahorse",
+        { y: "-170%", x: "-20%", opacity: 1 },
+        { y: "81%", opacity: 1, duration: 1.5  }
+      );
+    }
+
+    // Hippo animation on load for small devices
+    if (elementExists(".hippo")) {
+      gsap.fromTo(
+        ".hippo",
+        { y: "-95%", x: "-16%", opacity: 1 },
+        { y: "112%", opacity: 1, duration: 1.5  }
+      );
+    }
+
+    // Dino animation on load for small devices
+    if (elementExists(".dino")) {
+      gsap.fromTo(
+        ".dino",
+        { y: "-95%", x: "29%", opacity: 1 },
+        { y: "75%", opacity: 1, duration: 1.5  }
+      );
+    }
+  } else {
+    // Animation for the seahorse image if element exists
+    if (elementExists(".seahorse")) {
+      const seahorseX = screenWidth <= 960 ? "-20%" : "-21%";
+      gsap.fromTo(
+        ".seahorse",
+        { y: "-170%", x: seahorseX, opacity: 1 },
+        animationSettings
+      );
+    }
+
+    // Animation for the hippo image if element exists
+    if (elementExists(".hippo")) {
+      const hippoX = screenWidth <= 960 ? "-16%" : "-18%";
+      gsap.fromTo(
+        ".hippo",
+        { y: "-95%", x: hippoX, opacity: 1 },
+        {
+          y: "112%",
+          opacity: 1,
+          scrollTrigger: {
+            trigger: ".scroll-animation1",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+            once: true,
+          },
+        }
+      );
+    }
   }
 
   // Animation for the dino image if element exists
@@ -75,6 +106,37 @@ window.addEventListener("load", () => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("lostPasswordForm");
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const formData = new FormData(form); // Gather form data
+    formData.append("action", "custom_lost_password");
+    formData.append(
+      "woocommerce-lost-password-nonce",
+      document.querySelector('input[name="woocommerce-lost-password-nonce"]')
+        .value
+    ); // Add the nonce
+    jQuery.ajax({
+      url: custom_script_vars.ajaxurl,
+      method: "POST",
+      data: formData,
+      processData: false, // Prevent jQuery from automatically transforming the data into a query string
+      contentType: false, // Prevent jQuery from overriding the content type header
+      success: function (response) {
+        if (response.success) {
+          document.getElementById("modalText").textContent =
+            "A password reset email has been sent to the email address on file for your account, but may take several minutes to show up in your inbox. Please wait at least 10 minutes before attempting another reset.";
+        } else {
+          alert(response.data);
+        }
+      },
+      error: function (xhr, status, error) {
+        alert("An error occurred. Please try again.");
+      },
+    });
+  });
   // Show password visibility hover icon on woocommerce forms
   // Wrap password inputs with a span element
   var passwordInputs = document.querySelectorAll(

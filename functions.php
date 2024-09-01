@@ -562,7 +562,40 @@ function save_message_to_order_callback() {
 //     echo '<p>' . wc_price($price) . '</p>';
 // }
 
+add_action('wp_ajax_custom_lost_password', 'custom_lost_password');
+add_action('wp_ajax_nopriv_custom_lost_password', 'custom_lost_password');
 
+function custom_lost_password() {
+    // Check if the nonce is valid to secure the form submission
+    if (!isset($_POST['woocommerce-lost-password-nonce']) || !wp_verify_nonce($_POST['woocommerce-lost-password-nonce'], 'lost_password')) {
+        wp_send_json_error('Invalid nonce. Please refresh the page and try again.');
+    }
+    // Get the user login from the form data
+    $user_login = sanitize_text_field($_POST['user_login']);
+
+    // Ensure the user login field is not empty
+    if (empty($user_login)) {
+        wp_send_json_error('Please enter a username or email address.');
+    }
+
+    // Attempt to retrieve the user by email or login
+    $user = get_user_by('email', $user_login);
+    if (!$user) {
+        $user = get_user_by('login', $user_login);
+    }
+
+    // If the user is found, proceed with the password reset
+    if ($user) {
+        $result = retrieve_password($user_login);
+        if ($result) {
+            wp_send_json_success('Password reset email sent.');
+        } else {
+            wp_send_json_error('Could not send reset email. Please try again later.');
+        }
+    } else {
+        wp_send_json_error('No such user found.');
+    }
+}
 
 
 ?>

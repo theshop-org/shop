@@ -41,9 +41,9 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 					<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
 					<button type="submit" class="woocommerce-button button woocommerce-form-login__submit<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?>" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Log in', 'woocommerce' ); ?></button>
 				</p>
-				<p class="woocommerce-LostPassword lost_password">
-					<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Lost your password?', 'woocommerce' ); ?></a>
-				</p>
+				<p class="woocommerce-LostPassword lost_password"  data-bs-toggle="modal" data-bs-target="#messagePw">
+                    Lost your password?
+                </p>
 				<?php do_action( 'woocommerce_login_form_end' ); ?>
 			</form>
 		</div>
@@ -104,3 +104,34 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 </div>
 
 <?php do_action( 'woocommerce_after_customer_login_form' ); ?>
+
+
+
+<div class="modal fade card-modal" id="messagePw" tabindex="-1" aria-labelledby="messagePwLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messagePwLabel"><?php echo __('Lost your password?', 'storefront') ?></h5>
+                <p class="modal-text" id="modalText">
+                    <?php echo apply_filters( 'woocommerce_lost_password_message', esc_html__( 'Please enter your username or email address. You will receive a link to create a new password via email.', 'woocommerce' ) ); ?>
+                </p>
+            </div>
+            <div class="modal-body">
+            <form method="post" id="lostPasswordForm">
+                <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+                    <label for="user_login">Username or email</label>
+                    <input class="woocommerce-Input woocommerce-Input--text input-text" type="text" name="user_login" id="user_login" autocomplete="username" required />
+                </p>
+
+                <div class="clear"></div>
+
+                <div class="modal-footer p-0">
+                <?php wp_nonce_field('lost_password', 'woocommerce-lost-password-nonce'); ?>
+
+                    <button type="submit" class="modal-footer-save">Reset password</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
