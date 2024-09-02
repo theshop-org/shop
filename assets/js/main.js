@@ -108,35 +108,37 @@ window.addEventListener("load", () => {
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("lostPasswordForm");
 
-  form.addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formData = new FormData(form); // Gather form data
-    formData.append("action", "custom_lost_password");
-    formData.append(
-      "woocommerce-lost-password-nonce",
-      document.querySelector('input[name="woocommerce-lost-password-nonce"]')
-        .value
-    ); // Add the nonce
-    jQuery.ajax({
-      url: custom_script_vars.ajaxurl,
-      method: "POST",
-      data: formData,
-      processData: false, // Prevent jQuery from automatically transforming the data into a query string
-      contentType: false, // Prevent jQuery from overriding the content type header
-      success: function (response) {
-        if (response.success) {
-          document.getElementById("modalText").textContent =
-            "A password reset email has been sent to the email address on file for your account, but may take several minutes to show up in your inbox. Please wait at least 10 minutes before attempting another reset.";
-        } else {
-          alert(response.data);
-        }
-      },
-      error: function (xhr, status, error) {
-        alert("An error occurred. Please try again.");
-      },
+  if(form) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent the default form submission
+  
+      const formData = new FormData(form); // Gather form data
+      formData.append("action", "custom_lost_password");
+      formData.append(
+        "woocommerce-lost-password-nonce",
+        document.querySelector('input[name="woocommerce-lost-password-nonce"]')
+          .value
+      ); // Add the nonce
+      jQuery.ajax({
+        url: custom_script_vars.ajaxurl,
+        method: "POST",
+        data: formData,
+        processData: false, // Prevent jQuery from automatically transforming the data into a query string
+        contentType: false, // Prevent jQuery from overriding the content type header
+        success: function (response) {
+          if (response.success) {
+            document.getElementById("modalText").textContent =
+              "A password reset email has been sent to the email address on file for your account, but may take several minutes to show up in your inbox. Please wait at least 10 minutes before attempting another reset.";
+          } else {
+            alert(response.data);
+          }
+        },
+        error: function (xhr, status, error) {
+          alert("An error occurred. Please try again.");
+        },
+      });
     });
-  });
+  }
   // Show password visibility hover icon on woocommerce forms
   // Wrap password inputs with a span element
   var passwordInputs = document.querySelectorAll(
