@@ -254,7 +254,6 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             success: function (response) {
               // Handle successful response
-              console.log(response);
 
               document.getElementById("offcanvasCartButton").click();
 
@@ -638,7 +637,6 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       success: function (response) {
         // Handle successful response
-        console.log(response);
 
         document.getElementById("offcanvasCartButton").click();
 
@@ -805,7 +803,6 @@ document.addEventListener("DOMContentLoaded", function () {
         quantity: quantity,
       },
       success: function (response) {
-        console.log(response);
 
         let currentCount = parseInt(jQuery("#cartCount").text());
         let currentCountOffcanvas = parseInt(
@@ -844,7 +841,6 @@ document.addEventListener("DOMContentLoaded", function () {
         product_id: productId,
       },
       success: function (response) {
-        console.log(response);
 
         // Remove the cart item element from the DOM
         cartItemElement.remove();
@@ -879,7 +875,6 @@ document.addEventListener("DOMContentLoaded", function () {
           action: "get_cart_contents", // PHP function to retrieve cart items
         },
         success: function (response) {
-          console.log(response);
           updateOffcanvasCart(response);
           checkCartEmpty();
 
@@ -1080,7 +1075,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Example JavaScript function to save message and price
   function saveMessageToOrder(msg) {
-    console.log(msg);
     var price = 10; // Example price, adjust as needed
 
     // Make AJAX request to save data to order
