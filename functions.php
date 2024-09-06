@@ -597,6 +597,116 @@ function custom_lost_password() {
     }
 }
 
+add_action('wp_footer', 'custom_password_reset_popup');
+function custom_password_reset_popup() {
+    if (isset($_GET['password_reset']) && $_GET['password_reset'] === 'true') {
+        ?>
+        <div class="modal fade card-modal" id="password-reset-popup" tabindex="-1" aria-labelledby="password-reset-popupLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="password-reset-popupLabel"><?php echo __('Lost your password?', 'storefront') ?></h5>
+                        <p class="modal-text" id="modalText">
+                            <?php echo apply_filters( 'woocommerce_lost_password_message', esc_html__( 'Please enter your username or email address. You will receive a link to create a new password via email.', 'woocommerce' ) ); ?>
+                        </p>
+                    </div>
+                    <div class="modal-body">
+                    <form method="post" id="password-reset-form">
+                        <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+                            <label for="user_login">New Password</label>
+                            <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="new_password" required />
+                        </p>
+                        <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+                            <label for="user_login">Confirm Password</label>
+                            <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="confirm_password" required />
+                        </p>
+
+                        <div class="clear"></div>
+
+                        <div class="modal-footer p-0">
+                            <button type="submit">Reset Password</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var popup = document.getElementById('password-reset-popup');
+            var backdrop = document.querySelector(".fade.modal-backdrop");
+            popup.classList.add("show"); // Display the popup
+            backdrop.classList.add("show"); // Display the popup
+
+            document.getElementById('password-reset-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                var newPassword = document.querySelector('input[name="new_password"]').value;
+                var confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+
+                if (newPassword === confirmPassword) {
+                    var data = {
+                        'action': 'reset_user_password',  // The AJAX action
+                        'new_password': newPassword,      // The new password
+                        'security': '<?php echo wp_create_nonce("password_reset_nonce"); ?>' // Security nonce
+                    };
+
+                    fetch('<?php echo admin_url("admin-ajax.php"); ?>', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams(data)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Password reset successful!');
+                            window.location.href = '/my-account/'; // Redirect after success
+                        } else {
+                            alert('Password reset failed. ' + data.data.message);
+                        }
+                    });
+                } else {
+                    alert('Passwords do not match!');
+                }
+            });
+        });
+        </script>
+        <?php
+    }
+}
+
+add_action('wp_ajax_reset_user_password', 'handle_password_reset_ajax');
+add_action('wp_ajax_nopriv_reset_user_password', 'handle_password_reset_ajax');
+
+function handle_password_reset_ajax() {
+    // Verify the nonce for security
+    check_ajax_referer('password_reset_nonce', 'security');
+
+    // Get the current user
+    $user = wp_get_current_user();
+    
+    if ($user->ID === 0) {
+        // If no user is logged in, return an error
+        wp_send_json_error(array('message' => 'User not logged in.'));
+    }
+
+    // Get the new password from the request
+    $new_password = sanitize_text_field($_POST['new_password']);
+
+    // Validate the new password (you can add your own validation here)
+    if (strlen($new_password) < 8) {
+        wp_send_json_error(array('message' => 'Password must be at least 8 characters long.'));
+    }
+
+    // Update the user's password
+    wp_set_password($new_password, $user->ID);
+
+    // Send a successful response
+    wp_send_json_success();
+}
 
 ?>
 
