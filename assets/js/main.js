@@ -129,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (response.success) {
             document.getElementById("modalText").textContent =
               "A password reset email has been sent to the email address on file for your account, but may take several minutes to show up in your inbox. Please wait at least 10 minutes before attempting another reset.";
+              form.style.display = "none";
           } else {
             alert(response.data);
           }
