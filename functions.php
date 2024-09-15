@@ -706,17 +706,21 @@ function custom_reset_password_message($message, $key, $user_login, $user_data) 
 
 
 // POST CARD
-// Add fee if a customer adds a note in the block-based checkout
-add_action('woocommerce_cart_calculate_fees', 'add_fee_for_customer_note');
+add_action('woocommerce_cart_calculate_fees', 'add_custom_fee_based_on_note');
 
-function add_fee_for_customer_note() {
-    if ( isset( $_POST['post_data'] ) ) {
-        parse_str( $_POST['post_data'], $post_data );
-        // Check if the customer added a note in the block-based textarea
-        if ( isset( $post_data['wc-block-components-textarea'] ) && ! empty( $post_data['wc-block-components-textarea'] ) ) {
-            // Add a $5 fee for the note
-            WC()->cart->add_fee( 'Customer Note Fee', 5 );
-        }
+function add_custom_fee_based_on_note() {
+    if (isset($_POST['note']) && !empty($_POST['note'])) {
+        WC()->cart->add_fee('Custom Fee', 5);
+    }
+}
+
+// Hook into the WooCommerce checkout process to save the note to the session
+add_action('woocommerce_checkout_update_order_review', 'save_order_note_to_session');
+
+function save_order_note_to_session($post_data) {
+    parse_str($post_data, $parsed_data);
+    if (isset($parsed_data['note'])) {
+        WC()->session->set('order_note', sanitize_text_field($parsed_data['note']));
     }
 }
 

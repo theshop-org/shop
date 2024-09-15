@@ -31,7 +31,7 @@ window.addEventListener("load", () => {
       gsap.fromTo(
         ".seahorse",
         { y: "-170%", x: "-20%", opacity: 1 },
-        { y: "81%", opacity: 1, duration: 1.5  }
+        { y: "81%", opacity: 1, duration: 1.5 }
       );
     }
 
@@ -40,7 +40,7 @@ window.addEventListener("load", () => {
       gsap.fromTo(
         ".hippo",
         { y: "-95%", x: "-16%", opacity: 1 },
-        { y: "112%", opacity: 1, duration: 1.5  }
+        { y: "112%", opacity: 1, duration: 1.5 }
       );
     }
 
@@ -49,7 +49,7 @@ window.addEventListener("load", () => {
       gsap.fromTo(
         ".dino",
         { y: "-95%", x: "29%", opacity: 1 },
-        { y: "75%", opacity: 1, duration: 1.5  }
+        { y: "75%", opacity: 1, duration: 1.5 }
       );
     }
   } else {
@@ -108,10 +108,10 @@ window.addEventListener("load", () => {
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("lostPasswordForm");
 
-  if(form) {
+  if (form) {
     form.addEventListener("submit", function (event) {
       event.preventDefault(); // Prevent the default form submission
-  
+
       const formData = new FormData(form); // Gather form data
       formData.append("action", "custom_lost_password");
       formData.append(
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (response.success) {
             document.getElementById("modalText").textContent =
               "A password reset email has been sent to the email address on file for your account, but may take several minutes to show up in your inbox. Please wait at least 10 minutes before attempting another reset.";
-              form.style.display = "none";
+            form.style.display = "none";
           } else {
             alert(response.data);
           }
@@ -806,7 +806,6 @@ document.addEventListener("DOMContentLoaded", function () {
         quantity: quantity,
       },
       success: function (response) {
-
         let currentCount = parseInt(jQuery("#cartCount").text());
         let currentCountOffcanvas = parseInt(
           jQuery("#cartCountOffcanvas").text()
@@ -844,7 +843,6 @@ document.addEventListener("DOMContentLoaded", function () {
         product_id: productId,
       },
       success: function (response) {
-
         // Remove the cart item element from the DOM
         cartItemElement.remove();
 
@@ -1093,36 +1091,53 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Get the checkbox and textarea elements
-  const noteCheckbox = document.querySelector('#checkbox-control-1');
-  const noteTextarea = document.querySelector('.wc-block-components-textarea');
+// Add a short delay before selecting elements
+setTimeout(function () {
+  const noteCheckbox = document.querySelector(
+    'label[for="checkbox-control-1"] input[type="checkbox"]'
+  );
+
+  // Function to handle the checkbox change event
+  function handleCheckboxChange() {
+    if (noteCheckbox.checked) {
+      // Wait for a short delay to ensure the textarea is rendered
+      setTimeout(function () {
+        // Select the textarea
+        const noteTextarea = document.querySelector(
+          ".wc-block-components-textarea"
+        );
+
+        if (noteTextarea) {
+          if (noteTextarea.value.trim() !== "") {
+            updateCheckout(noteTextarea.value.trim());
+          }
+
+          // Add event listener for textarea input changes
+          noteTextarea.addEventListener("input", function () {
+            if (noteTextarea.value.trim() !== "") {
+              updateCheckout(noteTextarea.value.trim());
+            }
+          });
+        }
+      }, 500); // Adjust delay if needed
+    }
+  }
 
   // Function to trigger the checkout update
-  function updateCheckout() {
-      // Trigger the checkout update to recalculate fees
-      const event = new Event('update_checkout');
+  function updateCheckout(note) {
+    if (typeof window.Event === "function") {
+      // Create and dispatch the update_checkout event with the note
+      const event = new CustomEvent("update_checkout", { detail: { note } });
       document.body.dispatchEvent(event);
+    }
   }
 
-  // Listen for checkbox change
+  // Listen for changes on the checkbox
   if (noteCheckbox) {
-      noteCheckbox.addEventListener('change', function() {
-          if (noteCheckbox.checked) {
-              // If the checkbox is checked, trigger the update
-              updateCheckout();
-          }
-      });
+    noteCheckbox.addEventListener("change", handleCheckboxChange);
   }
+}, 1000); // Delay for 1 second
 
-  // Listen for textarea input
-  if (noteTextarea) {
-      noteTextarea.addEventListener('input', function() {
-          if (noteTextarea.value.trim() !== '') {
-              // If the textarea has content, trigger the update
-              updateCheckout();
-          }
-      });
-  }
 });
 
 //hide form after subscribe
