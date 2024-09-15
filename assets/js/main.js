@@ -1092,6 +1092,37 @@ document.addEventListener("DOMContentLoaded", function () {
       // Optionally, update UI or show confirmation message
     });
   }
+
+  // Get the checkbox and textarea elements
+  const noteCheckbox = document.querySelector('#checkbox-control-1');
+  const noteTextarea = document.querySelector('.wc-block-components-textarea');
+
+  // Function to trigger the checkout update
+  function updateCheckout() {
+      // Trigger the checkout update to recalculate fees
+      const event = new Event('update_checkout');
+      document.body.dispatchEvent(event);
+  }
+
+  // Listen for checkbox change
+  if (noteCheckbox) {
+      noteCheckbox.addEventListener('change', function() {
+          if (noteCheckbox.checked) {
+              // If the checkbox is checked, trigger the update
+              updateCheckout();
+          }
+      });
+  }
+
+  // Listen for textarea input
+  if (noteTextarea) {
+      noteTextarea.addEventListener('input', function() {
+          if (noteTextarea.value.trim() !== '') {
+              // If the textarea has content, trigger the update
+              updateCheckout();
+          }
+      });
+  }
 });
 
 //hide form after subscribe

@@ -706,28 +706,20 @@ function custom_reset_password_message($message, $key, $user_login, $user_data) 
 
 
 // POST CARD
-// Add a fee of $5 if a customer adds a note to their order
-add_action('woocommerce_checkout_create_order', 'add_note_fee_if_note_exists', 20, 2);
+// Add fee if a customer adds a note in the block-based checkout
+add_action('woocommerce_cart_calculate_fees', 'add_fee_for_customer_note');
 
-function add_note_fee_if_note_exists($order, $data) {
-    // Check if a customer has added a note during checkout
-    if ( ! empty( $data['customer_note'] ) ) {
-        // Add a $5 fee for the note
-        $fee_amount = 5.00;
-        $fee = new WC_Order_Item_Fee();
-        $fee->set_name( 'Customer Note Fee' );
-        $fee->set_amount( $fee_amount );
-        $fee->set_tax_class( '' );
-        $fee->set_tax_status( 'none' );
-        $fee->set_total( $fee_amount );
-
-        // Add the fee to the order
-        $order->add_item( $fee );
-        
-        // Recalculate order totals
-        $order->calculate_totals();
+function add_fee_for_customer_note() {
+    if ( isset( $_POST['post_data'] ) ) {
+        parse_str( $_POST['post_data'], $post_data );
+        // Check if the customer added a note in the block-based textarea
+        if ( isset( $post_data['wc-block-components-textarea'] ) && ! empty( $post_data['wc-block-components-textarea'] ) ) {
+            // Add a $5 fee for the note
+            WC()->cart->add_fee( 'Customer Note Fee', 5 );
+        }
     }
 }
+
 ?>
 
 
