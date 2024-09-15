@@ -542,30 +542,7 @@ function custom_handle_registration() {
 
 
 
-// Hook to handle AJAX request to save message and price to order
-add_action('wp_ajax_save_message_to_order', 'save_message_to_order_callback');
-add_action('wp_ajax_nopriv_save_message_to_order', 'save_message_to_order_callback'); // Allow non-logged in users to use this AJAX action
 
-function save_message_to_order_callback() {
-    if (isset($_POST['message']) && isset($_POST['price'])) {
-        $message = sanitize_text_field($_POST['message']);
-        $price = floatval($_POST['price']);
-
-        // Get current user's shopping cart and update the item
-        global $woocommerce;
-        $order_id = $woocommerce->cart->get_cart_id();
-
-        // Add message and price as order meta
-        update_post_meta($order_id, '_custom_message', $message);
-        update_post_meta($order_id, '_custom_price', $price);
-
-        echo 'Message saved successfully.';
-    } else {
-        echo 'Error: Message or price missing.';
-    }
-
-    wp_die(); // Always include this at the end of Ajax functions to terminate script
-}
 
 
 // Display it 
@@ -742,6 +719,69 @@ function custom_reset_password_message($message, $key, $user_login, $user_data) 
     $message .= __('Thank you!') . "\r\n";
 
     return $message;
+}
+
+
+// POST CARD
+// Add action hooks for AJAX requests
+add_action('wp_ajax_save_message_to_order', 'handle_save_message_to_order');
+add_action('wp_ajax_nopriv_save_message_to_order', 'handle_save_message_to_order');
+
+function handle_save_message_to_order() {
+    // Check for required parameters
+    if (!isset($_POST['message']) || !isset($_POST['price'])) {
+        wp_send_json_error('Missing data.');
+    }
+
+    // Sanitize and process the data
+    $message = sanitize_text_field($_POST['message']);
+    $price = 5;
+
+    // Ensure WooCommerce is initialized
+    if (WC()->cart) {
+        // Add a fee to the cart
+        WC()->cart->add_fee('Post Card Message Fee', $price);
+
+        // Store message in session for later use
+        WC()->session->set('post_card_message', $message);
+
+        wp_send_json_success('Message saved.');
+    } else {
+        wp_send_json_error('Cart not found.');
+    }
+}
+
+add_action('woocommerce_checkout_update_order_meta', 'save_post_card_message');
+
+function save_post_card_message($order_id) {
+    // Check if there's a message in the session
+    if (WC()->session->get('post_card_message')) {
+        $post_card_message = WC()->session->get('post_card_message');
+        // Save the message to order meta
+        update_post_meta($order_id, '_post_card_message', sanitize_text_field($post_card_message));
+        // Clear the session data
+        WC()->session->__unset('post_card_message');
+    }
+}
+
+// Display post card message in the admin order details
+add_action('woocommerce_admin_order_data_after_order_details', 'display_post_card_message_in_admin_order');
+
+function display_post_card_message_in_admin_order($order) {
+    $post_card_message = get_post_meta($order->get_id(), '_post_card_message', true);
+    if ($post_card_message) {
+        echo '<p><strong>' . __('Post Card Message', 'woocommerce') . ':</strong> ' . esc_html($post_card_message) . '</p>';
+    }
+}
+
+// Display post card message on the customer thank you page
+add_action('woocommerce_thankyou', 'display_post_card_message_on_thankyou', 20);
+
+function display_post_card_message_on_thankyou($order_id) {
+    $post_card_message = get_post_meta($order_id, '_post_card_message', true);
+    if ($post_card_message) {
+        echo '<p><strong>' . __('Post Card Message', 'woocommerce') . ':</strong> ' . esc_html($post_card_message) . '</p>';
+    }
 }
 
 ?>

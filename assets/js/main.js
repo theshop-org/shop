@@ -1059,37 +1059,32 @@ document.addEventListener("DOMContentLoaded", function () {
   var saveButton = document.getElementById("saveMessageButton");
 
   saveButton.addEventListener("click", function () {
-    var message = document.getElementById("postCardMessage").value;
+    var message = textarea.value;
     if (message) {
       saveMessageToOrder(message);
     }
   });
-  // Update character count on input
+
   textarea.addEventListener("input", function () {
     var currentLength = textarea.value.length;
     counter.textContent = currentLength + "/435 characters";
 
-    if (currentLength > 0) {
-      saveButton.removeAttribute("disabled");
-    } else {
-      saveButton.setAttribute("disabled", "disabled");
-    }
+    saveButton.disabled = currentLength === 0;
   });
 
-  // Example JavaScript function to save message and price
   function saveMessageToOrder(msg) {
-    var price = 10; // Example price, adjust as needed
-
-    // Make AJAX request to save data to order
     var data = {
       action: "save_message_to_order",
       message: msg,
-      price: price,
+      price: 10
     };
 
     jQuery.post(wc_add_to_cart_params.ajax_url, data, function (response) {
-      console.log("Message saved to order:", response);
-      // Optionally, update UI or show confirmation message
+      if (response.success) {
+        console.log("Message saved to order:", response.data);
+      } else {
+        console.error("Failed to save message:", response.data);
+      }
     });
   }
 });
