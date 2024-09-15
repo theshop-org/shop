@@ -764,7 +764,6 @@ function save_post_card_message($order_id) {
     }
 }
 
-// Display post card message in the admin order details
 add_action('woocommerce_admin_order_data_after_order_details', 'display_post_card_message_in_admin_order');
 
 function display_post_card_message_in_admin_order($order) {
@@ -774,7 +773,7 @@ function display_post_card_message_in_admin_order($order) {
     }
 }
 
-// Display post card message on the customer thank you page
+
 add_action('woocommerce_thankyou', 'display_post_card_message_on_thankyou', 20);
 
 function display_post_card_message_on_thankyou($order_id) {
@@ -783,6 +782,25 @@ function display_post_card_message_on_thankyou($order_id) {
         echo '<p><strong>' . __('Post Card Message', 'woocommerce') . ':</strong> ' . esc_html($post_card_message) . '</p>';
     }
 }
+
+// Add a custom field to the checkout page
+add_action('woocommerce_after_order_notes', 'add_post_card_message_checkout_field');
+
+function add_post_card_message_checkout_field($checkout) {
+    echo '<div id="post_card_message_field"><h2>' . __('Post Card Message') . '</h2>';
+
+    woocommerce_form_field('post_card_message', array(
+        'type'          => 'textarea',
+        'class'         => array('post-card-message form-row-wide'),
+        'label'         => __('Your Personal Message'),
+        'placeholder'   => __('Write your message here...'),
+        'required'      => false,
+    ), $checkout->get_value('post_card_message'));
+
+    echo '</div>';
+}
+
+
 
 ?>
 
