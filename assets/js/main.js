@@ -271,7 +271,9 @@ document.addEventListener("DOMContentLoaded", function () {
               // Handle error
               console.error(
                 "There was a problem with your AJAX request:",
-                error
+                error,
+                status,
+                xhr
               );
             },
           });
