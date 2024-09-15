@@ -540,23 +540,6 @@ function custom_handle_registration() {
     }
 }
 
-
-
-
-
-
-// Display it 
-// $order = wc_get_order($order_id);
-// $message = get_post_meta($order_id, '_custom_message', true);
-// $price = get_post_meta($order_id, '_custom_price', true);
-
-// if ($message && $price) {
-//     echo '<h2>Custom Message:</h2>';
-//     echo '<p>' . esc_html($message) . '</p>';
-//     echo '<h2>Custom Price:</h2>';
-//     echo '<p>' . wc_price($price) . '</p>';
-// }
-
 add_action('wp_ajax_custom_lost_password', 'custom_lost_password');
 add_action('wp_ajax_nopriv_custom_lost_password', 'custom_lost_password');
 
@@ -723,85 +706,28 @@ function custom_reset_password_message($message, $key, $user_login, $user_data) 
 
 
 // POST CARD
-// Add action hooks for AJAX requests
-add_action('wp_ajax_save_message_to_order', 'handle_save_message_to_order');
-add_action('wp_ajax_nopriv_save_message_to_order', 'handle_save_message_to_order');
+// Add a fee of $5 if a customer adds a note to their order
+add_action('woocommerce_checkout_create_order', 'add_note_fee_if_note_exists', 20, 2);
 
-function handle_save_message_to_order() {
-    // Check for required parameters
-    if (!isset($_POST['message']) || !isset($_POST['price'])) {
-        wp_send_json_error('Missing data.');
-    }
+function add_note_fee_if_note_exists($order, $data) {
+    // Check if a customer has added a note during checkout
+    if ( ! empty( $data['customer_note'] ) ) {
+        // Add a $5 fee for the note
+        $fee_amount = 5.00;
+        $fee = new WC_Order_Item_Fee();
+        $fee->set_name( 'Customer Note Fee' );
+        $fee->set_amount( $fee_amount );
+        $fee->set_tax_class( '' );
+        $fee->set_tax_status( 'none' );
+        $fee->set_total( $fee_amount );
 
-    // Sanitize and process the data
-    $message = sanitize_text_field($_POST['message']);
-    $price = 5;
-
-    // Ensure WooCommerce is initialized
-    if (WC()->cart) {
-        // Add a fee to the cart
-        WC()->cart->add_fee('Post Card Message Fee', $price);
-
-        // Store message in session for later use
-        WC()->session->set('post_card_message', $message);
-
-        wp_send_json_success('Message saved.');
-    } else {
-        wp_send_json_error('Cart not found.');
+        // Add the fee to the order
+        $order->add_item( $fee );
+        
+        // Recalculate order totals
+        $order->calculate_totals();
     }
 }
-
-add_action('woocommerce_checkout_update_order_meta', 'save_post_card_message');
-
-function save_post_card_message($order_id) {
-    // Check if there's a message in the session
-    if (WC()->session->get('post_card_message')) {
-        $post_card_message = WC()->session->get('post_card_message');
-        // Save the message to order meta
-        update_post_meta($order_id, '_post_card_message', sanitize_text_field($post_card_message));
-        // Clear the session data
-        WC()->session->__unset('post_card_message');
-    }
-}
-
-add_action('woocommerce_admin_order_data_after_order_details', 'display_post_card_message_in_admin_order');
-
-function display_post_card_message_in_admin_order($order) {
-    $post_card_message = get_post_meta($order->get_id(), '_post_card_message', true);
-    if ($post_card_message) {
-        echo '<p><strong>' . __('Post Card Message', 'woocommerce') . ':</strong> ' . esc_html($post_card_message) . '</p>';
-    }
-}
-
-
-add_action('woocommerce_thankyou', 'display_post_card_message_on_thankyou', 20);
-
-function display_post_card_message_on_thankyou($order_id) {
-    $post_card_message = get_post_meta($order_id, '_post_card_message', true);
-    if ($post_card_message) {
-        echo '<p><strong>' . __('Post Card Message', 'woocommerce') . ':</strong> ' . esc_html($post_card_message) . '</p>';
-    }
-}
-
-// Add a custom field to the checkout page
-add_action('woocommerce_after_order_notes', 'add_post_card_message_checkout_field');
-
-function add_post_card_message_checkout_field($checkout) {
-    echo '<div id="post_card_message_field"><h2>' . __('Post Card Message') . '</h2>';
-
-    woocommerce_form_field('post_card_message', array(
-        'type'          => 'textarea',
-        'class'         => array('post-card-message form-row-wide'),
-        'label'         => __('Your Personal Message'),
-        'placeholder'   => __('Write your message here...'),
-        'required'      => false,
-    ), $checkout->get_value('post_card_message'));
-
-    echo '</div>';
-}
-
-
-
 ?>
 
 
