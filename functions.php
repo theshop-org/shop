@@ -143,6 +143,24 @@ function add_to_cart_callback() {
     wp_send_json_success('Product added to cart');
 }
 
+add_action('wp_ajax_add_to_cart_shop', 'add_to_cart_shop_callback');
+add_action('wp_ajax_nopriv_add_to_cart_shop', 'add_to_cart_shop_callback');
+
+function add_to_cart_shop_callback() {
+    // Verify nonce
+    check_ajax_referer('add_to_cart_nonce', 'nonce');
+
+    // Get product ID and quantity from AJAX request
+    $product_id = $_POST['productId'];
+    $quantity = $_POST['quantity'];
+
+    // Add product to cart
+    WC()->cart->add_to_cart($product_id, $quantity);
+
+    // Return response
+    wp_send_json_success('Product added to cart');
+}
+
 
 register_nav_menus(
     apply_filters(

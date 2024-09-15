@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
             url: custom_script_vars.ajaxurl,
             method: "POST",
             data: {
-              action: "add_to_cart",
+              action: "add_to_cart_shop",
               nonce: custom_script_vars.nonce,
               productId: productId,
               quantity: parseInt(quantity),
