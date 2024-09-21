@@ -1052,91 +1052,42 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  var textarea = document.getElementById("postCardMessage");
-  var counter = document.getElementById("characterCount");
-  var saveButton = document.getElementById("saveMessageButton");
+  const postCardMessage = document.getElementById('postCardMessage');
+  const characterCount = document.getElementById('characterCount');
+  const saveMessageButton = document.getElementById('saveMessageButton');
+  const maxLength = 435;
 
-  saveButton.addEventListener("click", function () {
-    var message = document.getElementById("postCardMessage").value;
-    if (message) {
-      saveMessageToOrder(message);
-    }
-  });
-  // Update character count on input
-  textarea.addEventListener("input", function () {
-    var currentLength = textarea.value.length;
-    counter.textContent = currentLength + "/435 characters";
+  postCardMessage.addEventListener('input', function() {
+    const messageLength = postCardMessage.value.length;
+    characterCount.textContent = `${messageLength}/${maxLength} characters`;
 
-    if (currentLength > 0) {
-      saveButton.removeAttribute("disabled");
-    } else {
-      saveButton.setAttribute("disabled", "disabled");
-    }
+    // Enable the button if there's a message
+    saveMessageButton.disabled = messageLength === 0;
   });
 
-  // Example JavaScript function to save message and price
-  function saveMessageToOrder(msg) {
-    var price = 10; // Example price, adjust as needed
+  saveMessageButton.addEventListener('click', function() {
+    const message = postCardMessage.value;
 
-    // Make AJAX request to save data to order
-    var data = {
-      action: "save_message_to_order",
-      message: msg,
-      price: price,
-    };
-
-    jQuery.post(wc_add_to_cart_params.ajax_url, data, function (response) {
-      console.log("Message saved to order:", response);
-      // Optionally, update UI or show confirmation message
-    });
-  }
-
-// Add a short delay before selecting elements
-setTimeout(function () {
-  const noteCheckbox = document.querySelector(
-    'label[for="checkbox-control-1"] input[type="checkbox"]'
-  );
-
-  // Function to handle the checkbox change event
-  function handleCheckboxChange() {
-    if (noteCheckbox.checked) {
-      // Wait for a short delay to ensure the textarea is rendered
-      setTimeout(function () {
-        // Select the textarea
-        const noteTextarea = document.querySelector(
-          ".wc-block-components-textarea"
-        );
-
-        if (noteTextarea) {
-          if (noteTextarea.value.trim() !== "") {
-            updateCheckout(noteTextarea.value.trim());
-          }
-
-          // Add event listener for textarea input changes
-          noteTextarea.addEventListener("input", function () {
-            if (noteTextarea.value.trim() !== "") {
-              updateCheckout(noteTextarea.value.trim());
-            }
-          });
+    jQuery.ajax({
+      url: custom_script_vars.ajaxurl,  // This is the WordPress AJAX URL passed via wp_localize_script
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        action: 'add_postcard_message',  // The action defined in PHP
+        message: message
+      },
+      success: function(response) {
+        if (response.success) {
+          console.log('Post card added!');
+        } else {
+          console.log('Error: ' + response.data.message);
         }
-      }, 500); // Adjust delay if needed
-    }
-  }
-
-  // Function to trigger the checkout update
-  function updateCheckout(note) {
-    if (typeof window.Event === "function") {
-      // Create and dispatch the update_checkout event with the note
-      const event = new CustomEvent("update_checkout", { detail: { note } });
-      document.body.dispatchEvent(event);
-    }
-  }
-
-  // Listen for changes on the checkbox
-  if (noteCheckbox) {
-    noteCheckbox.addEventListener("change", handleCheckboxChange);
-  }
-}, 1000); // Delay for 1 second
+      },
+      error: function() {
+        console.log('There was an error sending your message.');
+      }
+    });
+  });
 
 });
 

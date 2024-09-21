@@ -706,23 +706,32 @@ function custom_reset_password_message($message, $key, $user_login, $user_data) 
 
 
 // POST CARD
-add_action('woocommerce_cart_calculate_fees', 'add_custom_fee_based_on_note');
+add_action( 'wp_ajax_add_postcard_message', 'add_postcard_message' );
+add_action( 'wp_ajax_nopriv_add_postcard_message', 'add_postcard_message' );
 
-function add_custom_fee_based_on_note() {
-    if (isset($_POST['note']) && !empty($_POST['note'])) {
-        WC()->cart->add_fee('Custom Fee', 5);
+function add_postcard_message() {
+    if ( isset( $_POST['message'] ) && ! empty( $_POST['message'] ) ) {
+        // Save the message in the WooCommerce session
+        WC()->session->set( 'postcard_message', sanitize_text_field( $_POST['message'] ) );
+
+        wp_send_json_success( array( 'message' => 'Post card message saved.' ) );
+    } else {
+        wp_send_json_error( array( 'message' => 'Message is empty.' ) );
     }
 }
 
-// Hook into the WooCommerce checkout process to save the note to the session
-add_action('woocommerce_checkout_update_order_review', 'save_order_note_to_session');
+add_action( 'woocommerce_cart_calculate_fees', 'add_postcard_fee' );
+function add_postcard_fee() {
+    // Get the post card message from the session
+    $postcard_message = WC()->session->get( 'postcard_message' );
 
-function save_order_note_to_session($post_data) {
-    parse_str($post_data, $parsed_data);
-    if (isset($parsed_data['note'])) {
-        WC()->session->set('order_note', sanitize_text_field($parsed_data['note']));
+    if ( ! empty( $postcard_message ) ) {
+        // Add a custom fee for the post card
+        $fee = 5.00; // Adjust the fee amount as needed
+        WC()->cart->add_fee( 'Post Card', $fee );
     }
 }
+
 
 ?>
 
