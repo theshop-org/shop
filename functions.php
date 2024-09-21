@@ -732,6 +732,37 @@ function add_postcard_fee() {
     }
 }
 
+// Hook to save the post card message to the order meta when the order is created
+add_action( 'woocommerce_checkout_create_order', 'save_postcard_message_to_order', 20, 2 );
+
+function save_postcard_message_to_order( $order, $data ) {
+    // Get the post card message from the session
+    $postcard_message = WC()->session->get( 'postcard_message' );
+
+    if ( ! empty( $postcard_message ) ) {
+        // Add the post card message as order meta data
+        $order->add_meta_data( 'Post Card Message', $postcard_message );
+    }
+}
+
+// Hook to display the post card message in the order details in the admin panel
+add_action( 'woocommerce_admin_order_data_after_order_details', 'display_postcard_message_in_admin' );
+
+function display_postcard_message_in_admin( $order ) {
+    // Get the post card message from the order meta
+    $postcard_message = $order->get_meta( 'Post Card Message' );
+
+    if ( ! empty( $postcard_message ) ) {
+        echo '<p><strong>' . __( 'Post Card Message:' ) . '</strong> ' . esc_html( $postcard_message ) . '</p>';
+    }
+}
+
+// Hook to clear the session after the order is processed
+add_action( 'woocommerce_thankyou', 'clear_postcard_message_session' );
+
+function clear_postcard_message_session( $order_id ) {
+    WC()->session->__unset( 'postcard_message' );
+}
 
 ?>
 
