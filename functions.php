@@ -706,57 +706,81 @@ function custom_reset_password_message($message, $key, $user_login, $user_data) 
 
 
 // POST CARD
-add_action( 'wp_ajax_add_postcard_message', 'add_postcard_message' );
-add_action( 'wp_ajax_nopriv_add_postcard_message', 'add_postcard_message' );
+// Add the post card message to WooCommerce session via AJAX
+add_action( 'wp_ajax_add_postcard_message', 'add_postcard_message_to_session' );
+add_action( 'wp_ajax_nopriv_add_postcard_message', 'add_postcard_message_to_session' );
 
-function add_postcard_message() {
+function add_postcard_message_to_session() {
     if ( isset( $_POST['message'] ) && ! empty( $_POST['message'] ) ) {
-        // Save the message in the WooCommerce session
-        WC()->session->set( 'postcard_message', sanitize_text_field( $_POST['message'] ) );
+        // Sanitize and store the message in the WooCommerce session
+        $message = sanitize_text_field( $_POST['message'] );
+        WC()->session->set( 'postcard_message', $message );
 
-        wp_send_json_success( array( 'message' => 'Post card message saved.' ) );
+        // Return a success response
+        wp_send_json_success( array( 'message' => 'Post card message saved successfully.' ) );
     } else {
-        wp_send_json_error( array( 'message' => 'Message is empty.' ) );
+        wp_send_json_error( array( 'message' => 'Message is required.' ) );
     }
 }
 
+// Add a fee for the post card if it's selected
 add_action( 'woocommerce_cart_calculate_fees', 'add_postcard_fee' );
+
 function add_postcard_fee() {
-    // Get the post card message from the session
     $postcard_message = WC()->session->get( 'postcard_message' );
 
+    // Add a fee if the post card message exists in the session
     if ( ! empty( $postcard_message ) ) {
-        // Add a custom fee for the post card
-        $fee = 5.00; // Adjust the fee amount as needed
-        WC()->cart->add_fee( 'Post Card', $fee );
+        WC()->cart->add_fee( __( 'Post Card Fee', 'your-textdomain' ), 5.00 );
     }
 }
 
-// Hook to save the post card message to the order meta when the order is created
+// Save the post card message as order meta when an order is created
 add_action( 'woocommerce_checkout_create_order', 'save_postcard_message_to_order', 20, 2 );
 
 function save_postcard_message_to_order( $order, $data ) {
-    // Get the post card message from the session
+    // Get the post card message from the WooCommerce session
     $postcard_message = WC()->session->get( 'postcard_message' );
 
     if ( ! empty( $postcard_message ) ) {
-        // Add the post card message as order meta data
-        $order->add_meta_data( 'Post Card Message', $postcard_message );
+        // Save the message as order meta
+        $order->add_meta_data( 'postcard_message', $postcard_message );
+
+        // Optionally, add the post card message as an order note
+        $order->add_order_note( 'Post Card Message: ' . $postcard_message, false );  // 'false' makes it a customer note
     }
 }
 
-add_action( 'woocommerce_checkout_create_order', 'add_postcard_message_as_order_note', 20, 2 );
+// Display the post card message in the WooCommerce admin order details
+add_action( 'woocommerce_admin_order_data_after_order_details', 'display_postcard_message_in_admin' );
 
-function add_postcard_message_as_order_note( $order, $data ) {
-    // Get the post card message from the session
-    $postcard_message = WC()->session->get( 'postcard_message' );
+function display_postcard_message_in_admin( $order ) {
+    // Get the post card message from the order meta
+    $postcard_message = $order->get_meta( 'postcard_message' );
 
     if ( ! empty( $postcard_message ) ) {
-        // Add the post card message as a customer order note
-        $order->add_order_note( 'Post Card Message: ' . $postcard_message, false ); // 'false' makes it a customer note
+        echo '<p><strong>' . __( 'Post Card Message:' ) . '</strong> ' . esc_html( $postcard_message ) . '</p>';
     }
 }
 
+// Optionally, include the post card message in WooCommerce order emails
+add_filter( 'woocommerce_email_order_meta_fields', 'add_postcard_message_to_emails', 10, 3 );
+
+function add_postcard_message_to_emails( $fields, $sent_to_admin, $order ) {
+    // Get the post card message from the order meta
+    $postcard_message = $order->get_meta( 'postcard_message' );
+
+    if ( ! empty( $postcard_message ) ) {
+        $fields['postcard_message'] = array(
+            'label' => __( 'Post Card Message' ),
+            'value' => $postcard_message,
+        );
+    }
+
+    return $fields;
+}
+
+// Clear the post card message from the session after checkout
 add_action( 'woocommerce_thankyou', 'clear_postcard_message_session' );
 
 function clear_postcard_message_session( $order_id ) {
