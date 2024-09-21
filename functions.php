@@ -745,19 +745,18 @@ function save_postcard_message_to_order( $order, $data ) {
     }
 }
 
-// Hook to display the post card message in the order details in the admin panel
-add_action( 'woocommerce_admin_order_data_after_order_details', 'display_postcard_message_in_admin' );
+add_action( 'woocommerce_checkout_create_order', 'add_postcard_message_as_order_note', 20, 2 );
 
-function display_postcard_message_in_admin( $order ) {
-    // Get the post card message from the order meta
-    $postcard_message = $order->get_meta( 'Post Card Message' );
+function add_postcard_message_as_order_note( $order, $data ) {
+    // Get the post card message from the session
+    $postcard_message = WC()->session->get( 'postcard_message' );
 
     if ( ! empty( $postcard_message ) ) {
-        echo '<p><strong>' . __( 'Post Card Message:' ) . '</strong> ' . esc_html( $postcard_message ) . '</p>';
+        // Add the post card message as a customer order note
+        $order->add_order_note( 'Post Card Message: ' . $postcard_message, false ); // 'false' makes it a customer note
     }
 }
 
-// Hook to clear the session after the order is processed
 add_action( 'woocommerce_thankyou', 'clear_postcard_message_session' );
 
 function clear_postcard_message_session( $order_id ) {
