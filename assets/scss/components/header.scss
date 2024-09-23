@@ -835,8 +835,8 @@
     }
     input:checked ~ .form-check-label::before {
       content: "\2713"; /* Unicode for check mark */
-      color: #000;
-      background-color: #000 !important;
+      color: #fff;
+      background-color: #000;
       display: flex;
       align-items: center;
       justify-content: center;

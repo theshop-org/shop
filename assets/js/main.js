@@ -1052,12 +1052,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  const postCardMessage = document.getElementById('postCardMessage');
-  const characterCount = document.getElementById('characterCount');
-  const saveMessageButton = document.getElementById('saveMessageButton');
+  // Postt card
+  const postCardCheckbox = document.getElementById("addPostCardCheck");
+  const postCardMessage = document.getElementById("postCardMessage");
+  const characterCount = document.getElementById("characterCount");
+  const saveMessageButton = document.getElementById("saveMessageButton");
   const maxLength = 435;
 
-  postCardMessage.addEventListener('input', function() {
+  postCardMessage.addEventListener("input", function () {
     const messageLength = postCardMessage.value.length;
     characterCount.textContent = `${messageLength}/${maxLength} characters`;
 
@@ -1065,30 +1067,68 @@ document.addEventListener("DOMContentLoaded", function () {
     saveMessageButton.disabled = messageLength === 0;
   });
 
-  saveMessageButton.addEventListener('click', function() {
-    const message = postCardMessage.value;
+  saveMessageButton.addEventListener("click", function () {
+    const isChecked = postCardCheckbox.checked;
+    
+    // If the checkbox is not checked, check it programmatically
+    if (!isChecked) {
+        postCardCheckbox.checked = true;
 
-    jQuery.ajax({
-      url: custom_script_vars.ajaxurl,  // This is the WordPress AJAX URL passed via wp_localize_script
-      type: 'POST',
-      dataType: 'json',
-      data: {
-        action: 'add_postcard_message',  // The action defined in PHP
-        message: message
-      },
-      success: function(response) {
-        if (response.success) {
-          console.log('Post card added!');
-        } else {
-          console.log('Error: ' + response.data.message);
-        }
-      },
-      error: function() {
-        console.log('There was an error sending your message.');
-      }
-    });
+        // Manually trigger the change event so the fee-adding logic is executed
+        const event = new Event('change');
+        postCardCheckbox.dispatchEvent(event);  // Trigger the change event
+    }
   });
 
+  // Listen for changes on the checkbox
+  postCardCheckbox.addEventListener("change", function () {
+    const isChecked = postCardCheckbox.checked;
+    const message = postCardMessage.value;
+
+    if (isChecked) {
+      // Add fee and save message
+      jQuery.ajax({
+        url: custom_script_vars.ajaxurl,
+        type: "POST",
+        dataType: "json",
+        data: {
+          action: "add_postcard_message",
+          message: message,
+        },
+        success: function (response) {
+          if (response.success) {
+            console.log("Post card added!");
+            // Optionally, you can update the UI to show that the fee is added
+          } else {
+            console.log("Error: " + response.data.message);
+          }
+        },
+        error: function () {
+          console.log("There was an error sending your message.");
+        },
+      });
+    } else {
+      // Remove the fee when unchecked
+      jQuery.ajax({
+        url: custom_script_vars.ajaxurl,
+        type: "POST",
+        dataType: "json",
+        data: {
+          action: "remove_postcard_message", // A separate action in PHP for removing the message and fee
+        },
+        success: function (response) {
+          if (response.success) {
+            console.log("Post card removed!");
+          } else {
+            console.log("Error: " + response.data.message);
+          }
+        },
+        error: function () {
+          console.log("There was an error removing your message.");
+        },
+      });
+    }
+  });
 });
 
 //hide form after subscribe

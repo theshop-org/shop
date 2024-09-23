@@ -798,6 +798,22 @@ function add_postcard_message_to_order_item( $item, $cart_item_key, $values, $or
     }
 }
 
+// AJAX handler to remove the post card message
+add_action( 'wp_ajax_remove_postcard_message', 'remove_postcard_message_from_session' );
+add_action( 'wp_ajax_nopriv_remove_postcard_message', 'remove_postcard_message_from_session' );
+
+function remove_postcard_message_from_session() {
+    // Remove the post card message from the WooCommerce session
+    WC()->session->__unset( 'postcard_message' );
+
+    // Optionally, you can trigger a cart refresh to remove the fee
+    WC()->cart->calculate_totals();
+
+    // Return a success response
+    wp_send_json_success( array( 'message' => 'Post card message removed successfully.' ) );
+}
+
+
 ?>
 
 
