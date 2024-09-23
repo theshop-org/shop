@@ -1081,54 +1081,74 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Listen for changes on the checkbox
-  postCardCheckbox.addEventListener("change", function () {
+  postCardCheckbox.addEventListener('change', function() {
     const isChecked = postCardCheckbox.checked;
-    const message = postCardMessage.value;
 
     if (isChecked) {
-      // Add fee and save message
-      jQuery.ajax({
-        url: custom_script_vars.ajaxurl,
-        type: "POST",
-        dataType: "json",
-        data: {
-          action: "add_postcard_message",
-          message: message,
-        },
-        success: function (response) {
-          if (response.success) {
-            console.log("Post card added!");
-            // Optionally, you can update the UI to show that the fee is added
-          } else {
-            console.log("Error: " + response.data.message);
-          }
-        },
-        error: function () {
-          console.log("There was an error sending your message.");
-        },
-      });
+        // Add fee via AJAX when checked
+        const message = postCardMessage.value;
+        jQuery.ajax({
+            url: custom_script_vars.ajaxurl,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'add_postcard_message',
+                message: message
+            },
+            success: function(response) {
+                if (response.success) {
+                    console.log('Post card fee added!');
+                }
+            },
+            error: function() {
+                console.log('There was an error adding the fee.');
+            }
+        });
     } else {
-      // Remove the fee when unchecked
-      jQuery.ajax({
-        url: custom_script_vars.ajaxurl,
-        type: "POST",
-        dataType: "json",
-        data: {
-          action: "remove_postcard_message", // A separate action in PHP for removing the message and fee
-        },
-        success: function (response) {
-          if (response.success) {
-            console.log("Post card removed!");
-          } else {
-            console.log("Error: " + response.data.message);
-          }
-        },
-        error: function () {
-          console.log("There was an error removing your message.");
-        },
-      });
+        // Remove fee and message via AJAX when unchecked
+        jQuery.ajax({
+            url: custom_script_vars.ajaxurl,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'remove_postcard_message'
+            },
+            success: function(response) {
+                if (response.success) {
+                    postCardMessage.value = '';  // Clear the message
+                    console.log('Post card fee and message removed!');
+                }
+            },
+            error: function() {
+                console.log('There was an error removing the fee and message.');
+            }
+        });
     }
-  });
+});
+
+
+
+  // Make an AJAX call to get the current post card state from the session
+  jQuery.ajax({
+    url: custom_script_vars.ajaxurl,
+    type: 'POST',
+    dataType: 'json',
+    data: {
+        action: 'get_postcard_state'  // Custom action to check the WooCommerce session
+    },
+    success: function(response) {
+        if (response.success) {
+            // If the message exists in the session, check the checkbox and set the textarea value
+            if (response.data.message) {
+                postCardCheckbox.checked = true;
+                postCardMessage.value = response.data.message;
+            }
+        }
+    },
+    error: function() {
+        console.log('There was an error retrieving the post card state.');
+    }
+});
 });
 
 //hide form after subscribe

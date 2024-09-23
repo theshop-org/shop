@@ -813,6 +813,21 @@ function remove_postcard_message_from_session() {
     wp_send_json_success( array( 'message' => 'Post card message removed successfully.' ) );
 }
 
+// AJAX handler to get the current post card state
+add_action( 'wp_ajax_get_postcard_state', 'get_postcard_state_from_session' );
+add_action( 'wp_ajax_nopriv_get_postcard_state', 'get_postcard_state_from_session' );
+
+function get_postcard_state_from_session() {
+    // Get the post card message from the WooCommerce session
+    $postcard_message = WC()->session->get( 'postcard_message' );
+
+    if ( ! empty( $postcard_message ) ) {
+        wp_send_json_success( array( 'message' => $postcard_message ) );
+    } else {
+        wp_send_json_error( array( 'message' => '' ) );
+    }
+}
+
 
 ?>
 
