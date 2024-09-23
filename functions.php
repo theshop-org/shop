@@ -787,6 +787,17 @@ function clear_postcard_message_session( $order_id ) {
     WC()->session->__unset( 'postcard_message' );
 }
 
+add_action( 'woocommerce_checkout_create_order_line_item', 'add_postcard_message_to_order_item', 20, 4 );
+function add_postcard_message_to_order_item( $item, $cart_item_key, $values, $order ) {
+    // Get the post card message from the session
+    $postcard_message = WC()->session->get( 'postcard_message' );
+
+    if ( ! empty( $postcard_message ) ) {
+        // Add the post card message to the order item meta
+        $item->add_meta_data( __( 'Post Card Message', 'storefront' ), $postcard_message, true );
+    }
+}
+
 ?>
 
 
