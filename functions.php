@@ -829,6 +829,17 @@ function get_postcard_state_from_session() {
 }
 
 add_filter('wp_lazy_loading_enabled', '__return_false');
+function disable_lazy_load_for_mobile( $attr, $attachment, $size ) {
+    // Check if the user is on a mobile device
+    if ( wp_is_mobile() ) {
+        // Remove the lazy-load class from images
+        if ( isset( $attr['class'] ) && strpos( $attr['class'], 'lazy' ) !== false ) {
+            $attr['class'] = str_replace( 'lazy', '', $attr['class'] );
+        }
+    }
+    return $attr;
+}
+add_filter( 'wp_get_attachment_image_attributes', 'disable_lazy_load_for_mobile', 10, 3 );
 
 ?>
 
