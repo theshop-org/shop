@@ -828,13 +828,7 @@ function get_postcard_state_from_session() {
     }
 }
 
-function disable_lazy_load_for_mobile( $enabled, $context ) {
-    if ( wp_is_mobile() ) {
-        return false;
-    }
-    return $enabled;
-}
-add_filter( 'wp_lazy_loading_enabled', 'disable_lazy_load_for_mobile', 10, 2 );
+add_filter('wp_lazy_loading_enabled', '__return_false');
 
 ?>
 
