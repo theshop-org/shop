@@ -53,17 +53,7 @@ get_header( 'shop' );
 					<div class="product-single__landing">
 						<div class="product-single__hero">
 							<div class="product-single__hero--images">
-								<?php if($product->is_type('variable')): ?>
-									<?php if(!empty($available_variations)): ?>
-										<?php foreach($available_variations as $key=>$variation): ?>
-											<div class="product-single__hero--img" id="variationImg<?php echo $key ?>">
-												<?php if(isset($variation['image']['url'])): ?>
-													<img src="<?php echo $variation['image']['url'] ?>" alt="<?php echo $variation['image']['alt'] ?>">
-												<?php endif; ?>
-											</div>
-										<?php endforeach; ?>
-									<?php endif; ?>
-								<?php else: ?>
+								
 									<?php if(isset($first_img['url'])): ?>
 										<div class="product-single__hero--img">
 												<img src="<?php echo $first_img['url'] ?>" alt="<?php echo $first_img['alt'] ?>">
@@ -74,7 +64,6 @@ get_header( 'shop' );
 												<img src="<?php echo $second_img['url'] ?>" alt="<?php echo $second_img['alt'] ?>">
 										</div>
 									<?php endif; ?>
-								<?php endif; ?>
 								<div class="swiper mySwiper product-single__slider" id="singleSlider">
 									<div class="swiper-wrapper product-single__slide-wrapper">
 										<?php if($product->is_type('variable')): ?>
