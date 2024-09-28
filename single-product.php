@@ -54,15 +54,23 @@ get_header( 'shop' );
 						<div class="product-single__hero">
 							<div class="product-single__hero--images">
 								
-									<?php if(isset($first_img['url'])): ?>
-										<div class="product-single__hero--img">
-												<img src="<?php echo $first_img['url'] ?>" alt="<?php echo $first_img['alt'] ?>">
-										</div>
+									<?php if(!empty($first_img)): ?>
+										<?php foreach($first_img as $key=>$img): ?>
+												<?php if(isset($img['image']) && $img['image']): ?>
+													<div class="product-single__hero--img" <?php echo $key === 0 ? "id='variationImg0'" : ""  ?>>
+															<img src="<?php echo $img['image']['url'] ?>" alt="<?php echo $img["image"]['alt'] ?>">
+													</div>
+												<?php endif; ?>
+										<?php endforeach; ?>
 									<?php endif; ?>
-									<?php if(isset($second_img['url'])): ?>
-										<div class="product-single__hero--img">
-												<img src="<?php echo $second_img['url'] ?>" alt="<?php echo $second_img['alt'] ?>">
-										</div>
+									<?php if(!empty($second_img)): ?>
+										<?php foreach($second_img as $key=>$img): ?>
+											<?php if(isset($img['image']) && $img['image']): ?>
+												<div class="product-single__hero--img" <?php echo $key === 0 ? "id='variationImg1'" : ""  ?>>
+														<img src="<?php echo $img["image"]['url'] ?>" alt="<?php echo $img["image"]['alt'] ?>">
+												</div>
+											<?php endif; ?>
+										<?php endforeach; ?>
 									<?php endif; ?>
 								<div class="swiper mySwiper product-single__slider" id="singleSlider">
 									<div class="swiper-wrapper product-single__slide-wrapper">
