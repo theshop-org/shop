@@ -68,15 +68,33 @@ $information = get_field('information');
                     </div>
                 </div>
                 <?php if(isset($information[1])): ?>
-                    <div class="about-us__content--second">
-                        <div class="about-us__content--img">
-                            <span class="about-us__content--loc">
+                    <div  >
+                        <div >
+                            <p class="location-heading-second-image-section">Locations</p>
+                            <div class="two-images-on-about-page-final">
+
+                            <div >
+                            <span class="about-us-first-image-desc-final">
                                 <?php echo $information[1]['location'] ?>
                             </span>
                             <?php if(isset($information[1]['image']['url']) && $information[1]['image']['url']): ?>
-                                <img src="<?php echo $information[1]['image']['url'] ?>" alt="<?php echo $information[1]['image']['alt'] ?>">
+                               
+                                <img class="image-first-container-final" style="border-radius: unset" src="<?php echo $information[1]['image']['url'] ?>" alt="<?php echo $information[1]['image']['alt'] ?>">
+                                
+                            <?php endif; ?>
+                            
+                            </div>
+                            <div >
+                            <span class="about-us-second-image-desc-final">
+                                <?php echo $information[1]['location'] ?>
+                            </span>
+                            <?php if(isset($information[1]['image']['url']) && $information[1]['image']['url']): ?>
+                               
+                                
+                                <img class="image-first-container-final" style="border-radius: unset" src="<?php echo $information[1]['image_copy']['url'] ?>" alt="<?php echo $information[1]['image']['alt'] ?>">
                             <?php endif; ?>
                         </div>
+                            </div>
                         <div class="about-us__content--texts">
                             <h2 class="about-us__content--title">
                                 <?php echo $information[1]['title'] ?>

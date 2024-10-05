@@ -59,6 +59,34 @@
 }
 
 
+//about addition images
+
+.two-images-on-about-page-final{
+   display: flex;
+   gap: 9px;
+  
+}
+
+.image-first-container-final{
+    margin-top: 5px;
+}
+
+.location-heading-second-image-section{
+    font-size: 59px;
+    font-family: "Bodoni";
+    margin: 0;
+    margin-bottom: 0 !important;
+}
+
+.about-us-first-image-desc-final{
+    font-size: 20px;
+   
+}
+
+.about-us-second-image-desc-final{
+    font-size: 20px;
+    padding-bottom: 14px !important;
+}
 
 
 .woocommerce-Input:-webkit-autofill,
@@ -324,6 +352,13 @@ a {
 }
 
 @media screen and (max-width:1200px) {
+
+    .two-images-on-about-page-final{
+       
+        flex-direction: column;
+       
+       
+     }
 
     .img-1{
         display: none;
