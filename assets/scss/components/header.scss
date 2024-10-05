@@ -826,7 +826,7 @@
       width: 0;
     }
     .form-check-label::before {
-      content: "";
+      content: "" !important;
       width: 20px;
       height: 20px;
       border: 1px solid #000;
