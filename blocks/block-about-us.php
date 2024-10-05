@@ -86,7 +86,7 @@ $information = get_field('information');
                             </div>
                             <div >
                             <span class="about-us-second-image-desc-final">
-                            The Shop Tbilisi   <?php echo $information[1]['location_copy'] ?> 
+                            The Shop Batumi   <?php echo $information[1]['location_copy'] ?> 
                             </span>
                             <?php if(isset($information[1]['image']['url']) && $information[1]['image']['url']): ?>
                                
