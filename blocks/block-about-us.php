@@ -106,8 +106,8 @@ $information = get_field('information');
                     </div>
                 <?php endif; ?>
                 <?php if(isset($information[2])): ?>
-                    <div class="about-us__content--third">
-                        <div class="about-us__content--texts">
+                    <div class="about-us__content--third" style="display: none">
+                        <div >
                             <h2 class="about-us__content--title">
                                 <?php echo $information[2]['title'] ?>
                             </h2>
