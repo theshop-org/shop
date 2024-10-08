@@ -344,7 +344,7 @@ $contact_us_email = get_field("contact_us_email", "option");
 						</button>
 					</div>
 					<div class="post-card__right" style="align-self: flex-start; margin-left: auto; margin-top: 5px;">
-						10 GEL
+						$ 5
 					</div>
 					</label>
 					
