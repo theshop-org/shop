@@ -30,11 +30,11 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 				<?php do_action( 'woocommerce_login_form_start' ); ?>
 				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide position-relative">
 					<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" />
-					<label for="username"><?php esc_html_e( 'E-MAIL', 'woocommerce' ); ?></label>
+					<label class="focused" for="username"><?php esc_html_e( 'E-MAIL', 'woocommerce' ); ?></label>
 				</p>
 				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide position-relative">
 					<input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="password" autocomplete="current-password" />
-					<label for="password"><?php esc_html_e( 'PASSWORD', 'woocommerce' ); ?></label>
+					<label class="focused" for="password"><?php esc_html_e( 'PASSWORD', 'woocommerce' ); ?></label>
 				</p>
 				<?php do_action( 'woocommerce_login_form' ); ?>
 				<p class="form-row">
