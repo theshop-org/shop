@@ -217,6 +217,7 @@
     transform: translateX(-50%);
     opacity: 0; /* Start with images hidden */
     z-index: -1;
+    will-change: transform, opacity;
 
     &.hippo {
       z-index: -4;
