@@ -120,7 +120,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
             <form method="post" id="lostPasswordForm">
                 <p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
                     <label for="user_login">Username or email</label>
-                    <input class="woocommerce-Input woocommerce-Input--text input-text" type="text" name="user_login" id="user_login" autocomplete="username" required />
+                    <input class="field-background-webkit-final woocommerce-Input woocommerce-Input--text input-text" type="text" name="user_login" id="user_login" autocomplete="username" required />
                 </p>
 
                 <div class="clear"></div>
