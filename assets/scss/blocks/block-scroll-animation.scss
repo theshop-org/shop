@@ -224,10 +224,19 @@
 
     &.seahorse {
       @media screen and (max-width: 960px) {
+        width: 28rem;
+      }
+      @media screen and (max-width: 850px) {
+        width: 26rem;
+      }
+      @media screen and (max-width: 650px) {
         width: 20rem;
       }
       @media screen and (max-width: 540px) {
-        width: 10rem;
+        width: 16rem;
+      }
+      @media screen and (max-width: 440px) {
+        width: 14rem;
       }
     }
   }
