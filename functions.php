@@ -829,6 +829,20 @@ function get_postcard_state_from_session() {
 }
 
 
+
+
+
+//test products count 
+
+// Display more than 12 products per page
+add_filter('loop_shop_per_page', 'custom_products_per_page', 20);
+function custom_products_per_page($cols) {
+    $cols = 24; // Change this to the number of products you'd like to display
+    return $cols;
+}
+
+
+
 ?>
 
 
