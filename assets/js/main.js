@@ -1136,10 +1136,8 @@ document.addEventListener("DOMContentLoaded", function () {
     success: function(response) {
         if (response.success) {
             // If the message exists in the session, check the checkbox and set the textarea value
-            if (response.data.message) {
                 postCardCheckbox.checked = true;
                 postCardMessage.value = response.data.message;
-            }
         }
     },
     error: function() {
