@@ -1062,9 +1062,6 @@ document.addEventListener("DOMContentLoaded", function () {
   postCardMessage.addEventListener("input", function () {
     const messageLength = postCardMessage.value.length;
     characterCount.textContent = `${messageLength}/${maxLength} characters`;
-
-    // Enable the button if there's a message
-    saveMessageButton.disabled = messageLength === 0;
   });
 
   saveMessageButton.addEventListener("click", function () {
@@ -1086,7 +1083,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (isChecked) {
         // Add fee via AJAX when checked
-        const message = postCardMessage.value;
+        const message = postCardMessage.value ? postCardMessage.value : "Empty" ;
         jQuery.ajax({
             url: custom_script_vars.ajaxurl,
             type: 'POST',

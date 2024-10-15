@@ -390,7 +390,7 @@ $contact_us_email = get_field("contact_us_email", "option");
 								<div id="characterCount">0/435 characters</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="modal-footer-save" id="saveMessageButton"  data-bs-dismiss="modal" disabled>SEND</button>
+								<button type="button" class="modal-footer-save" id="saveMessageButton"  data-bs-dismiss="modal">SEND</button>
 							</div>
 						</div>
 					</div>
