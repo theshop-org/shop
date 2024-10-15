@@ -1083,7 +1083,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (isChecked) {
         // Add fee via AJAX when checked
-        const message = postCardMessage.value;
+        const message = postCardMessage.value ? postCardMessage.value : "Empty" ;
         jQuery.ajax({
             url: custom_script_vars.ajaxurl,
             type: 'POST',
