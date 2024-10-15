@@ -108,7 +108,7 @@ get_header( 'shop' );
 										<?php echo $product->get_title(); ?>
 											</div>
 												<div class="price-for-mobile-screen">
-													<?php echo get_woocommerce_currency_symbol() . $product->get_price(); ?>
+													<?php echo $product->get_price_html(); ?>
 												</div>
 											</div>
 										
@@ -121,7 +121,7 @@ get_header( 'shop' );
 													<?php echo __("Product price:"); ?>
 												</div>
 												<div>
-													<?php echo get_woocommerce_currency_symbol() . $product->get_price(); ?>
+													<?php echo $product->get_price_html(); ?>
 												</div>
 											</div>
 											<?php if(isset($available_variations)): ?>
