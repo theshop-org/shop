@@ -711,16 +711,12 @@ add_action( 'wp_ajax_add_postcard_message', 'add_postcard_message_to_session' );
 add_action( 'wp_ajax_nopriv_add_postcard_message', 'add_postcard_message_to_session' );
 
 function add_postcard_message_to_session() {
-    if ( isset( $_POST['message'] ) && ! empty( $_POST['message'] ) ) {
         // Sanitize and store the message in the WooCommerce session
         $message = sanitize_text_field( $_POST['message'] );
         WC()->session->set( 'postcard_message', $message );
 
         // Return a success response
         wp_send_json_success( array( 'message' => 'Post card message saved successfully.' ) );
-    } else {
-        wp_send_json_error( array( 'message' => 'Message is required.' ) );
-    }
 }
 
 // Add a fee for the post card if it's selected

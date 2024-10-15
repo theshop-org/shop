@@ -1062,9 +1062,6 @@ document.addEventListener("DOMContentLoaded", function () {
   postCardMessage.addEventListener("input", function () {
     const messageLength = postCardMessage.value.length;
     characterCount.textContent = `${messageLength}/${maxLength} characters`;
-
-    // Enable the button if there's a message
-    saveMessageButton.disabled = messageLength === 0;
   });
 
   saveMessageButton.addEventListener("click", function () {
