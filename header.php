@@ -344,7 +344,9 @@ $contact_us_email = get_field("contact_us_email", "option");
 						</button>
 					</div>
 					<div class="post-card__right" style="align-self: flex-start; margin-left: auto; margin-top: 5px;">
-						$ 5
+						<?php
+						global $msg_price;
+						echo get_woocommerce_currency_symbol() . $msg_price ?>
 					</div>
 					</label>
 					

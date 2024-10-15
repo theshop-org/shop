@@ -706,6 +706,27 @@ function custom_reset_password_message($message, $key, $user_login, $user_data) 
 
 
 // POST CARD
+
+function set_msg_price() {
+    global $msg_price;
+
+    if ( class_exists( 'WooCommerce' ) ) {
+        $currency = get_woocommerce_currency();
+
+        if ( $currency === 'GEL' ) {
+            $msg_price = 15;  // Set to 5 for GEL
+        } elseif ( $currency === 'USD' ) {
+            $msg_price = 5; // Set to 15 for USD
+        } else {
+            $msg_price = 0;  // Default or other currency
+        }
+    } else {
+        $msg_price = 0; // WooCommerce not active
+    }
+}
+
+add_action( 'init', 'set_msg_price' );
+
 // Add the post card message to WooCommerce session via AJAX
 add_action( 'wp_ajax_add_postcard_message', 'add_postcard_message_to_session' );
 add_action( 'wp_ajax_nopriv_add_postcard_message', 'add_postcard_message_to_session' );
@@ -727,11 +748,12 @@ function add_postcard_message_to_session() {
 add_action( 'woocommerce_cart_calculate_fees', 'add_postcard_fee' );
 
 function add_postcard_fee() {
+    global $msg_price;
     $postcard_message = WC()->session->get( 'postcard_message' );
 
     // Add a fee if the post card message exists in the session
     if ( ! empty( $postcard_message ) ) {
-        WC()->cart->add_fee( __( 'Post Card Fee', 'your-textdomain' ), 5.00 );
+        WC()->cart->add_fee( __( 'Post Card Fee', 'your-textdomain' ), $msg_price );
     }
 }
 
@@ -840,7 +862,6 @@ function custom_products_per_page($cols) {
     $cols = 24; // Change this to the number of products you'd like to display
     return $cols;
 }
-
 
 
 ?>
