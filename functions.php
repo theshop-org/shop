@@ -874,43 +874,34 @@ function clean_empty_repeater_fields() {
     foreach ($posts as $post) {
         $post_id = $post->ID;
 
-        // Get the repeater field 'first_image'
         $repeater = get_field('first_image', $post_id);
         $repeater2 = get_field('second_image', $post_id);
 
         if ($repeater) {
-            $updated_repeater = array(); // Array to hold non-empty rows
-
-            // Loop through each row in the repeater
+            $updated_repeater = array();
             foreach ($repeater as $row) {
-                // Keep rows where the image field is not empty
                 if (!empty($row['image'])) {
-                    $updated_repeater[] = $row; // Add non-empty rows to the new array
+                    $updated_repeater[] = $row; 
                 }
             }
-
-            // Update the repeater field with only non-empty rows
             update_field('first_image', $updated_repeater, $post_id);
         }
         if ($repeater2) {
-            $updated_repeater2 = array(); // Array to hold non-empty rows
-
-            // Loop through each row in the repeater2
+            $updated_repeater2 = array(); 
+            
             foreach ($repeater2 as $row) {
-                // Keep rows where the image field is not empty
                 if (!empty($row['image'])) {
-                    $updated_repeater2[] = $row; // Add non-empty rows to the new array
+                    $updated_repeater2[] = $row;
                 }
             }
 
-            // Update the repeater field with only non-empty rows
             update_field('second_image', $updated_repeater2, $post_id);
         }
     }
 }
 
 // Run the function
-clean_empty_repeater_fields();
+// clean_empty_repeater_fields();
 
 ?>
 
