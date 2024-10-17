@@ -890,7 +890,7 @@ function clean_empty_repeater_fields() {
             }
 
             // Update the repeater field with only non-empty rows
-            update_field('second_image', $updated_repeater, $post_id);
+            update_field('first_image', $updated_repeater, $post_id);
         }
         if ($repeater2) {
             $updated_repeater2 = array(); // Array to hold non-empty rows
