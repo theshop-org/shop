@@ -72,29 +72,26 @@ get_header( 'shop' );
 											<?php endif; ?>
 										<?php endforeach; ?>
 									<?php endif; ?>
-								<div class="swiper mySwiper product-single__slider" id="singleSlider">
+								<div class="swiper mySwiper product-single__slider position-relative" id="singleSlider">
 									<div class="swiper-wrapper product-single__slide-wrapper">
-										<?php if($product->is_type('variable')): ?>
-											<?php if(!empty($available_variations)): ?>
-												<?php foreach($available_variations as $key=>$variation): ?>
-													<div class="swiper-slide product-single__slide" id="variationImg<?php echo $key ?>">
-														<?php if(isset($variation['image']['url'])): ?>
-															<img src="<?php echo $variation['image']['url'] ?>" alt="<?php echo $variation['image']['alt'] ?>">
+										
+											<?php if(!empty($first_img)): ?>
+												<?php foreach($first_img as $key=>$img): ?>
+														<?php if(isset($img['image']) && $img['image']): ?>
+														<div class="swiper-slide product-single__slide h-auto">
+																<img src="<?php echo $img['image']['url'] ?>" class="w-100 h-100" style="object-fit: cover;" alt="<?php echo $img['image']['alt'] ?>">
+														</div>
 														<?php endif; ?>
-													</div>
 												<?php endforeach; ?>
 											<?php endif; ?>
-										<?php else: ?>
-											<?php if(isset($first_img['url'])): ?>
-												<div class="swiper-slide product-single__slide">
-														<img src="<?php echo $first_img['url'] ?>" alt="<?php echo $first_img['alt'] ?>">
-												</div>
-											<?php endif; ?>
-											<?php if(isset($second_img['url'])): ?>
-												<div class="swiper-slide product-single__slide">
-														<img src="<?php echo $second_img['url'] ?>" alt="<?php echo $second_img['alt'] ?>">
-												</div>
-											<?php endif; ?>
+											<?php if(!empty($second_img)): ?>
+											<?php foreach($second_img as $key=>$img): ?>
+												<?php if(isset($img['image']) && $img['image']): ?>
+													<div class="swiper-slide product-single__slide h-auto">
+															<img src="<?php echo $img['image']['url'] ?>" class="w-100 h-100" style="object-fit: cover;" alt="<?php echo $img['image']['alt'] ?>">
+													</div>
+												<?php endif; ?>
+											<?php endforeach; ?>
 										<?php endif; ?>
 									</div>
 									<div class="swiper-pagination"></div>
