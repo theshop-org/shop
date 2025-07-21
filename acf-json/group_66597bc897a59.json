@@ -78,7 +78,7 @@
             "preview_size": "medium"
         },
         {
-            "key": "field_66b2522719db6",
+            "key": "field_66b25682e43d2",
             "label": "Last image",
             "name": "last_image",
             "aria-label": "",
@@ -202,6 +202,13 @@
                 "operator": "==",
                 "value": "6"
             }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "product_cat"
+            }
         ]
     ],
     "menu_order": 0,
@@ -213,5 +220,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1722962662
+    "modified": 1752835317
 }

@@ -20,11 +20,32 @@ defined( 'ABSPATH' ) || exit;
 get_header('shop');
 
 
-$grid_texts = get_field('grid_texts', wc_get_page_id('shop'));
-$main_image = get_field('main_image', wc_get_page_id('shop'));
-$horizontal_image = get_field('horizontal_image', wc_get_page_id('shop'));
-$vertical_image = get_field('vertical_image', wc_get_page_id('shop'));
-$last_image = get_field('last_image', wc_get_page_id('shop'));
+$category_id = get_queried_object_id();
+if (is_product_category()) {
+    $grid_texts = get_field('grid_texts',  'product_cat_' . $category_id);
+} else {
+    $grid_texts = get_field('grid_texts', wc_get_page_id('shop'));
+}
+if (is_product_category()) {
+    $main_image = get_field('main_image', 'product_cat_' . $category_id);
+} else {
+    $main_image = get_field('main_image', wc_get_page_id('shop'));
+}
+if (is_product_category()) {
+    $horizontal_image = get_field('horizontal_image', 'product_cat_' . $category_id);
+} else {
+    $horizontal_image = get_field('horizontal_image', wc_get_page_id('shop'));
+}
+if (is_product_category()) {
+    $vertical_image = get_field('vertical_image', 'product_cat_' . $category_id);
+} else {
+    $vertical_image = get_field('vertical_image', wc_get_page_id('shop'));
+}
+if (is_product_category()) {
+    $last_image = get_field('last_image', 'product_cat_' . $category_id);
+} else {
+    $last_image = get_field('last_image', wc_get_page_id('shop'));
+}
 $count = 0;
 if (have_posts()) : ?>
     <div class="shop-page gridStyleOne">
